@@ -35,9 +35,7 @@ void parse_split(char **matrix)
 	while (matrix[i] != NULL)
 	{
 		if(is_cmd(matrix[i]))
-		{
 			printf("%s es un comando\n",matrix[i]);	
-		}
 		i++;
 	}
 }
