@@ -33,6 +33,8 @@ t_token_type	classify_tokken(char *token)
 		return (REDIR_APPEND);
 	else if (ft_strcmp(token, "<<") == 0)
 		return (HEREDOC);
+	else if (ft_strcmp(token,"\"") == 0 || ft_strcmp(token,"\'")  == 0)
+		return(QUOTE);
 	else if (token[0] == '$')
 	{
 		if (ft_strcmp(token, "$?") == 0)
