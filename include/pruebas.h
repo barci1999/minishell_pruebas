@@ -66,5 +66,5 @@ void				ft_lstadd_back(t_list **lst, t_list *new);
 void parse_split(char **matrix);
 t_list	*ft_lstlast(t_list *lst);
 t_token_type classify_tokken(char *token);
-void tonkenize(char *input);
+void tokenize(char *input);
 #endif

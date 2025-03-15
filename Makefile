@@ -1,4 +1,4 @@
-NAME	= pruebas
+NAME	= mini
 
 CC	= cc
 

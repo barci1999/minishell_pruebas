@@ -7,8 +7,8 @@ int	is_cmd(char *cmd)
 	char	*temp;
 
 	i = 0;
-	if(access(cmd,X_OK) == 0)
-		return(1);
+	if (access(cmd, X_OK) == 0)
+		return (1);
 	path = ft_split(getenv("PATH"), ':');
 	temp = NULL;
 	while (path[i] != NULL)
@@ -16,10 +16,10 @@ int	is_cmd(char *cmd)
 		temp = ft_get_strjoin(path[i], "/");
 		path[i] = ft_get_strjoin(temp, cmd);
 		if (access(path[i], X_OK) == 0)
-			return (ft_free_matrix(path),1);
+			return (ft_free_matrix(path), 1);
 		i++;
 	}
-	return (ft_free_matrix(path),0);
+	return (ft_free_matrix(path), 0);
 }
 t_token_type	classify_tokken(char *token)
 {
@@ -33,8 +33,8 @@ t_token_type	classify_tokken(char *token)
 		return (REDIR_APPEND);
 	else if (ft_strcmp(token, "<<") == 0)
 		return (HEREDOC);
-	else if (ft_strcmp(token,"\"") == 0 || ft_strcmp(token,"\'")  == 0)
-		return(QUOTE);
+	else if (ft_strcmp(token, "\"") == 0 || ft_strcmp(token, "\'") == 0)
+		return (QUOTE);
 	else if (token[0] == '$')
 	{
 		if (ft_strcmp(token, "$?") == 0)
@@ -47,42 +47,52 @@ t_token_type	classify_tokken(char *token)
 		return (INVALID);
 }
 
-void	tonkenize(char *input)
+void	tokenize(char *input)
 {
-	char			**tokens;
 	int				i;
-	t_token_type	token_type;
+	int				start;
+	char			*token;
+	int				flag_quote;
+	char			quote_char;
+	t_token_type	token_tipe;
 
-	tokens = ft_split(input, ' ');
 	i = 0;
-	while (tokens[i])
+	start = 0;
+	token = NULL;
+	flag_quote = 0;
+	quote_char = 0;
+	while (input[i] != '\0')
 	{
-		token_type = classify_tokken(tokens[i]);
-		if (token_type == CMD)
-			printf("CMD: %s\n", tokens[i]);
-		else if (token_type == ARG)
-			printf("ARG: %s\n", tokens[i]);
-		else if (token_type == PIPE)
-			printf("PIPE: %s\n", tokens[i]);
-		else if (token_type == REDIR_IN)
-			printf("REDIR_IN: %s\n", tokens[i]);
-		else if (token_type == REDIR_OUT)
-			printf("REDIR_OUT: %s\n", tokens[i]);
-		else if (token_type == REDIR_APPEND)
-			printf("REDIR_APPEND: %s\n", tokens[i]);
-		else if (token_type == HEREDOC)
-			printf("HEREDOC: %s\n", tokens[i]);
-		else if (token_type == ENV_VAR)
-			printf("ENV_VAR: %s\n", tokens[i]);
-		else if (token_type == DOLLAR_EXIT)
-			printf("DOLLAR_EXIT: %s\n", tokens[i]);
-		else if (token_type == QUOTE)
-			printf("QUOTE: %s\n", tokens[i]);
-		else if (token_type == INVALID)
-			printf("INVALID: %s\n", tokens[i]);
+		if (input[i] == '\'' || input[i] == '\"')
+		{
+			if (flag_quote && input[i] == quote_char)
+				flag_quote = 0;
+			else if (!flag_quote)
+			{
+				flag_quote = 1;
+				quote_char = input[i];
+			}
+		}
+		else if (input[i] == ' ' && !flag_quote)
+		{
+			if (i > start)
+			{
+				token = ft_substr(input, start, i - start);
+				token_tipe = classify_tokken(token);
+				printf("%u\n", token_tipe);
+				free(token);
+			}
+			start = i + 1;
+		}
 		i++;
 	}
-	ft_free_matrix(tokens);
+	if (i > start)
+	{
+		token = ft_substr(input, start, i - start);
+		token_tipe = classify_tokken(token);
+		printf("%u\n", token_tipe);
+		free(token);
+	}
 }
 int	main(int argc, char **argv, char **envp)
 {
@@ -97,7 +107,7 @@ int	main(int argc, char **argv, char **envp)
 		if (input == NULL)
 			break ;
 		if (*input != '\0')
-			tonkenize(input);
+			tokenize(input);
 	}
 	return (0);
 }
