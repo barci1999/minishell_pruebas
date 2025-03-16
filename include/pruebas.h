@@ -19,7 +19,7 @@ typedef enum e_token_type {
     ENV_VAR,    // Variables de entorno, por ejemplo '$HOME'
     DOLLAR_EXIT, // Expansión de $? para el estado de salida
     QUOTE,      // Comillas simples (') o dobles (")
-    INVALID     // Token inválido o no reconocido
+    WORD,     // Token inválido o no reconocido
 } t_token_type;
 
 typedef enum e_signal_type {
@@ -56,15 +56,21 @@ typedef enum e_expansion_type {
 
 typedef struct t_list
 {
-	void			*content;
+	t_token_type	token;
+	char			*content;
 	struct t_list	*next;
+	struct t_list	*prev;
+	
 }t_list;
 
 void	print_list(t_list *list);
-t_list				*ft_lstnew(void *content);
-void				ft_lstadd_back(t_list **lst, t_list *new);
+//t_list				*ft_lstnew(void *content);
+//void				ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*new_doble_node(t_token_type type, char *token);
+int	node_to_end(t_list **list, t_list *insert);
+void	free_list(t_list **list);
 void parse_split(char **matrix);
 t_list	*ft_lstlast(t_list *lst);
 t_token_type classify_tokken(char *token);
-void tokenize(char *input);
+t_list *tokenize(char *input);
 #endif

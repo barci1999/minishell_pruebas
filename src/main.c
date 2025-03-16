@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pablalva <pablalva@student.42madrid.com>   #+#  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025-03-16 15:25:26 by pablalva          #+#    #+#             */
+/*   Updated: 2025-03-16 15:25:26 by pablalva         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pruebas.h"
 
 int	is_cmd(char *cmd)
@@ -21,6 +33,7 @@ int	is_cmd(char *cmd)
 	}
 	return (ft_free_matrix(path), 0);
 }
+
 t_token_type	classify_tokken(char *token)
 {
 	if (ft_strcmp(token, "|") == 0)
@@ -44,10 +57,10 @@ t_token_type	classify_tokken(char *token)
 	else if (is_cmd(token))
 		return (CMD);
 	else
-		return (INVALID);
+		return (WORD);
 }
 
-void	tokenize(char *input)
+t_list	*tokenize(char *input)
 {
 	int				i;
 	int				start;
@@ -55,12 +68,14 @@ void	tokenize(char *input)
 	int				flag_quote;
 	char			quote_char;
 	t_token_type	token_tipe;
+	t_list			*tokens;
 
 	i = 0;
 	start = 0;
 	token = NULL;
 	flag_quote = 0;
 	quote_char = 0;
+	tokens = NULL;
 	while (input[i] != '\0')
 	{
 		if (input[i] == '\'' || input[i] == '\"')
@@ -79,7 +94,11 @@ void	tokenize(char *input)
 			{
 				token = ft_substr(input, start, i - start);
 				token_tipe = classify_tokken(token);
-				printf("%u\n", token_tipe);
+				if (node_to_end(&tokens, new_doble_node(token_tipe, token)) == -1)
+				{
+					free_list(&tokens);
+					exit(1);
+				}
 				free(token);
 			}
 			start = i + 1;
@@ -90,13 +109,20 @@ void	tokenize(char *input)
 	{
 		token = ft_substr(input, start, i - start);
 		token_tipe = classify_tokken(token);
-		printf("%u\n", token_tipe);
+		if (node_to_end(&tokens, new_doble_node(token_tipe, token)) == -1)
+		{
+			free_list(&tokens);
+			exit(1);
+		}
 		free(token);
 	}
+	return (tokens);
 }
+
 int	main(int argc, char **argv, char **envp)
 {
-	char *input;
+	char	*input;
+
 	(void)argv;
 	(void)envp;
 	if (argc < 1)
@@ -107,7 +133,7 @@ int	main(int argc, char **argv, char **envp)
 		if (input == NULL)
 			break ;
 		if (*input != '\0')
-			tokenize(input);
+			print_list(tokenize(input));
 	}
 	return (0);
 }
