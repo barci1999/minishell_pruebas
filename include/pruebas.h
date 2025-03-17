@@ -20,6 +20,9 @@ typedef enum e_token_type {
     DOLLAR_EXIT, // Expansión de $? para el estado de salida
     QUOTE,      // Comillas simples (') o dobles (")
     WORD,     // Token inválido o no reconocido
+	OUTFILE,  // salida de la redireccion
+	INFILE,	 // entrada de la redireccion
+	OUTFILE_APPEND, // salida de la redireccion en modo append
 } t_token_type;
 
 typedef enum e_signal_type {
@@ -64,8 +67,6 @@ typedef struct t_list
 }t_list;
 
 void	print_list(t_list *list);
-//t_list				*ft_lstnew(void *content);
-//void				ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*new_doble_node(t_token_type type, char *token);
 int	node_to_end(t_list **list, t_list *insert);
 void	free_list(t_list **list);
@@ -73,4 +74,5 @@ void parse_split(char **matrix);
 t_list	*ft_lstlast(t_list *lst);
 t_token_type classify_tokken(char *token);
 t_list *tokenize(char *input);
+void change_word(t_list **list);
 #endif

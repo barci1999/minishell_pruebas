@@ -94,7 +94,8 @@ t_list	*tokenize(char *input)
 			{
 				token = ft_substr(input, start, i - start);
 				token_tipe = classify_tokken(token);
-				if (node_to_end(&tokens, new_doble_node(token_tipe, token)) == -1)
+				if (node_to_end(&tokens, new_doble_node(token_tipe, token)) ==
+					-1)
 				{
 					free_list(&tokens);
 					exit(1);
@@ -116,6 +117,7 @@ t_list	*tokenize(char *input)
 		}
 		free(token);
 	}
+	change_word(&tokens);
 	return (tokens);
 }
 
