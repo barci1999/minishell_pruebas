@@ -1,0 +1,79 @@
+
+!! cambiar los outfile en infile para que me guarde los dos como simplemente fd por que un fd puede ser donde se guarde la salida de un comando pero ser al mismo tiempo de donde se saque la informacion para e siguiente 
+asi que hacer solo fd ¡¡
+
+nodo tipo comando 
+	-nodo anterior
+	 	-puede ser nulo (es decir que el primer nodo de la lista sea al comando)
+		-puede ser un nodo de tipo PIPE
+	-nodo siguiente
+		-puede ser un ARG
+		-puede ser una redireccion
+		-puede ser un pipe
+nodo tipo argumentos
+	-nodo anterior
+		-nodo tipo comando
+	-nodo siguiente
+		-nodo tipo pipe
+		-nodo tipo redireccion(todas incluido heredoc)
+		-fin de la lista
+nodo tipo pipe
+	-nodo anterior
+		-puede ser nodo timo comando
+		-puede ser nodo tipo argumento de comando
+		-nodo tipo builting
+		-nodo tipo variable de entorno
+		-nodo tipo salida dolar ($?)
+	-nodo siguiente
+		-nodo tipo comando
+		-nodo tipo builting
+nodo tipo redireccion de entrada ("<")
+	-nodo anterior
+		-nodo tipo comando
+		-nodo tipo builting
+		-nodo tipo argumento
+		-nodo tipo variable de entorno
+	-nodo siguiente
+		-nodo tipo infile(cambia por fd)
+nodd tipo redireccion de salida (">")
+	-nodo anterior
+		-nodo tipo comando
+		-nodo tipo builting
+		-nodo tipo argumento
+		-nodo tipo variable de entorno
+	-nodo siguiente
+		-nodo tipo outfile(cambiar por fd)
+nodo tipo redireccion de salida append (">>")
+	-nodo anterior
+		-nodo tipo comando
+		-nodo tipo builtin
+		-nodo tipo argumento
+		-nodo tipo variable de entorno
+	-nodo siguiente
+		-nodo tipo outfile(cambiar por fd)
+nodo tipo heredoc ("<<")
+	-nodo anterior
+		-nodo tipo comando
+		-nodo tipo builtin
+		-nodo tipo argumento
+		-nodo tipo variable de entorno
+	-nodo siguiente
+		-nodo tipo fd
+nodo tipo variable de entorno 
+	-nodo anterior
+		-nodo  comando 
+		-nodo 	builtine
+		-nodo tipo redireccion
+	-nodo siguiente
+		-nodo argumento
+		-nodo pipe
+		-nodo redir_in
+nodo tipo DOLLAR_EXIT ("$?")
+	-nodo anterior
+		-nodo comando
+		-nodo builtin
+	-nodo siguiente
+		-nodo redireccion de salida
+		-nodo de redireccion de salida append
+
+

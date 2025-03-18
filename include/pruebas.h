@@ -23,6 +23,7 @@ typedef enum e_token_type {
 	OUTFILE,  // salida de la redireccion
 	INFILE,	 // entrada de la redireccion
 	OUTFILE_APPEND, // salida de la redireccion en modo append
+	BUILTIN,
 } t_token_type;
 
 typedef enum e_signal_type {
@@ -75,4 +76,6 @@ t_list	*ft_lstlast(t_list *lst);
 t_token_type classify_tokken(char *token);
 t_list *tokenize(char *input);
 void change_word(t_list **list);
+int is_builting(char *token);
+void	sintax_list(t_list **list);
 #endif

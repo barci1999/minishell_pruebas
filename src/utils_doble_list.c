@@ -17,11 +17,15 @@ t_list	*new_doble_node(t_token_type type, char *token)
 
 	new_node = malloc(1 * sizeof(t_list));
 	if (!new_node)
+	{
+		free(token);
 		return (NULL);
+	}
 	new_node->content = ft_strdup(token);
-	if (!new_node)
+	if (!new_node->content)
 	{
 		free(new_node);
+		free(token);
 		return (NULL);
 	}
 	new_node->next = NULL;
@@ -78,29 +82,4 @@ void	print_list(t_list *list)
 		now = now->next;
 	}
 }
-void	change_word(t_list **list)
-{
-	t_list	*current;
 
-	current = *list;
-	while (current)
-	{
-		if (current->prev != NULL)
-		{
-			if (current->token == WORD && current->prev->token == CMD)
-				current->token = ARG;
-			else if (current->token == WORD
-				&& current->prev->token == REDIR_OUT)
-				current->token = OUTFILE;
-			else if (current->token == WORD
-				&& current->prev->token == REDIR_APPEND)
-				current->token = OUTFILE_APPEND;
-		}
-		if (current->next != NULL)
-		{
-			if (current->token == WORD && current->next->token == REDIR_IN)
-				current->token = INFILE;
-		}
-		current = current->next;
-	}
-}

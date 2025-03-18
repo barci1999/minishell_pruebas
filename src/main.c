@@ -11,6 +11,24 @@
 /* ************************************************************************** */
 
 #include "pruebas.h"
+int is_builting(char *token)
+{
+	if (ft_strcmp(token, "echo") == 0)
+		return(1);
+	else if (ft_strcmp(token, "cd") == 0)
+		return(1);
+	else if (ft_strcmp(token, "pwd") == 0)
+		return(1);
+	else if (ft_strcmp(token, "export") == 0)
+		return(1);
+	else if (ft_strcmp(token, "unset") == 0)
+		return(1);
+	else if (ft_strcmp(token, "env") == 0)
+		return(1);
+	else if (ft_strcmp(token, "exit") == 0)
+		return(1);
+	return(0);	
+}
 
 int	is_cmd(char *cmd)
 {
@@ -54,6 +72,8 @@ t_token_type	classify_tokken(char *token)
 			return (DOLLAR_EXIT);
 		return (ENV_VAR);
 	}
+	else if (is_builting(token))
+		return(BUILTIN);
 	else if (is_cmd(token))
 		return (CMD);
 	else
@@ -93,9 +113,14 @@ t_list	*tokenize(char *input)
 			if (i > start)
 			{
 				token = ft_substr(input, start, i - start);
+				if(token == NULL)
+				{
+					free_list(&tokens);
+					free(token);
+					exit(1);
+				}
 				token_tipe = classify_tokken(token);
-				if (node_to_end(&tokens, new_doble_node(token_tipe, token)) ==
-					-1)
+				if (node_to_end(&tokens, new_doble_node(token_tipe, token)) == -1)
 				{
 					free_list(&tokens);
 					exit(1);
@@ -109,6 +134,12 @@ t_list	*tokenize(char *input)
 	if (i > start)
 	{
 		token = ft_substr(input, start, i - start);
+		if(token == NULL)
+		{
+			free_list(&tokens);
+			free(token);
+			exit(1);
+		}
 		token_tipe = classify_tokken(token);
 		if (node_to_end(&tokens, new_doble_node(token_tipe, token)) == -1)
 		{
