@@ -107,6 +107,7 @@ int					sintax_arg(t_token_type type,t_list *comprove);
 int					sintax_pipe(t_token_type type,t_list *comprove);
 int					sintax_redirs_out(t_token_type type,t_list *comprove);
 int					sintax_redir_in(t_token_type type,t_list *comprove);
-void				fun_error_sintax(t_list **list);
+int	sintax_builting(t_token_type type, t_list *comprove);
+void				fun_error_sintax(char *error,t_list **list);
 
 #endif
