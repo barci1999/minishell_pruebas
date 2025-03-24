@@ -18,14 +18,13 @@ int	sintax_cmd(t_token_type type, t_list *comprove)
 	{
 		if (comprove->prev == NULL || comprove->prev->token == PIPE)
 		{
-			if (comprove->next != NULL)
-			{
-				if (comprove->next == NULL || comprove->next->token == ARG
-					|| comprove->next->token == REDIR_OUT
-					|| comprove->next->token == HEREDOC
-					|| comprove->next->token == PIPE)
+			if (comprove->next == NULL || comprove->next->token == ARG
+				|| comprove->next->token == REDIR_OUT
+				|| comprove->next->token == HEREDOC
+				|| comprove->next->token == PIPE)
+				{
 					return (1);
-			}
+				}
 		}
 	}
 	return (-1);
@@ -42,7 +41,10 @@ int	sintax_arg(t_token_type type, t_list *comprove)
 			if (comprove->next == NULL || comprove->next->token == REDIR_OUT
 				|| comprove->next->token == REDIR_APPEND
 				|| comprove->next->token == PIPE)
-				return (1);
+				{
+
+					return (1);
+				}
 		}
 	}
 	return (-1);

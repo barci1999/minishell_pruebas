@@ -43,36 +43,55 @@ void	change_word(t_list **list)
 }
 void	sintax_list(t_list **list)
 {
-	t_list	*current;
-	t_list *temp;
+	t_list			*current;
+	t_list			*temp;
+	t_token_type	type;
+
 	current = *list;
-	t_builtin_type type;
 	while (current)
 	{
 		temp = current;
 		type = temp->token;
-		if (sintax_cmd(type,temp) == -1)
-			fun_error_sintax("Error in sintax_cmd \n",&list);
-		else if(sintax_builting(type,temp) == -1)
-			fun_error_sintax("Error int sintax_builting \n",&list);
-		else if(sintax_arg(type,temp) == -1)
-			fun_error_sintax("Error in sintax_arg \n",&list);
-		else if(sintax_pipe(type,temp) == -1)
-			fun_error_sintax("Error in sintax_pipe \n",&list);
-		else if (sintax_redirs_out(type,temp) == -1)
-			fun_error_sintax("Error in sintax_redirs_out\n",&list);
-		else if (sintax_redir_in(type,temp) == -1)
-			fun_error_sintax("Error in sintax_redir_in\n",&list);
-		else if (sintax_heredoc(type,temp) == -1)
-			fun_error_sintax("Error in sintax_heredoc\n",&list);
-		else if (sintax_env_var(type,temp) == -1)
-			fun_error_sintax("Error in sintax_env_var\n",&list);
-		else if (sintax_dollar_exit(type,temp) == -1)
-			fun_error_sintax("Error in sintax_dollar_exit\n",&list);
-		else if (sintax_fd(type,temp) == -1)
-			fun_error_sintax("Error in sintax_fd\n",&list);
-		free(temp);
-		free(type);
+		if (type == CMD && sintax_cmd(type, temp) == -1)
+		{
+			fun_error_sintax("Error in sintax_cmd", list);
+		}
+		if ( type == BUILTIN  && sintax_builting(type, temp) == -1)
+		{
+			fun_error_sintax("Error int sintax_builting", list);
+		}
+		if (type == ARG && sintax_arg(type, temp) == -1)
+		{
+			fun_error_sintax("Error in sintax_arg", list);
+		}
+		if (type == PIPE && sintax_pipe(type, temp) == -1)
+		{
+			fun_error_sintax("Error in sintax_pipe", list);
+		}
+		if ((type == REDIR_OUT || type == REDIR_APPEND) && sintax_redirs_out(type, temp) == -1)
+		{
+			fun_error_sintax("Error in sintax_redirs_out", list);
+		}
+		if (type == REDIR_IN && sintax_redir_in(type, temp) == -1)
+		{
+			fun_error_sintax("Error in sintax_redir_in", list);
+		}
+		if (type == HEREDOC && sintax_heredoc(type, temp) == -1)
+		{
+			fun_error_sintax("Error in sintax_heredoc", list);
+		}
+		if (type == ENV_VAR && sintax_env_var(type, temp) == -1)
+		{
+			fun_error_sintax("Error in sintax_env_var", list);
+		}
+		if (type == DOLLAR_EXIT && sintax_dollar_exit(type, temp) == -1)
+		{
+			fun_error_sintax("Error in sintax_dollar_exit", list);
+		}
+		if (type == FD && sintax_fd(type, temp) == -1)
+		{
+			fun_error_sintax("Error in sintax_fd", list);
+		}
 		current = current->next;
 	}
 }

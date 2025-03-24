@@ -149,6 +149,7 @@ t_list	*tokenize(char *input)
 		free(token);
 	}
 	change_word(&tokens);
+	sintax_list(&tokens);
 	return (tokens);
 }
 

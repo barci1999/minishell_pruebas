@@ -61,8 +61,7 @@ int	node_to_end(t_list **list, t_list *insert)
 void	free_list(t_list **list)
 {
 	t_list	*temp;
-
-	while (list)
+	while ((*list)->next != NULL)
 	{
 		temp = *list;
 		*list = (*list)->next;

@@ -109,5 +109,6 @@ int					sintax_redirs_out(t_token_type type,t_list *comprove);
 int					sintax_redir_in(t_token_type type,t_list *comprove);
 int	sintax_builting(t_token_type type, t_list *comprove);
 void				fun_error_sintax(char *error,t_list **list);
+int	sintax_dollar_exit(t_token_type type, t_list *comprove);
 
 #endif
