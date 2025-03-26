@@ -21,7 +21,8 @@ int	sintax_cmd(t_token_type type, t_list *comprove)
 			if (comprove->next == NULL || comprove->next->token == ARG
 				|| comprove->next->token == REDIR_OUT
 				|| comprove->next->token == HEREDOC
-				|| comprove->next->token == PIPE)
+				|| comprove->next->token == PIPE
+				|| comprove->next->token == REDIR_IN)
 				{
 					return (1);
 				}
@@ -36,7 +37,7 @@ int	sintax_arg(t_token_type type, t_list *comprove)
 	{
 		if (comprove->prev == NULL)
 			return (-1);
-		else if (comprove->prev->token == CMD)
+		else if (comprove->prev->token == CMD || comprove->prev->token == BUILTIN)
 		{
 			if (comprove->next == NULL || comprove->next->token == REDIR_OUT
 				|| comprove->next->token == REDIR_APPEND
@@ -74,7 +75,7 @@ int	sintax_redirs_out(t_token_type type, t_list *comprove)
 		if (comprove->prev == NULL || comprove->next == NULL)
 			return (-1);
 		else if (comprove->prev->token == CMD || comprove->prev->token == ARG
-			|| comprove->prev->token == BUILTIN)
+			|| comprove->prev->token == BUILTIN || comprove->prev->token == ENV_VAR)
 		{
 			if (comprove->next->token == FD)
 				return (1);
@@ -93,7 +94,10 @@ int	sintax_redir_in(t_token_type type, t_list *comprove)
 			|| comprove->prev->token == BUILTIN)
 		{
 			if (comprove->next->token == FD)
+			{
+				printf("hola\n");
 				return (1);
+			}
 		}
 	}
 	return (-1);

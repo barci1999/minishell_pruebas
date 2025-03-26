@@ -28,7 +28,7 @@ int	sintax_builting(t_token_type type, t_list *comprove)
 				if (comprove->next->token == ARG
 					|| comprove->next->token == REDIR_OUT
 					|| comprove->next->token == HEREDOC
-					|| comprove->next->token == PIPE)
+					|| comprove->next->token == PIPE || comprove->next->token == ENV_VAR)
 					return (1);
 			}
 			else

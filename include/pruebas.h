@@ -111,4 +111,9 @@ int	sintax_builting(t_token_type type, t_list *comprove);
 void				fun_error_sintax(char *error,t_list **list);
 int	sintax_dollar_exit(t_token_type type, t_list *comprove);
 
+/* Expand Vatriable  */
+
+char	*take_dollar(char *input);
+int	number_of_dollar(char *input);
+char	*expand_var(char *input);
 #endif

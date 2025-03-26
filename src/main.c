@@ -149,16 +149,18 @@ t_list	*tokenize(char *input)
 		free(token);
 	}
 	change_word(&tokens);
-	sintax_list(&tokens);
+	//sintax_list(&tokens);
 	return (tokens);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
+	char	*input = NULL;
+	char *temp;
 
 	(void)argv;
 	(void)envp;
+	int num_var;
 	if (argc < 1)
 		return (1);
 	while (1)
@@ -167,7 +169,18 @@ int	main(int argc, char **argv, char **envp)
 		if (input == NULL)
 			break ;
 		if (*input != '\0')
-			print_list(tokenize(input));
+			{
+				//print_list(tokenize(input));
+				num_var = number_of_dollar(input);
+				while(num_var > 0)
+				{
+					temp = expand_var(input);
+					free(input);
+					input = temp;
+					num_var = number_of_dollar(input);
+				}
+				printf("%s\n",input);
+			}
 	}
 	return (0);
 }

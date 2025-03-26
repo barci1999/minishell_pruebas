@@ -13,7 +13,8 @@ PRINT_DIR = ./printf
 LIBS = -L$(LIBFT_DIR) -lft -L$(PRINT_DIR) -lftprintf -lreadline
 
 # Archivos fuente
-SRCS = src/main.c src/utils_doble_list.c src/utils_enums.c src/util_sintax.c src/utils_sintax2.c src/utils_sintax3.c
+SRCS = src/main.c src/utils_doble_list.c src/utils_enums.c src/util_sintax.c src/utils_sintax2.c src/utils_sintax3.c\
+		src/utils_expand.c
 
 # Archivos objeto
 OBJS = $(SRCS:.c=.o)

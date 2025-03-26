@@ -21,17 +21,17 @@ void	change_word(t_list **list)
 	{
 		if (current->prev != NULL)
 		{
-			if (current->token == WORD && (current->prev->token == CMD
-					|| current->prev->token == BUILTIN))
+			if (current->token == WORD && (current->prev->token != PIPE))
 				current->token = ARG;
-			else if (current->token == WORD
-				&& current->prev->token == REDIR_OUT)
+			else if (current->token == WORD && current->prev->token == REDIR_OUT)
 				current->token = FD;
 			else if (current->token == WORD
 				&& current->prev->token == REDIR_APPEND)
 				current->token = FD;
 			else if (current->prev->token == HEREDOC)
 				current->token = DELIM;
+			else if (current->prev->token == REDIR_IN)
+				current->token = FD;
 		}
 		if (current->next != NULL)
 		{
@@ -56,7 +56,7 @@ void	sintax_list(t_list **list)
 		{
 			fun_error_sintax("Error in sintax_cmd", list);
 		}
-		if ( type == BUILTIN  && sintax_builting(type, temp) == -1)
+		if (type == BUILTIN && sintax_builting(type, temp) == -1)
 		{
 			fun_error_sintax("Error int sintax_builting", list);
 		}
@@ -68,7 +68,8 @@ void	sintax_list(t_list **list)
 		{
 			fun_error_sintax("Error in sintax_pipe", list);
 		}
-		if ((type == REDIR_OUT || type == REDIR_APPEND) && sintax_redirs_out(type, temp) == -1)
+		if ((type == REDIR_OUT || type == REDIR_APPEND)
+			&& sintax_redirs_out(type, temp) == -1)
 		{
 			fun_error_sintax("Error in sintax_redirs_out", list);
 		}
