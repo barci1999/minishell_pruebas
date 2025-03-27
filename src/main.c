@@ -156,7 +156,7 @@ t_list	*tokenize(char *input)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input = NULL;
-	char *temp;
+	char *temp = NULL;
 
 	(void)argv;
 	(void)envp;
@@ -179,7 +179,8 @@ int	main(int argc, char **argv, char **envp)
 					input = temp;
 					num_var = number_of_dollar(input);
 				}
-				printf("%s\n",input);
+				ft_printf("%s\n",input);
+				//free(input);
 			}
 	}
 	return (0);

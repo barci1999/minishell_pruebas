@@ -105,10 +105,8 @@ char	*take_dollar(char *input)
 		if (input[i] == '$')
 		{
 			j++;
-			while (!is_space(input[i]))
-			{
+			while (!is_space(input[i]) && input[i]!='\0')
 				i++;
-			}
 			result = ft_substr(input, j, (i - j));
 			if (!result)
 				return (NULL);
