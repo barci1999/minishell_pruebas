@@ -113,7 +113,9 @@ int	sintax_dollar_exit(t_token_type type, t_list *comprove);
 
 /* Expand Vatriable  */
 
-char	*take_dollar(char *input);
-int	number_of_dollar(char *input);
-char	*expand_var(char *input);
+//char	*take_dollar(char *input);
+//int	number_of_dollar(char *input);
+//char	*expand_var(char *input);
+char *expand_str(char *input);
+char	*expand_var(char *input, size_t i, size_t j);
 #endif

@@ -160,7 +160,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	(void)envp;
-	int num_var;
+	//int num_var;
 	if (argc < 1)
 		return (1);
 	while (1)
@@ -170,18 +170,13 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		if (*input != '\0')
 			{
-				//print_list(tokenize(input));
-				num_var = number_of_dollar(input);
-				while(num_var > 0)
-				{
-					temp = expand_var(input);
-					free(input);
-					input = temp;
-					num_var = number_of_dollar(input);
-				}
-				ft_printf("%s\n",input);
-				//free(input);
+				//print_list(tokenize(input)););
+				temp = expand_str(input);
+				//printf("%s\n",temp);
+				free(input);
+				input = temp;
 			}
+			//free(input);
 	}
 	return (0);
 }
