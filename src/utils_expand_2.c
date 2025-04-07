@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_expand_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-04-01 10:20:50 by pablalva          #+#    #+#             */
-/*   Updated: 2025-04-01 10:20:50 by pablalva         ###   ########.fr       */
+/*   Created: 2025/04/01 10:20:50 by pablalva          #+#    #+#             */
+/*   Updated: 2025/04/07 16:17:03 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pruebas.h"
+
+#include"pruebas.h"
 
 static int is_space(char c)
 {
@@ -36,12 +37,14 @@ char	*expand_var(char *input, size_t i, size_t j)
 		e++;
 		j++;
 	}
-	name_var = ft_substr(input, i + 1 , e - 1);
+	if(input[j - 1] == '\"')
+		e -= 2;
+	name_var = ft_substr(input, i +1 , e - 1);
 	if (!name_var)
 	{
 		/*gestion de leaks*/
 	}
-	exp_var = getenv(name_var);
+	exp_var =  ft_strjoin("VAR_",getenv(name_var));
 	if (!exp_var)
 	{
 		/* gestion de leaks y usar env propio*/
@@ -59,46 +62,93 @@ char	*expand_var(char *input, size_t i, size_t j)
 	return (ft_strjoin(exp_var, rest));
 }
 
-char	*expand_str(char *input)
+char    *expand_str(char *input)
 {
-	size_t	i;
-	size_t	j;
-	char	*pre_exp;
-	char	*rest;
+    size_t  i;
+    size_t  j;
+    char    *pre_exp;
+    char    *rest;
+    char *result;
 
-	i = 0;
-	j = 0;
-	pre_exp = NULL;
-	rest = NULL;
-	while (input[i])
-	{
-		if (input[i] == '\'')
-		{
-			while (input[i] != '\'' && input[i])
-				i++;
-		}
-		else if (input[i] == '$')
-		{
-			j = i;
-			pre_exp = ft_substr(input, 0, (j));
-			if(!pre_exp)
-			{
-				/* gestion de leacks */
-			}
-			rest = expand_var(input, i, j);
-			if(!rest)
-			{
-				/*gestion de leacks */
-			}
-			free(input);
-			input = ft_strjoin(pre_exp, rest);
-			if(!input)
-			{
-				/* gestion de leaks */
-			}
-		}
-		if (input[i] != '\0')
-			i++;
-	}
-	return (input);
+    i = 0;
+    j = 0;
+    pre_exp = NULL;
+    rest = NULL;
+    while (input[i])
+    {
+        if (input[i] == '\'')
+        {
+            i++;
+            while (input[i] != '\'' && input[i])
+            {
+                i++;
+            }
+        }
+        else  if (input[i] == '$')
+        {
+            j = i;
+            if(input[j -1] == '\"')
+                j--;
+            pre_exp = ft_substr(input, 0, (j));
+            if(!pre_exp)
+            {
+                /* gestion de leacks */
+            }
+            rest = expand_var(input, i, j);
+            if(!rest)
+            {
+                /*gestion de leacks */
+            }
+            free(input);
+            input = ft_strjoin(pre_exp, rest);
+            if(!input)
+            {
+                /* gestion de leaks */
+            }
+        }
+        if (input[i] != '\0')
+            i++;
+    }
+    result = rem_sin_quotes(input);
+    return (result);
+}
+size_t nb_of_quotes(char *input)
+{
+    size_t quotes = 0;
+    int i = 0;
+    while(input[i])
+    {
+        if(input[i] == '\'')
+        {
+            quotes++;
+        }
+        i++;
+    }
+    return(quotes);
+}
+char *rem_sin_quotes(char *input)
+{
+    size_t nb_quotes;
+    int i = 0;
+    int j = 0;
+    char *result;
+    nb_quotes = nb_of_quotes(input);
+    result = malloc((ft_strlen(input)- nb_quotes + 1) * sizeof(char));
+    if(!result)
+    {
+        /* gestion de leaks */
+    }
+    while(input[i])
+    {
+        if(input[i] != '\'')
+        {
+            result[j] = input[i];
+            j++;
+            i++;
+        }
+        else
+            i++;
+    }
+    result[j] = '\0';
+    return(result);
 }

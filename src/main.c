@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025-03-16 15:25:26 by pablalva         ###   ########.fr       */
+/*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
+/*   Updated: 2025/04/07 16:35:47 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ int	is_cmd(char *cmd)
 	int		i;
 	char	**path;
 	char	*temp;
-
+	
+	if (strncmp(cmd, "VAR_", 4) == 0)
+    {
+        return (0);
+    }
 	i = 0;
 	if (access(cmd, X_OK) == 0)
 		return (1);
@@ -66,12 +70,8 @@ t_token_type	classify_tokken(char *token)
 		return (HEREDOC);
 	else if (ft_strcmp(token, "\"") == 0 || ft_strcmp(token, "\'") == 0)
 		return (QUOTE);
-	else if (token[0] == '$')
-	{
-		if (ft_strcmp(token, "$?") == 0)
+	else if (ft_strcmp(token, "$?") == 0)
 			return (DOLLAR_EXIT);
-		return (ENV_VAR);
-	}
 	else if (is_builting(token))
 		return(BUILTIN);
 	else if (is_cmd(token))
@@ -170,11 +170,10 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		if (*input != '\0')
 			{
-				//print_list(tokenize(input)););
-				temp = expand_str(input);
-				//printf("%s\n",temp);
-				free(input);
-				input = temp;
+				add_history(input);
+				temp = ft_strdup(expand_str(input));
+				input = ft_strdup(temp);
+				print_list(tokenize(input));
 			}
 			//free(input);
 	}

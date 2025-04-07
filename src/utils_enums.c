@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_enums.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-18 18:47:09 by pablalva          #+#    #+#             */
-/*   Updated: 2025-03-18 18:47:09 by pablalva         ###   ########.fr       */
+/*   Created: 2025/03/18 18:47:09 by pablalva          #+#    #+#             */
+/*   Updated: 2025/04/07 16:30:38 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	change_word(t_list **list)
 	{
 		if (current->prev != NULL)
 		{
-			if (current->token == WORD && (current->prev->token != PIPE))
-				current->token = ARG;
-			else if (current->token == WORD && current->prev->token == REDIR_OUT)
+			if (current->token == WORD && current->prev->token == REDIR_OUT)
 				current->token = FD;
+			else if (current->token == WORD && (current->prev->token != PIPE))
+				current->token = ARG;
 			else if (current->token == WORD
 				&& current->prev->token == REDIR_APPEND)
 				current->token = FD;
