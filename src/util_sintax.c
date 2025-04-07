@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 20:15:19 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/07 16:34:50 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:39:31 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ int	sintax_redirs_out(t_token_type type, t_list *comprove)
 		if (comprove->prev == NULL || comprove->next == NULL)
 			return (-1);
 		else if (comprove->prev->token == CMD || comprove->prev->token == ARG
-			|| comprove->prev->token == BUILTIN || comprove->prev->token == ENV_VAR)
+			|| comprove->prev->token == BUILTIN || comprove->prev->token == ENV_VAR || comprove->prev->token == DELIM)
 		{
-			if (comprove->next->token == FD || comprove->next->token == DELIM)
+			if (comprove->next->token == FD)
 				return (1);
 		}
 	}

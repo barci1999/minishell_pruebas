@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/07 16:35:47 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/07 20:14:35 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,10 @@ int	is_cmd(char *cmd)
 	int		i;
 	char	**path;
 	char	*temp;
+	i = 0;
 	
 	if (strncmp(cmd, "VAR_", 4) == 0)
-    {
         return (0);
-    }
-	i = 0;
 	if (access(cmd, X_OK) == 0)
 		return (1);
 	path = ft_split(getenv("PATH"), ':');
@@ -160,7 +158,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	(void)envp;
-	//int num_var;
 	if (argc < 1)
 		return (1);
 	while (1)
@@ -175,7 +172,7 @@ int	main(int argc, char **argv, char **envp)
 				input = ft_strdup(temp);
 				print_list(tokenize(input));
 			}
-			//free(input);
+			
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/18 18:47:09 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/07 16:30:38 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/07 17:34:14 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	change_word(t_list **list)
 		{
 			if (current->token == WORD && current->prev->token == REDIR_OUT)
 				current->token = FD;
-			else if (current->token == WORD && (current->prev->token != PIPE))
-				current->token = ARG;
 			else if (current->token == WORD
 				&& current->prev->token == REDIR_APPEND)
 				current->token = FD;
@@ -32,6 +30,10 @@ void	change_word(t_list **list)
 				current->token = DELIM;
 			else if (current->prev->token == REDIR_IN)
 				current->token = FD;
+			else if(current->token == WORD && current->prev->token == DELIM)
+				current->token = FD;
+			else if (current->token == WORD && (current->prev->token != PIPE))
+				current->token = ARG;
 		}
 		if (current->next != NULL)
 		{
