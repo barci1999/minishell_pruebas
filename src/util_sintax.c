@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 20:15:19 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/07 17:39:31 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:14:25 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	sintax_redirs_out(t_token_type type, t_list *comprove)
 {
 	if (type == REDIR_OUT || type == REDIR_APPEND)
 	{
-		printf("%i\n",type);
 		if (comprove->prev == NULL || comprove->next == NULL)
 			return (-1);
 		else if (comprove->prev->token == CMD || comprove->prev->token == ARG
@@ -97,7 +96,6 @@ int	sintax_redir_in(t_token_type type, t_list *comprove)
 		{
 			if (comprove->next->token == FD)
 			{
-				printf("hola\n");
 				return (1);
 			}
 		}
