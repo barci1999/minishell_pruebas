@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/09 13:31:52 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/09 16:37:47 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ int	main(int argc, char **argv, char **envp)
 				add_history(input);
 				temp = ft_strdup(expand_str(input));
 				input = ft_strdup(temp);
+				//printf("%s\n",input);
 				print_list(tokenize(input));
 			}
 			
