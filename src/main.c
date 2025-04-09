@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/08 18:06:46 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/09 13:31:52 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ t_list	*tokenize(char *input)
 		free(token);
 	}
 	change_word(&tokens);
-	sintax_list(&tokens);
+	//sintax_list(&tokens);
 	return (tokens);
 }
 

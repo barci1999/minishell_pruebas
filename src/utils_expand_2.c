@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 10:20:50 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/07 16:17:03 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/09 13:56:04 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ char	*expand_var(char *input, size_t i, size_t j)
 	exp_var = NULL;
 	rest = NULL;
 	t = 0;
-	while (!is_space(input[j]) && input[j])
+	while (!is_space(input[j]) && input[j] != '\0')
 	{
 		e++;
-		j++;
+	    j++;
 	}
-	if(input[j - 1] == '\"')
-		e -= 2;
+    j--;
+	if(input[j] == '\"')
+		e -= 1;
 	name_var = ft_substr(input, i +1 , e - 1);
 	if (!name_var)
 	{
@@ -58,7 +59,10 @@ char	*expand_var(char *input, size_t i, size_t j)
 		}	
 	}
 	else
+    {
+        printf("hola\n");
 		return(ft_strjoin(exp_var,NULL));
+    }
 	return (ft_strjoin(exp_var, rest));
 }
 
