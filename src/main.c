@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/09 16:37:47 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/10 20:29:32 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ t_list	*tokenize(char *input)
 		free(token);
 	}
 	change_word(&tokens);
-	//sintax_list(&tokens);
+	sintax_list(&tokens);
 	return (tokens);
 }
 
@@ -170,10 +170,8 @@ int	main(int argc, char **argv, char **envp)
 				add_history(input);
 				temp = ft_strdup(expand_str(input));
 				input = ft_strdup(temp);
-				//printf("%s\n",input);
 				print_list(tokenize(input));
 			}
-			
 	}
 	return (0);
 }

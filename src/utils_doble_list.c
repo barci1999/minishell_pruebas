@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_doble_list,c                                 :+:      :+:    :+:   */
+/*   utils_doble_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-03-16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025-03-16 12:39:07 by pablalva         ###   ########.fr       */
+/*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
+/*   Updated: 2025/04/10 18:52:48 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pruebas.h"
+
+#include"pruebas.h"
 
 t_list	*new_doble_node(t_token_type type, char *token)
 {
@@ -77,7 +78,7 @@ void	print_list(t_list *list)
 	now = list;
 	while (now)
 	{
-		printf("%s   %i\n", now->content, now->token);
+		printf("%s   %u\n", now->content, now->token);
 		now = now->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 20:15:19 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/08 18:14:25 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/10 20:56:39 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,33 +23,33 @@ int	sintax_cmd(t_token_type type, t_list *comprove)
 				|| comprove->next->token == HEREDOC
 				|| comprove->next->token == PIPE
 				|| comprove->next->token == REDIR_IN)
-				{
-					return (1);
-				}
+			{
+				return (1);
+			}
 		}
 	}
 	return (-1);
 }
 
-int sintax_arg(t_token_type type, t_list *comprove)
+int	sintax_arg(t_token_type type, t_list *comprove)
 {
-    if (type == ARG)
-    {
-        if (comprove->prev == NULL)
-            return (-1);
-        else if (comprove->prev->token == CMD || comprove->prev->token == BUILTIN || comprove->prev->token == ARG)
-        {
-            if (comprove->next == NULL || comprove->next->token == REDIR_OUT
-                || comprove->next->token == REDIR_APPEND
-                || comprove->next->token == PIPE
-                || comprove->next->token == ARG)
-                {
-
-                    return (1);
-                }
-        }
-    }
-    return (-1);
+	if (type == ARG)
+	{
+		if (comprove->prev == NULL)
+			return (-1);
+		else if (comprove->prev->token == CMD
+			|| comprove->prev->token == BUILTIN || comprove->prev->token == ARG)
+		{
+			if (comprove->next == NULL || comprove->next->token == REDIR_OUT
+				|| comprove->next->token == REDIR_APPEND
+				|| comprove->next->token == PIPE
+				|| comprove->next->token == ARG)
+			{
+				return (1);
+			}
+		}
+	}
+	return (-1);
 }
 
 int	sintax_pipe(t_token_type type, t_list *comprove)
@@ -76,7 +76,9 @@ int	sintax_redirs_out(t_token_type type, t_list *comprove)
 		if (comprove->prev == NULL || comprove->next == NULL)
 			return (-1);
 		else if (comprove->prev->token == CMD || comprove->prev->token == ARG
-			|| comprove->prev->token == BUILTIN || comprove->prev->token == ENV_VAR || comprove->prev->token == DELIM)
+			|| comprove->prev->token == BUILTIN
+			|| comprove->prev->token == ENV_VAR
+			|| comprove->prev->token == DELIM || comprove->prev->token == FD)
 		{
 			if (comprove->next->token == FD)
 				return (1);

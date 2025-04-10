@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 10:20:50 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/09 17:48:00 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/10 18:40:55 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ char	*expand_var(char *input, size_t i, size_t j)
 		}
 	}
 	else
-	{
 		return (ft_strjoin(exp_var, NULL));
-	}
 	return (ft_strjoin(exp_var, rest));
 }
 
@@ -107,7 +105,7 @@ char	*expand_str(char *input)
 			i++;
 	}
 	result = rem_sin_quotes(input);
-	return (result);
+	return (input);
 }
 size_t	nb_of_quotes(char *input)
 {
