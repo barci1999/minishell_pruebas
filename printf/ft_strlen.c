@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:57:09 by pablalva          #+#    #+#             */
-/*   Updated: 2024/10/08 15:06:51 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/11 12:05:03 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
+
 	i = 0;
-	//if(s == NULL)
-	//{
-	//	return(0);
-	//}
+	if(s == NULL)
+	{
+		return(0);
+	}
 	while (s[i] != '\0')
 		i++;
 	return (i);

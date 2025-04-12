@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_matrixlen.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-02-03 18:13:33 by pablalva          #+#    #+#             */
-/*   Updated: 2025-02-03 18:13:33 by pablalva         ###   ########.fr       */
+/*   Created: 2025/02/03 18:13:33 by pablalva          #+#    #+#             */
+/*   Updated: 2025/04/11 12:17:12 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "libft.h"
 
-int	ft_matrixlen(char **matrix)
+#include"libft.h"
+
+size_t	ft_matrixlen(char **matrix)
 {
-	int	i;
+	size_t	i;
 
+	if (!matrix)
+		return (0);
 	i = 0;
 	while (matrix[i])
 		i++;

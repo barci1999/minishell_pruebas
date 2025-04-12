@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
+/*   ft_dup_matrix.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/02 14:57:43 by pablalva          #+#    #+#             */
-/*   Updated: 2024/10/03 13:58:12 by pablalva         ###   ########.fr       */
+/*   Created: 2025/04/11 10:52:19 by pablalva          #+#    #+#             */
+/*   Updated: 2025/04/11 12:22:39 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstdelone(t_list *lst, void (*del)(void *))
+char	**ft_dup_matrix(char **src)
 {
-	if (!lst || !del)
-		return ;
-	del(lst->content);
-	free(lst);
+	int		i;
+	char	**result;
+
+	i = 0;
+	result = malloc((ft_matrixlen(src) + 1) * sizeof(char *));
+	while (src[i])
+	{
+		result[i] = ft_strdup(src[i]);
+		i++;
+	}
+	result[i] = NULL;
+	return (result);
 }

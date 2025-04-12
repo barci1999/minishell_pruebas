@@ -6,13 +6,13 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 10:20:50 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/10 18:40:55 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/12 15:19:55 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pruebas.h"
 
-static int	is_space(char c)
+int	is_space(char c)
 {
 	if (c == 32 || (c >= 9 && c <= 13))
 		return (1);

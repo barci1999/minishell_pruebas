@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/10 20:56:01 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/12 18:42:03 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ t_token_type        classify_tokken(char *token);
 t_list              *tokenize(char *input);
 void                change_word(t_list **list);
 int                 is_builting(char *token);
+int	is_space(char c);
 
 /* list fuctions  */
 void                free_list(t_list **list);
@@ -120,4 +121,12 @@ size_t nb_of_quotes(char *input);
 char *rem_sin_quotes(char *input);
 char *expand_str(char *input);
 char    *expand_var(char *input, size_t i, size_t j);
+
+/* pruebas de funciones */
+size_t num_pipes(char *input);
+void	rem_space(char **input, int *i, int *j);
+char	**split_pipes(char *input);
+int 	in_quotes(char **input,int i, int j);
+int is_quote(char c);
+void modifi_quote(char *input,char *quote,int j);
 #endif
