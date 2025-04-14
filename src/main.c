@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/12 19:01:27 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/14 21:37:54 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,8 @@ int	main(int argc, char **argv, char **envp)
 	char	*input = NULL;
 	//char *temp = NULL;
 	char **my_env;
-	//int t = 0;
+	char **temp;
+	int t = 0;
 
 	my_env = NULL;
 	(void)argv;
@@ -178,21 +179,27 @@ int	main(int argc, char **argv, char **envp)
 				//temp = ft_strdup(expand_str(input));
 				// input = ft_strdup(temp);
 				// print_list(tokenize(input));
-				char **temp = split_pipes(input);
-				// while (temp[t])
-				// {
-				// 	printf("%s\n",temp[t]);
-				// 	t++;
-				// }
-				ft_free_matrix(temp);
-				free(input);
+				if(num_pipes(input) != 0)
+				{
+					temp = split_pipes(input);
+					while (temp[t])
+					{
+						ft_printf("%s\n",temp[t]);
+						printf("%i\n",t);
+						t++;
+					}
+					t = 0;
+					ft_free_matrix(temp);
+				}
 				
+				//free(input);
 				// while (temp)
 				// {
 				// 	printf("%s\n",*temp);
 				// 	temp++;
 				// }
 			}
+			printf("cocacola\n");
 	}
 	return (0);
 }

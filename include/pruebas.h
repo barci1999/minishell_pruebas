@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/12 18:42:03 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/14 22:42:02 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@
 # include <readline/readline.h>
 # include <stdio.h>
 # include <unistd.h>
+
+typedef struct s_split
+{
+    char    **res;
+    int     i;
+    int     j;
+    int     r;
+    char    quote;
+}   t_split;
 
 typedef enum e_token_type
 {
@@ -114,9 +123,6 @@ int sintax_dollar_exit(t_token_type type, t_list *comprove);
 
 /* Expand Vatriable  */
 
-//char  *take_dollar(char *input);
-//int   number_of_dollar(char *input);
-//char  *expand_var(char *input);
 size_t nb_of_quotes(char *input);
 char *rem_sin_quotes(char *input);
 char *expand_str(char *input);
@@ -128,5 +134,4 @@ void	rem_space(char **input, int *i, int *j);
 char	**split_pipes(char *input);
 int 	in_quotes(char **input,int i, int j);
 int is_quote(char c);
-void modifi_quote(char *input,char *quote,int j);
 #endif

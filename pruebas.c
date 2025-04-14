@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:13 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/12 19:09:46 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/14 22:42:10 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ size_t	num_pipes(char *input)
 	return (count);
 }
 
-void	modifi_quote(char *input, char *quote, int j)
+static void	modifi_quote(char *input, char *quote, int j)
 {
 	if (input[j] == '\'' || input[j] == '\"')
 	{
@@ -48,37 +48,42 @@ void	modifi_quote(char *input, char *quote, int j)
 	}
 }
 
+static int	last_assign(t_split *data, char *input)
+{
+	if (data->j > data->i)
+	{
+		data->res[data->r] = ft_substr(input, data->i, (data->j - data->i));
+		if (!data->res[data->r])
+			return (1);
+		data->r++;
+	}
+	return (0);
+}
+
 char	**split_pipes(char *input)
 {
-	char	**result;
-	int		r;
-	int		i;
-	int		j;
-	char	quote;
+	t_split	data;
 
-	r = 0;
-	i = 0;
-	j = 0;
-	quote = 0;
-	result = malloc((num_pipes(input) + 2) * sizeof(char *));
-	printf("%zu\n",num_pipes(input));
-	while (input[j])
+	data.i = 0;
+	data.j = 0;
+	data.r = 0;
+	data.quote = 0;
+	data.res = malloc((num_pipes(input) + 2) * sizeof(char *));
+	if (!data.res)
+		return (NULL);
+	while (input[data.j])
 	{
-		modifi_quote(input, &quote, j);
-		if (input[j] == '|' && !quote)
+		modifi_quote(input, &data.quote, data.j++);
+		if (input[data.j] == '|' && !data.quote)
 		{
-			result[r++] = ft_substr(input, i, (j - i));
-			r++;
-			i = j + 1;
+			data.res[data.r] = ft_substr(input, data.i, (data.j - data.i));
+			if (!data.res[data.r])
+				return (ft_free_matrix(data.res), NULL);
+			data.r++;
+			data.i = data.j + 1;
 		}
-		j++;
 	}
-	if (j > i)
-	{
-		result[r++] = ft_substr(input, i, j - i);
-		r++;
-		ft_printf("%s\n",result[r]);
-	}
-	result[r] = NULL;
-	return (result);
+	if (last_assign(&data, input))
+		return (ft_free_matrix(data.res), NULL);
+	return (data.res[data.r] = NULL, data.res);
 }
