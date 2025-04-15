@@ -6,33 +6,26 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/10 18:52:48 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/15 17:55:21 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include "pruebas.h"
 
-t_list	*new_doble_node(t_token_type type, char *token)
+t_list	*new_doble_node(char *token)
 {
 	t_list	*new_node;
 
 	new_node = malloc(1 * sizeof(t_list));
 	if (!new_node)
-	{
-		free(token);
-		return (NULL);
-	}
-	new_node->content = ft_strdup(token);
+		return (free(token), NULL);
+	new_node->cmd_arg = NULL;
+	new_node->cmd_name = NULL;
+	new_node->cmd_path = NULL;
+	new_node->content = ft_strtrim(token, " \t\v\n\r\b\f");
 	if (!new_node->content)
-	{
-		free(new_node);
-		free(token);
-		return (NULL);
-	}
-	new_node->next = NULL;
-	new_node->prev = NULL;
-	new_node->token = type;
-	return (new_node);
+		return (free(new_node), free(token), NULL);
+	return (new_node->next = NULL, new_node->prev = NULL, new_node);
 }
 
 int	node_to_end(t_list **list, t_list *insert)
@@ -62,6 +55,7 @@ int	node_to_end(t_list **list, t_list *insert)
 void	free_list(t_list **list)
 {
 	t_list	*temp;
+
 	while ((*list)->next != NULL)
 	{
 		temp = *list;
@@ -71,15 +65,18 @@ void	free_list(t_list **list)
 	*list = NULL;
 }
 
-void	print_list(t_list *list)
+t_list	*matrix_to_list(char **matrix)
 {
-	t_list	*now;
+	t_list	*list;
+	int		i;
 
-	now = list;
-	while (now)
+	list = NULL;
+	i = 0;
+	while (matrix[i])
 	{
-		printf("%s   %u\n", now->content, now->token);
-		now = now->next;
+		if (node_to_end(&list, new_doble_node(matrix[i])) == -1)
+			return (free_list(&list), ft_free_matrix(matrix), NULL);
+		i++;
 	}
+	return (list);
 }
-

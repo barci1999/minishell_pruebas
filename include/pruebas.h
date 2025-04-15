@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/14 22:42:02 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/15 18:23:24 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <readline/readline.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <sys/stat.h>
 
 typedef struct s_split
 {
@@ -28,6 +29,13 @@ typedef struct s_split
     int     r;
     char    quote;
 }   t_split;
+
+typedef struct s_general
+{
+    char **my_env;
+    
+}   t_general;
+
 
 typedef enum e_token_type
 {
@@ -85,12 +93,19 @@ typedef enum e_expansion_type
 
 typedef struct t_list
 {
-    t_token_type    token;
-    char            *content;
-    struct t_list   *next;
-    struct t_list   *prev;
+    t_token_type    token;          // 1º paso           // 2º paso
+    char            *content;   //  infile < cat -e // infile < cat -e
+    char            *cmd_path;  // NULL             //  /usr/bin/cat
+    char            **cmd_arg;  // NULL             // infile | < | cat | -e
+    char            *cmd_name;  // NULL             // cat
+    struct t_list   *next;      // siguiente nodo   // siguiente nodo
+    struct t_list   *prev;      // anterior nodo    // anterior nodo
 
 }                   t_list;
+
+/* funcciones a borrar  */
+
+void print_cmd_list(t_list *list);
 
 /* tokens functions  */
 t_token_type        classify_tokken(char *token);
@@ -102,9 +117,13 @@ int	is_space(char c);
 /* list fuctions  */
 void                free_list(t_list **list);
 int                 node_to_end(t_list **list, t_list *insert);
-t_list              *new_doble_node(t_token_type type, char *token);
-void                print_list(t_list *list);
+t_list              *new_doble_node(char *token);
 t_list              *ft_lstlast(t_list *lst);
+
+
+
+t_list *matrix_to_list(char **matrix);
+t_list	*asigg_cont_list(t_list * list,t_general *data_gen);
 
 /* Sintax functions  */
 void                sintax_list(t_list **list);
@@ -134,4 +153,10 @@ void	rem_space(char **input, int *i, int *j);
 char	**split_pipes(char *input);
 int 	in_quotes(char **input,int i, int j);
 int is_quote(char c);
+
+/* funciones env */
+char	**take_paths_env(char **envp);
+char	*asig_cmd_path(char **matrix_content,t_general *data_gen);
+char	*take_cmd_path(char *comprove, t_general *data_gen);
+int is_cmd(char *comprove,t_general *data_gen);
 #endif
