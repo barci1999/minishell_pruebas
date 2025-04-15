@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/15 18:22:43 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/15 19:55:14 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,21 +173,15 @@ int	main(int argc, char **argv, char **envp)
 		if (*input != '\0')
 			{
 				add_history(input);
-				//temp = ft_strdup(expand_str(input));
-				// input = ft_strdup(temp);
-				// print_list(tokenize(input));
 				if(num_pipes(input) != 0)
 				{
 					temp = asigg_cont_list(matrix_to_list(split_pipes(input)),&data_gen);
 					print_cmd_list(temp);
 				}
-				
-				//free(input);
-				// while (temp)
-				// {
-				// 	printf("%s\n",*temp);
-				// 	temp++;
-				// }
+				else
+				{
+					temp = asigg_cont_list(matrix_to_list(&input),&data_gen);
+				}
 			}
 	}
 	return (0);

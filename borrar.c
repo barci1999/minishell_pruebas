@@ -23,8 +23,12 @@ void	print_cmd_list(t_list *list)
 		if (list->cmd_arg)
 		{
 			j = 0;
-			while (list->cmd_arg[j++])
-				printf("║    [%d] -> %-26s ║\n", j, list->cmd_arg[j]);
+			while (list->cmd_arg[j])
+			{
+				printf("║    [%d] -> %-26s   ║\n", j, list->cmd_arg[j]);
+				j++;
+			}
+			printf("║    [%d] -> %-26s   ║\n", j, list->cmd_arg[j]);
 		}
 		else
 			printf("║    (null)                              ║\n");
