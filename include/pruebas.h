@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/15 20:29:14 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:15:32 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,6 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/stat.h>
-
-typedef struct s_split
-{
-    char    **res;
-    int     i;
-    int     j;
-    int     r;
-    char    quote;
-}   t_split;
 
 typedef struct s_general
 {
@@ -105,14 +96,14 @@ typedef struct t_list
 
 /* funcciones a borrar  */
 
-void print_cmd_list(t_list *list);
+void                print_cmd_list(t_list *list);
 
 /* tokens functions  */
 t_token_type        classify_tokken(char *token);
 t_list              *tokenize(char *input);
 void                change_word(t_list **list);
 int                 is_builting(char *token);
-int	is_space(char c);
+int	                is_space(char c);
 
 /* list fuctions  */
 void                free_list(t_list **list);
@@ -122,8 +113,8 @@ t_list              *ft_lstlast(t_list *lst);
 
 
 
-t_list *matrix_to_list(char **matrix);
-t_list	*asigg_cont_list(t_list * list,t_general *data_gen);
+t_list              *matrix_to_list(char **matrix);
+t_list	            *asigg_cont_list(t_list * list,t_general *data_gen);
 
 /* Sintax functions  */
 void                sintax_list(t_list **list);
@@ -136,28 +127,28 @@ int                 sintax_arg(t_token_type type,t_list *comprove);
 int                 sintax_pipe(t_token_type type,t_list *comprove);
 int                 sintax_redirs_out(t_token_type type,t_list *comprove);
 int                 sintax_redir_in(t_token_type type,t_list *comprove);
-int sintax_builting(t_token_type type, t_list *comprove);
+int                 sintax_builting(t_token_type type, t_list *comprove);
 void                fun_error_sintax(char *error,t_list **list);
-int sintax_dollar_exit(t_token_type type, t_list *comprove);
+int                 sintax_dollar_exit(t_token_type type, t_list *comprove);
 
 /* Expand Vatriable  */
 
-size_t nb_of_quotes(char *input);
-char *rem_sin_quotes(char *input);
-char *expand_str(char *input);
-char    *expand_var(char *input, size_t i, size_t j);
+size_t              nb_of_quotes(char *input);
+char                *rem_sin_quotes(char *input);
+char                *expand_str(char *input);
+char                *expand_var(char *input, size_t i, size_t j);
 
 /* pruebas de funciones */
-size_t num_pipes(char *input);
-void	rem_space(char **input, int *i, int *j);
-char	**split_pipes(char *input);
-int 	in_quotes(char **input,int i, int j);
-int is_quote(char c);
+size_t              num_pipes(char *input);
+void	            rem_space(char **input, int *i, int *j);
+char	            **split_pipes(char *input);
+int 	            in_quotes(char **input,int i, int j);
+int                 is_quote(char c);
 
 /* funciones env */
-char	**take_paths_env(char **envp);
-char	*asig_cmd_path(char **matrix_content,t_general *data_gen);
-char	*take_cmd_path(char *comprove, t_general *data_gen);
-char	**assig_cmd_args(char *cmd_name, char **matrix_content);
-int is_cmd(char *comprove,t_general *data_gen);
+char	            **take_paths_env(char **envp);
+char	            *asig_cmd_path(char **matrix_content,t_general *data_gen);
+char	            *take_cmd_path(char *comprove, t_general *data_gen);
+char	            **assig_cmd_args(char *cmd_name, char **matrix_content);
+int                 is_cmd(char *comprove,t_general *data_gen);
 #endif

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:55:27 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/12 19:13:32 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/16 14:45:15 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
 	size_t	mem;
-	
+
 	mem = len;
 	if (!s)
 	{
-    	return (NULL);
+		return (NULL);
 	}
 	if (ft_strlen(s) <= start)
 	{

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/15 20:41:28 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/16 15:17:50 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,28 @@ char	*take_cmd_path(char *comprove, t_general *data_gen)
 
 char	*asig_cmd_path(char **matrix_content, t_general *data_gen)
 {
-	int	i;
+	int		i;
+	char	*result;
+	char	*temp;
+	char	*temp_2;
 
-	i = 0;
-	while (matrix_content[i])
+	i = -1;
+	temp_2 = NULL;
+	while (matrix_content[++i])
 	{
 		if (is_cmd(matrix_content[i], data_gen) == 1)
-			return (take_cmd_path(matrix_content[i], data_gen));
-		i++;
+		{
+			temp = take_cmd_path(matrix_content[i], data_gen);
+			result = ft_strdup(temp);
+			if (ft_strrchr(matrix_content[i], '/') != NULL)
+			{
+				temp_2 = ft_strdup(ft_strrchr(matrix_content[i], '/') + 1);
+				if (!temp_2)
+					return (free(result), free(temp), NULL);
+				matrix_content[i] = temp_2;
+			}
+			return (free(temp), result);
+		}
 	}
 	return (NULL);
 }
@@ -141,7 +155,7 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 	current->cmd_name = NULL;
 	while (current)
 	{
-		matrix_content = ft_split(current->content, ' ');
+		matrix_content = ft_split_quotes(current->content,' ');
 		if (!matrix_content)
 			return (ft_free_matrix(matrix_content), NULL);
 		current->cmd_path = asig_cmd_path(matrix_content, data_gen);
