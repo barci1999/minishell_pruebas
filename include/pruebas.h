@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/16 15:15:32 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:07:14 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	                is_space(char c);
 
 /* list fuctions  */
 void                free_list(t_list **list);
-int                 node_to_end(t_list **list, t_list *insert);
+int               node_to_end(t_list **list, t_list *insert);
 t_list              *new_doble_node(char *token);
 t_list              *ft_lstlast(t_list *lst);
 

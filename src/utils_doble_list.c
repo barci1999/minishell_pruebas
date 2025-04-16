@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/15 17:55:21 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/16 17:07:09 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,12 @@ t_list	*matrix_to_list(char **matrix)
 	int		i;
 
 	list = NULL;
-	i = 0;
-	while (matrix[i])
+	i = -1;
+		printf("%s\n",matrix[1]);
+	while (matrix[++i])
 	{
 		if (node_to_end(&list, new_doble_node(matrix[i])) == -1)
 			return (free_list(&list), ft_free_matrix(matrix), NULL);
-		i++;
 	}
 	return (list);
 }
