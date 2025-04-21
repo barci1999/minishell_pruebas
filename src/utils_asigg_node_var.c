@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pruebas_2.c                                        :+:      :+:    :+:   */
+/*   utils_asigg_node_var.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/16 15:17:50 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/21 19:27:15 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,33 +101,52 @@ char	*asig_cmd_path(char **matrix_content, t_general *data_gen)
 	}
 	return (NULL);
 }
-char	**assig_cmd_args(char *cmd_name, char **matrix_content)
+int	is_redirec(char *str)
 {
+	if (ft_strcmp(str, "<") == 0)
+		return (0);
+	else if (ft_strcmp(str, "<<") == 0)
+		return (0);
+	else if (ft_strcmp(str, ">") == 0)
+		return (0);
+	else if (ft_strcmp(str, ">>") == 0)
+		return (0);
+	else
+		return (1);
+}
+char	**assig_cmd_args(char *cmd_name, char **matrix)
+{
+	char	**res;
 	int		i;
-	int		m;
-	char	**result;
+	size_t	m;
+	size_t	arg_count;
 
 	i = 0;
 	m = 0;
-	result = NULL;
+	arg_count = 0;
+
 	if (!cmd_name)
 		return (NULL);
-	while (ft_strcmp(matrix_content[i], cmd_name) != 0)
+	while (matrix[i] && ft_strcmp(matrix[i], cmd_name) != 0)
 		i++;
-	if (!matrix_content[i])
+	if (!matrix[i])
 		return (NULL);
-	result = malloc(((ft_matrixlen(matrix_content) - i) + 1) * sizeof(char *));
-	if (!result)
+	arg_count = i;
+	while (matrix[arg_count] && is_redirec(matrix[arg_count]))
+		arg_count++;
+	res = malloc((arg_count + 1) * sizeof(char *));
+	if (!res)
 		return (NULL);
-	while (matrix_content[i])
+	while (matrix[i] && is_redirec(matrix[i]))
 	{
-		result[m] = ft_strdup(matrix_content[i]);
-		if (!result)
-			return (ft_free_matrix(result), NULL);
-		i++;
+		res[m] = ft_strdup(matrix[i]);
+		if (!res[m])
+			return (ft_free_matrix(res), NULL);
 		m++;
+		i++;
 	}
-	return (result[m] = NULL, result);
+	res[m] = NULL;
+	return (res);
 }
 static char	*asigg_cmd_name(char *cmd_path)
 {
@@ -144,6 +163,26 @@ static char	*asigg_cmd_name(char *cmd_path)
 	else
 		return (NULL);
 }
+static char	*assig_redirecc(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+	{
+		if (ft_strcmp(matrix[i], "<") == 0)
+			return (ft_strdup(matrix[i]));
+		else if (ft_strcmp(matrix[i], "<<") == 0)
+			return (ft_strdup(matrix[i]));
+		else if (ft_strcmp(matrix[i], ">") == 0)
+			return (ft_strdup(matrix[i]));
+		else if (ft_strcmp(matrix[i], ">>") == 0)
+			return (ft_strdup(matrix[i]));
+		else
+			i++;
+	}
+	return (NULL);
+}
 t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 {
 	t_list	*current;
@@ -155,12 +194,15 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 	current->cmd_name = NULL;
 	while (current)
 	{
-		matrix_content = ft_split_quotes(current->content,' ');
+		matrix_content = ft_split_quotes(current->content, ' ');
 		if (!matrix_content)
 			return (ft_free_matrix(matrix_content), NULL);
 		current->cmd_path = asig_cmd_path(matrix_content, data_gen);
 		current->cmd_name = asigg_cmd_name(current->cmd_path);
 		current->cmd_arg = assig_cmd_args(current->cmd_name, matrix_content);
+		current->redirecc = assig_redirecc(matrix_content);
+		// current->delim = assig_delim();
+		// current->fd = assig_fd();
 		current = current->next;
 	}
 	return (list);

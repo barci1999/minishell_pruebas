@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/16 17:07:14 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/21 14:17:05 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,15 @@ typedef enum e_expansion_type
 typedef struct t_list
 {
     t_token_type    token;          // 1º paso           // 2º paso
-    char            *content;   //  infile < cat -e // infile < cat -e
+    char            *content;   // infile < cat -e  //  infile < cat -e
     char            *cmd_path;  // NULL             //  /usr/bin/cat
-    char            **cmd_arg;  // NULL             // infile | < | cat | -e
-    char            *cmd_name;  // NULL             // cat
-    struct t_list   *next;      // siguiente nodo   // siguiente nodo
-    struct t_list   *prev;      // anterior nodo    // anterior nodo
+    char            **cmd_arg;  // NULL             //  infile | < | cat | -e
+    char            *cmd_name;  // NULL             //  cat
+    char            *redirecc;  // NULL             //  <
+    char            *fd;        // NULL             //  infile
+    char            *delim;     // NULL             //  EOF
+    struct t_list   *next;      // siguiente nodo   //  siguiente nodo
+    struct t_list   *prev;      // anterior nodo    //  anterior nodo
 
 }                   t_list;
 

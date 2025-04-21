@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/16 19:23:37 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/21 14:21:41 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ t_list	*new_doble_node(char *token)
 	new_node->cmd_arg = NULL;
 	new_node->cmd_name = NULL;
 	new_node->cmd_path = NULL;
+	new_node->fd = NULL;
+	new_node->redirecc = NULL;
+	new_node->delim = NULL;
 	new_node->content = ft_strtrim(token, " \t\v\n\r\b\f");
 	if (!new_node->content)
 		return (free(new_node), free(token), NULL);
