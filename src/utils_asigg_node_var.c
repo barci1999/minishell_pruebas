@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/21 19:27:15 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/21 20:40:02 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*take_cmd_path(char *comprove, t_general *data_gen)
 	return (ft_free_matrix(paths), NULL);
 }
 
-char	*asig_cmd_path(char **matrix_content, t_general *data_gen)
+static char	*asig_cmd_path(char **matrix_content, t_general *data_gen)
 {
 	int		i;
 	char	*result;
@@ -101,7 +101,7 @@ char	*asig_cmd_path(char **matrix_content, t_general *data_gen)
 	}
 	return (NULL);
 }
-int	is_redirec(char *str)
+static int	is_redirec(char *str)
 {
 	if (ft_strcmp(str, "<") == 0)
 		return (0);
@@ -114,7 +114,7 @@ int	is_redirec(char *str)
 	else
 		return (1);
 }
-char	**assig_cmd_args(char *cmd_name, char **matrix)
+static char	**assig_cmd_args(char *cmd_name, char **matrix)
 {
 	char	**res;
 	int		i;
@@ -124,7 +124,6 @@ char	**assig_cmd_args(char *cmd_name, char **matrix)
 	i = 0;
 	m = 0;
 	arg_count = 0;
-
 	if (!cmd_name)
 		return (NULL);
 	while (matrix[i] && ft_strcmp(matrix[i], cmd_name) != 0)
@@ -162,6 +161,48 @@ static char	*asigg_cmd_name(char *cmd_path)
 	}
 	else
 		return (NULL);
+}
+static char	*assig_delim(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+	{
+		if (ft_strcmp(matrix[i], "<<") == 0)
+		{
+			if (matrix[i + 1])
+				return (matrix[i + 1]);
+			else
+				return (NULL);
+		}
+		i++;
+	}
+	return (NULL);
+}
+static char	*assig_fd(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+	{
+		if (ft_strcmp(matrix[i], ">") == 0 || ft_strcmp(matrix[i], ">>") == 0)
+		{
+			if (matrix[i + 1])
+				return (matrix[i + 1]);
+			return (NULL);
+		}
+		else if (ft_strcmp(matrix[i], "<") == 0 || ft_strcmp(matrix[i],
+				"<<") == 0)
+		{
+			if (matrix[i - 1])
+				return (matrix[i - 1]);
+			return (NULL);
+		}
+		i++;
+	}
+	return (NULL);
 }
 static char	*assig_redirecc(char **matrix)
 {
@@ -201,8 +242,8 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 		current->cmd_name = asigg_cmd_name(current->cmd_path);
 		current->cmd_arg = assig_cmd_args(current->cmd_name, matrix_content);
 		current->redirecc = assig_redirecc(matrix_content);
-		// current->delim = assig_delim();
-		// current->fd = assig_fd();
+		current->delim = assig_delim(matrix_content);
+		current->fd = assig_fd(matrix_content);
 		current = current->next;
 	}
 	return (list);

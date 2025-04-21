@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/21 14:17:05 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/21 20:39:06 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,8 +150,6 @@ int                 is_quote(char c);
 
 /* funciones env */
 char	            **take_paths_env(char **envp);
-char	            *asig_cmd_path(char **matrix_content,t_general *data_gen);
 char	            *take_cmd_path(char *comprove, t_general *data_gen);
-char	            **assig_cmd_args(char *cmd_name, char **matrix_content);
 int                 is_cmd(char *comprove,t_general *data_gen);
 #endif

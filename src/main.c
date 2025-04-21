@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/16 17:10:26 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/21 20:38:39 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*input = NULL;
 	t_list *temp = NULL;
-	t_list *temp_2 = NULL;
 	t_general data_gen;
 
 	(void)argv;
@@ -178,12 +177,15 @@ int	main(int argc, char **argv, char **envp)
 				{
 					temp = asigg_cont_list(matrix_to_list(split_pipes(input)),&data_gen);
 					print_cmd_list(temp);
+					free_list(&temp);
 				}
 				else
 				{
 					node_to_end(&temp,new_doble_node(input));
-					temp_2 = asigg_cont_list(temp,&data_gen);
-					print_cmd_list(temp_2);
+					temp = asigg_cont_list(temp,&data_gen);
+					print_cmd_list(temp);
+					free_list(&temp);
+					
 				}
 			}
 	}
