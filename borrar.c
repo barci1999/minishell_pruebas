@@ -4,6 +4,7 @@
 
 
 #define WIDTH 48
+#define WIDTH_2 48
 
 // Función auxiliar para limpiar strings (quita \n, \t, etc.)
 void sanitize_string(const char *src, char *dest, int max_len)
@@ -44,6 +45,7 @@ void print_cmd_list(t_list *list)
 {
     int i = 0;
     int j;
+    int r;
 
     while (list)
     {
@@ -93,12 +95,37 @@ void print_cmd_list(t_list *list)
             snprintf(final_line, sizeof(final_line), "   [%d] -> (null)", j);
             printf("║%-*s║\n", WIDTH, final_line);
         }
+        printf("╠════════════════════════════════════════════════╣\n");
+        print_box_line("redirects", "");
+        if(list->redirecc)
+        {
+            r = 0;
+            while(list->redirecc[r])
+            {
+                char clean_red[256];
+                char red_line[WIDTH_2 + 1];
+                char output_red[WIDTH_2 + 1];
+
+                sanitize_string(list->redirecc[r], clean_red, sizeof(clean_red));
+                snprintf(red_line, sizeof(red_line), "   [%d] -> %s", r, clean_red);
+
+                if ((int)strlen(red_line) > WIDTH_2)
+                    snprintf(output_red, sizeof(output_red), "%.*s", WIDTH_2, red_line);
+                else
+                    snprintf(output_red, sizeof(output_red), "%-*s", WIDTH_2, red_line);
+
+                printf("║%s║\n", output_red);
+                r++;
+            }
+            char final_red[WIDTH_2 + 1];
+            snprintf(final_red, sizeof(final_red), "   [%d] -> (null)", r);
+            printf("║%-*s║\n", WIDTH_2, final_red);
+        }
         else
         {
-            printf("║%-*s║\n", WIDTH, "   (null)");
+            printf("║%-*s║\n", WIDTH_2, "   (null)");
         }
         printf("╠════════════════════════════════════════════════╣\n");
-        print_box_line("redirect", list->redirecc);
         print_box_line("delim", list->delim);
 
         print_box_line("fd", list->fd);

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/21 20:38:39 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:26:39 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ int	main(int argc, char **argv, char **envp)
 	char	*input = NULL;
 	t_list *temp = NULL;
 	t_general data_gen;
+	ft_memset(&temp,0,sizeof(temp));
 
 	(void)argv;
 	(void)envp;

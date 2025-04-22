@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/21 20:39:06 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:19:19 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct t_list
     char            *cmd_path;  // NULL             //  /usr/bin/cat
     char            **cmd_arg;  // NULL             //  infile | < | cat | -e
     char            *cmd_name;  // NULL             //  cat
-    char            *redirecc;  // NULL             //  <
+    char            **redirecc;  // NULL             //  <
     char            *fd;        // NULL             //  infile
     char            *delim;     // NULL             //  EOF
     struct t_list   *next;      // siguiente nodo   //  siguiente nodo

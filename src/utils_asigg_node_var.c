@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/21 20:40:02 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:40:11 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,42 +187,61 @@ static char	*assig_fd(char **matrix)
 	i = 0;
 	while (matrix[i])
 	{
-		if (ft_strcmp(matrix[i], ">") == 0 || ft_strcmp(matrix[i], ">>") == 0)
+		if (ft_strcmp(matrix[i], ">") == 0 || ft_strcmp(matrix[i], ">>") == 0
+			|| ft_strcmp(matrix[i], "<") == 0)
 		{
 			if (matrix[i + 1])
 				return (matrix[i + 1]);
-			return (NULL);
-		}
-		else if (ft_strcmp(matrix[i], "<") == 0 || ft_strcmp(matrix[i],
-				"<<") == 0)
-		{
-			if (matrix[i - 1])
-				return (matrix[i - 1]);
 			return (NULL);
 		}
 		i++;
 	}
 	return (NULL);
 }
-static char	*assig_redirecc(char **matrix)
+static size_t	nb_redirrec(char **matrix)
 {
-	int	i;
+	int		i;
+	size_t	result;
 
 	i = 0;
+	result = 0;
 	while (matrix[i])
 	{
-		if (ft_strcmp(matrix[i], "<") == 0)
-			return (ft_strdup(matrix[i]));
-		else if (ft_strcmp(matrix[i], "<<") == 0)
-			return (ft_strdup(matrix[i]));
-		else if (ft_strcmp(matrix[i], ">") == 0)
-			return (ft_strdup(matrix[i]));
-		else if (ft_strcmp(matrix[i], ">>") == 0)
-			return (ft_strdup(matrix[i]));
+		if (ft_strcmp(matrix[i], ">") == 0 || ft_strcmp(matrix[i], ">>") == 0
+			|| ft_strcmp(matrix[i], "<") == 0 || ft_strcmp(matrix[i],
+				"<<") == 0)
+			result++;
+		i++;
+	}
+	return (result);
+}
+static char	**assig_redirecc(char **matrix)
+{
+	int		i;
+	int		r;
+	char	**result;
+
+	i = 0;
+	r = 0;
+	result = malloc((nb_redirrec(matrix) + 1) * sizeof(char *));
+	if (!result)
+		return (NULL);
+	while (matrix[i])
+	{
+		if (ft_strcmp(matrix[i], ">") == 0 || ft_strcmp(matrix[i], ">>") == 0
+			|| ft_strcmp(matrix[i], "<") == 0 || ft_strcmp(matrix[i],
+				"<<") == 0)
+		{
+			result[r] = ft_strdup(matrix[i]);
+			if (!result)
+				return (ft_free_matrix(result), NULL);
+			r++;
+			i++;
+		}
 		else
 			i++;
 	}
-	return (NULL);
+	return (result[r] = NULL,result);
 }
 t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 {
@@ -230,9 +249,6 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 	char	**matrix_content;
 
 	current = list;
-	current->cmd_path = NULL;
-	current->cmd_arg = NULL;
-	current->cmd_name = NULL;
 	while (current)
 	{
 		matrix_content = ft_split_quotes(current->content, ' ');
@@ -240,9 +256,9 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 			return (ft_free_matrix(matrix_content), NULL);
 		current->cmd_path = asig_cmd_path(matrix_content, data_gen);
 		current->cmd_name = asigg_cmd_name(current->cmd_path);
+		current->delim = assig_delim(matrix_content);
 		current->cmd_arg = assig_cmd_args(current->cmd_name, matrix_content);
 		current->redirecc = assig_redirecc(matrix_content);
-		current->delim = assig_delim(matrix_content);
 		current->fd = assig_fd(matrix_content);
 		current = current->next;
 	}
