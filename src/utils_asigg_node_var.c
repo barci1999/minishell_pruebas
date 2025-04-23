@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/22 14:40:11 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/23 18:20:11 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,13 @@ char	*take_cmd_path(char *comprove, t_general *data_gen)
 	return (ft_free_matrix(paths), NULL);
 }
 
-static char	*asig_cmd_path(char **matrix_content, t_general *data_gen)
+static char	*asig_cmd_path(char **matrix_content, t_general *data_gen,t_list *list)
 {
 	int		i;
 	char	*result;
 	char	*temp;
 	char	*temp_2;
+	(void)list;
 
 	i = -1;
 	temp_2 = NULL;
@@ -114,12 +115,13 @@ static int	is_redirec(char *str)
 	else
 		return (1);
 }
-static char	**assig_cmd_args(char *cmd_name, char **matrix)
+static char	**assig_cmd_args(char *cmd_name, char **matrix,t_list *list)
 {
 	char	**res;
 	int		i;
 	size_t	m;
 	size_t	arg_count;
+	(void)list;
 
 	i = 0;
 	m = 0;
@@ -147,10 +149,10 @@ static char	**assig_cmd_args(char *cmd_name, char **matrix)
 	res[m] = NULL;
 	return (res);
 }
-static char	*asigg_cmd_name(char *cmd_path)
+static char	*asigg_cmd_name(char *cmd_path,t_list *list)
 {
 	char	*result;
-
+	(void)list;
 	result = NULL;
 	if (ft_strrchr(cmd_path, '/') != NULL)
 	{
@@ -162,10 +164,10 @@ static char	*asigg_cmd_name(char *cmd_path)
 	else
 		return (NULL);
 }
-static char	*assig_delim(char **matrix)
+static char	*assig_delim(char **matrix,t_list *list)
 {
 	int	i;
-
+	(void)list;
 	i = 0;
 	while (matrix[i])
 	{
@@ -175,24 +177,6 @@ static char	*assig_delim(char **matrix)
 				return (matrix[i + 1]);
 			else
 				return (NULL);
-		}
-		i++;
-	}
-	return (NULL);
-}
-static char	*assig_fd(char **matrix)
-{
-	int	i;
-
-	i = 0;
-	while (matrix[i])
-	{
-		if (ft_strcmp(matrix[i], ">") == 0 || ft_strcmp(matrix[i], ">>") == 0
-			|| ft_strcmp(matrix[i], "<") == 0)
-		{
-			if (matrix[i + 1])
-				return (matrix[i + 1]);
-			return (NULL);
 		}
 		i++;
 	}
@@ -215,11 +199,47 @@ static size_t	nb_redirrec(char **matrix)
 	}
 	return (result);
 }
-static char	**assig_redirecc(char **matrix)
+static char	**assig_fd(char **matrix,t_general *data_gen,t_list *list)
+{
+	int	i;
+	char **result;
+	int r = 0;
+	result = malloc((nb_redirrec(matrix)+1) * sizeof(char *));
+	if(!result)
+		return(ft_free_matrix(matrix),free_list(&list),NULL);
+	i = -1;
+	while (matrix[++i])
+	{
+		if (ft_strcmp(matrix[i], ">") == 0 || ft_strcmp(matrix[i], ">>") == 0
+		|| ft_strcmp(matrix[i], "<") == 0)
+		{
+			if (matrix[i + 1])
+			{
+				result[r] = ft_strdup(matrix[i + 1]);
+				if(!result[r])
+				return(ft_free_matrix(matrix),ft_free_matrix(result),free_list(&list),NULL);
+				r++;
+			}	
+			
+		}
+		if(ft_strcmp(matrix[i], "<<") == 0)
+		{
+			result[r] = ft_strjoin("temp_here_",ft_itoa(data_gen->tem_heredoc));
+			if(!result[r])
+				return(ft_free_matrix(matrix),ft_free_matrix(result),free_list(&list),NULL);
+			r++;
+			data_gen->tem_heredoc++;
+		}
+	}
+	return (result[r] = NULL,result);
+}
+
+static char	**assig_redirecc(char **matrix,t_list *list)
 {
 	int		i;
 	int		r;
 	char	**result;
+	(void)list;
 
 	i = 0;
 	r = 0;
@@ -249,17 +269,18 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 	char	**matrix_content;
 
 	current = list;
+	data_gen->tem_heredoc = 0;
 	while (current)
 	{
 		matrix_content = ft_split_quotes(current->content, ' ');
 		if (!matrix_content)
 			return (ft_free_matrix(matrix_content), NULL);
-		current->cmd_path = asig_cmd_path(matrix_content, data_gen);
-		current->cmd_name = asigg_cmd_name(current->cmd_path);
-		current->delim = assig_delim(matrix_content);
-		current->cmd_arg = assig_cmd_args(current->cmd_name, matrix_content);
-		current->redirecc = assig_redirecc(matrix_content);
-		current->fd = assig_fd(matrix_content);
+		current->cmd_path = asig_cmd_path(matrix_content, data_gen,list);
+		current->cmd_name = asigg_cmd_name(current->cmd_path,list);
+		current->delim = assig_delim(matrix_content,list);
+		current->cmd_arg = assig_cmd_args(current->cmd_name, matrix_content,list);
+		current->redirecc = assig_redirecc(matrix_content,list);
+		current->fd = assig_fd(matrix_content,data_gen,list);
 		current = current->next;
 	}
 	return (list);

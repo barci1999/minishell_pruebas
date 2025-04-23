@@ -5,6 +5,7 @@
 
 #define WIDTH 48
 #define WIDTH_2 48
+#define WIDTH_3 48
 
 // Función auxiliar para limpiar strings (quita \n, \t, etc.)
 void sanitize_string(const char *src, char *dest, int max_len)
@@ -46,6 +47,7 @@ void print_cmd_list(t_list *list)
     int i = 0;
     int j;
     int r;
+    int f;
 
     while (list)
     {
@@ -126,10 +128,40 @@ void print_cmd_list(t_list *list)
             printf("║%-*s║\n", WIDTH_2, "   (null)");
         }
         printf("╠════════════════════════════════════════════════╣\n");
-        print_box_line("delim", list->delim);
+        print_box_line("fd", "");
+        if(list->fd)
+        {
+            f = 0;
+            while (list->fd[f])
+            {
+                char clean_fd[256];
+                char fd_line[WIDTH_3 + 1];
+                char output_fd[WIDTH_3 + 1];
 
-        print_box_line("fd", list->fd);
+                sanitize_string(list->fd[f], clean_fd, sizeof(clean_fd));
+                snprintf(fd_line, sizeof(fd_line), "   [%d] -> %s", f, clean_fd);
+
+                if ((int)strlen(fd_line) > WIDTH_3)
+                    snprintf(output_fd, sizeof(output_fd), "%.*s", WIDTH_3, fd_line);
+                else
+                    snprintf(output_fd, sizeof(output_fd), "%-*s", WIDTH_3, fd_line);
+
+                printf("║%s║\n", output_fd);
+                f++;
+            }
+            char final_fd[WIDTH_3 + 1];
+            snprintf(final_fd, sizeof(final_fd), "   [%d] -> (null)", f);
+            printf("║%-*s║\n", WIDTH, final_fd);
+        }
+        else
+        {
+            printf("║%-*s║\n", WIDTH_3, "   (null)");
+        }
+        
+        //print_box_line("fd", list->fd);
         // Línea final
+        printf("╠════════════════════════════════════════════════╣\n");
+        print_box_line("delim", list->delim);
         printf("╚════════════════════════════════════════════════╝\n\n");
 
         list = list->next;

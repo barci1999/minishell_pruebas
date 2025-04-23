@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/22 14:19:19 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/23 17:03:21 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 typedef struct s_general
 {
     char **my_env;
+    int tem_heredoc;
     
 }   t_general;
 
@@ -89,8 +90,8 @@ typedef struct t_list
     char            *cmd_path;  // NULL             //  /usr/bin/cat
     char            **cmd_arg;  // NULL             //  infile | < | cat | -e
     char            *cmd_name;  // NULL             //  cat
-    char            **redirecc;  // NULL             //  <
-    char            *fd;        // NULL             //  infile
+    char            **redirecc; // NULL             //  <
+    char            **fd;       // NULL             //  infile
     char            *delim;     // NULL             //  EOF
     struct t_list   *next;      // siguiente nodo   //  siguiente nodo
     struct t_list   *prev;      // anterior nodo    //  anterior nodo
