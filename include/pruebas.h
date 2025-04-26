@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/24 14:38:45 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/26 13:42:30 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,6 @@ t_list              *ft_lstlast(t_list *lst);
 
 
 
-t_list              *mat_to_list(char **mat);
-t_list	            *asigg_cont_list(t_list * list,t_general *data_gen);
 
 /* Sintax functions  */
 void                sintax_list(t_list **list);
@@ -143,14 +141,28 @@ char                *expand_str(char *input);
 char                *expand_var(char *input, size_t i, size_t j);
 
 /* pruebas de funciones */
-size_t              num_pipes(char *input);
-void	            rem_space(char **input, int *i, int *j);
-char	            **split_pipes(char *input);
-int 	            in_quotes(char **input,int i, int j);
-int                 is_quote(char c);
+//size_t              num_pipes(char *input);
+// void	            rem_space(char **input, int *i, int *j);
+// char	            **split_pipes(char *input);
+// int 	            in_quotes(char **input,int i, int j);
+// int                 is_quote(char c);
+size_t	num_pipes(char *input, char c);
 
 /* funciones env */
 char	            **take_paths_env(char **envp);
 char	            *take_cmd_path(char *comprove, t_general *data_gen);
 int                 is_cmd(char *comprove,t_general *data_gen);
+
+/* funciones de asignacion de variables a los nodos */
+t_list              *mat_to_list(char **mat);
+t_list	            *asigg_cont_list(t_list * list,t_general *data_gen);
+char	**assig_redirecc(char **mat, t_list *list);
+char	**assig_fd(char **mat, t_general *data_gen, t_list *list);
+size_t	nb_redirrec(char **mat);
+char	*assig_delim(char **mat, t_list *list);
+char	*asigg_cmd_name(char *cmd_path, t_list *list);
+char	**assig_cmd_args(char *cmd_name, char **mat, t_list *list);
+int	is_redirec(char *str);
+char	*asig_cmd_path(char **mat_content, t_general *data_gen, t_list *list);
+char	*take_cmd_path(char *comprove, t_general *data_gen);
 #endif

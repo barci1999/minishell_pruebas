@@ -6,31 +6,12 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/24 14:38:45 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/26 14:03:23 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pruebas.h"
-int is_builting(char *token)
-{
-	if(!token)
-		return(0);
-	else if (ft_strcmp(token, "echo") == 0)
-		return(1);
-	else if (ft_strcmp(token, "cd") == 0)
-		return(1);
-	else if (ft_strcmp(token, "pwd") == 0)
-		return(1);
-	else if (ft_strcmp(token, "export") == 0)
-		return(1);
-	else if (ft_strcmp(token, "unset") == 0)
-		return(1);
-	else if (ft_strcmp(token, "env") == 0)
-		return(1);
-	else if (ft_strcmp(token, "exit") == 0)
-		return(1);
-	return(0);	
-}
+
 
 // int	is_cmd(char *cmd)
 // {
@@ -176,9 +157,9 @@ int	main(int argc, char **argv, char **envp)
 		if (*input != '\0')
 			{
 				add_history(input);
-				if(num_pipes(input) != 0)
+				if(num_pipes(input,'|') != 0)
 				{
-					temp = asigg_cont_list(mat_to_list(split_pipes(input)),&data_gen);
+					temp = asigg_cont_list(mat_to_list(ft_split_quotes(input,'|')),&data_gen);
 					print_cmd_list(temp);
 					free_list(&temp);
 				}

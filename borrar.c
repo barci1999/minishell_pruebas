@@ -48,7 +48,6 @@ void print_cmd_list(t_list *list)
     int j;
     int r;
     int f;
-
     while (list)
     {
         // Línea superior
