@@ -6,14 +6,16 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/22 12:26:39 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:38:45 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pruebas.h"
 int is_builting(char *token)
 {
-	if (ft_strcmp(token, "echo") == 0)
+	if(!token)
+		return(0);
+	else if (ft_strcmp(token, "echo") == 0)
 		return(1);
 	else if (ft_strcmp(token, "cd") == 0)
 		return(1);
@@ -48,10 +50,10 @@ int is_builting(char *token)
 // 		temp = ft_get_strjoin(path[i], "/");
 // 		path[i] = ft_get_strjoin(temp, cmd);
 // 		if (access(path[i], X_OK) == 0)
-// 			return (ft_free_matrix(path), 1);
+// 			return (ft_free_mat(path), 1);
 // 		i++;
 // 	}
-// 	return (ft_free_matrix(path), 0);
+// 	return (ft_free_mat(path), 0);
 // }
 
 // t_token_type	classify_tokken(char *token)
@@ -163,7 +165,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc < 1)
 		return (1);
 	if(envp)
-		data_gen.my_env = ft_dup_matrix(envp);
+		data_gen.my_env = ft_dup_mat(envp);
 	//else
 		//my_env = gen_env();		
 	while (1)
@@ -176,7 +178,7 @@ int	main(int argc, char **argv, char **envp)
 				add_history(input);
 				if(num_pipes(input) != 0)
 				{
-					temp = asigg_cont_list(matrix_to_list(split_pipes(input)),&data_gen);
+					temp = asigg_cont_list(mat_to_list(split_pipes(input)),&data_gen);
 					print_cmd_list(temp);
 					free_list(&temp);
 				}

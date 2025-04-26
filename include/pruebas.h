@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/23 17:03:21 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:38:45 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ t_list              *ft_lstlast(t_list *lst);
 
 
 
-t_list              *matrix_to_list(char **matrix);
+t_list              *mat_to_list(char **mat);
 t_list	            *asigg_cont_list(t_list * list,t_general *data_gen);
 
 /* Sintax functions  */

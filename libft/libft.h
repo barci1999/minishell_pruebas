@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:31:01 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/16 16:39:54 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:38:45 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ int			ft_str_is_dec(char *nb);
 int			ft_is_sing(char c);
 int			ft_is_valid_num(char *nbr);
 int			ft_sqrt(int num);
-size_t		ft_matrixlen(char **matrix);
-void		ft_free_matrix(char **matrix);
-char		**ft_dup_matrix(char **src);
+size_t		ft_matlen(char **mat);
+void		ft_free_mat(char **mat);
+char		**ft_dup_mat(char **src);
 char		**ft_split_quotes(char *input, char c);
 
 #endif

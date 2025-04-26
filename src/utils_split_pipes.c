@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 18:43:13 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/16 14:26:54 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:38:45 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ char	**split_pipes(char *input)
 		{
 			data.res[data.r] = ft_substr(input, data.i, (data.j - data.i));
 			if (!data.res[data.r])
-				return (ft_free_matrix(data.res), NULL);
+				return (ft_free_mat(data.res), NULL);
 			data.r++;
 			data.i = data.j + 1;
 		}
 	}
 	if (last_assign(&data, input))
-		return (ft_free_matrix(data.res), NULL);
+		return (ft_free_mat(data.res), NULL);
 	return (data.res[data.r] = NULL, data.res);
 }

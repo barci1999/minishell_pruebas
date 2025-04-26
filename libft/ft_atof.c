@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42madrid.com>   #+#  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-11-18 14:12:11 by pablalva          #+#    #+#             */
-/*   Updated: 2024-11-18 14:12:11 by pablalva         ###   ########.fr       */
+/*   Created: 2024/11/18 14:12:11 by pablalva          #+#    #+#             */
+/*   Updated: 2025/04/26 13:21:12 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 static double	take_sign(char *nb, int *i)
@@ -28,38 +29,38 @@ static double	take_sign(char *nb, int *i)
 static double	handle_decimal_part(char *nb, int *i)
 {
 	double	decimal_part;
-	double	result;
+	double	res;
 
 	decimal_part = 1.0;
-	result = 0.0;
+	res = 0.0;
 	while (nb[*i] && ft_isdigit(nb[*i]))
 	{
 		decimal_part *= 10;
-		result += (nb[*i] - '0') / decimal_part;
+		res += (nb[*i] - '0') / decimal_part;
 		(*i)++;
 	}
-	return (result);
+	return (res);
 }
 
 double	ft_atof(char *nb)
 {
 	int		i;
-	double	result;
+	double	res;
 	double	sign;
 
 	i = 0;
-	result = 0.0;
+	res = 0.0;
 	sign = 1.0;
 	sign = take_sign(nb, &i);
 	while (nb[i] && ft_isdigit(nb[i]))
 	{
-		result = result * 10 + (nb[i] - '0');
+		res = res * 10 + (nb[i] - '0');
 		i++;
 	}
 	if (nb[i] == '.')
 	{
 		i++;
-		result += handle_decimal_part(nb, &i);
+		res += handle_decimal_part(nb, &i);
 	}
-	return (result * sign);
+	return (res * sign);
 }

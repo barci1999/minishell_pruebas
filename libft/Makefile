@@ -6,7 +6,7 @@
 #    By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/09/24 10:29:24 by pablalva          #+#    #+#              #
-#    Updated: 2025/04/16 16:04:36 by pablalva         ###   ########.fr        #
+#    Updated: 2025/04/24 14:38:45 by pablalva         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ CFILES = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.
 	   ft_strjoin.c ft_strtrim.c ft_itoa.c ft_strmapi.c ft_striteri.c ft_putchar_fd.c\
 	   ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_split.c\
 	   ft_str_isdigit.c ft_atof.c ft_str_is_dec.c ft_del.c ft_atol.c\
-		ft_is_sing.c ft_is_valid_num.c ft_sqrt.c get_next_line.c get_next_line_utils.c ft_matrixlen.c\
-		ft_free_matrix.c ft_strcmp.c ft_dup_matrix.c ft_split_quotes.c
+		ft_is_sing.c ft_is_valid_num.c ft_sqrt.c get_next_line.c get_next_line_utils.c ft_matlen.c\
+		ft_free_mat.c ft_strcmp.c ft_dup_mat.c ft_split_quotes.c
 
 HEADERS_DIR = /
 

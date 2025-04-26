@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_matrix.c                                   :+:      :+:    :+:   */
+/*   ft_dup_mat.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/31 14:56:16 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/16 15:00:14 by pablalva         ###   ########.fr       */
+/*   Created: 2025/04/11 10:52:19 by pablalva          #+#    #+#             */
+/*   Updated: 2025/04/11 12:22:39 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_matrix(char **matrix)
+char	**ft_dup_mat(char **src)
 {
-	int	i;
+	int		i;
+	char	**res;
 
 	i = 0;
-	if (matrix == NULL)
-		return ;
-	while (matrix[i])
+	res = malloc((ft_matlen(src) + 1) * sizeof(char *));
+	while (src[i])
 	{
-		free(matrix[i]);
+		res[i] = ft_strdup(src[i]);
 		i++;
 	}
-	free(matrix);
+	res[i] = NULL;
+	return (res);
 }

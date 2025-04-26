@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 14:41:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/16 15:18:17 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:39:06 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	last_assign(t_split *data, char *input)
 		data->res[data->r] = ft_substr(input, data->i, (data->j - data->i));
 		if (!data->res[data->r])
 		{
-			ft_free_matrix(data->res);
+			ft_free_mat(data->res);
 			return (1);
 		}
 		data->r++;
@@ -81,36 +81,36 @@ char	**ft_split_quotes(char *input, char c)
 		{
 			data.res[data.r] = ft_substr(input, data.i, (data.j - data.i));
 			if (!data.res[data.r])
-				return (ft_free_matrix(data.res), NULL);
+				return (ft_free_mat(data.res), NULL);
 			data.r++;
 			data.i = data.j + 1;
 		}
 	}
 	if (last_assign(&data, input))
-		return (ft_free_matrix(data.res), NULL);
+		return (ft_free_mat(data.res), NULL);
 	return (data.res[data.r] = NULL, data.res);
 }
 // int main(void)
 // {
 // 	char *src = "";
-// 	char **result = split_pipes(src,' ');
+// 	char **res = split_pipes(src,' ');
 // 	int i = 0;
 // 	int j = 0;
-// 	while (result[i])
+// 	while (res[i])
 // 	{
-// 		while (result[i][j])
+// 		while (res[i][j])
 // 		{
-// 			if(result[i][j] == ' ')
+// 			if(res[i][j] == ' ')
 // 				write(1,"=",1);
 // 			else
-// 				write(1,&result[i][j],1);
+// 				write(1,&res[i][j],1);
 // 			j++;
 // 		}
 // 		j = 0;
 // 		write(1,"\n",1);
 // 		i++;
 // 	}
-// 	if(result)
-// 		ft_free_matrix(result);
+// 	if(res)
+// 		ft_free_mat(res);
 // 	return(0);
 // }

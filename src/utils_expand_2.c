@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 10:20:50 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/12 15:19:55 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/24 14:39:06 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*expand_str(char *input)
 	size_t	j;
 	char	*pre_exp;
 	char	*rest;
-	char	*result;
+	char	*res;
 
 	i = 0;
 	j = 0;
@@ -104,7 +104,7 @@ char	*expand_str(char *input)
 		if (input[i] != '\0')
 			i++;
 	}
-	result = rem_sin_quotes(input);
+	res = rem_sin_quotes(input);
 	return (input);
 }
 size_t	nb_of_quotes(char *input)
@@ -129,13 +129,13 @@ char	*rem_sin_quotes(char *input)
 	size_t	nb_quotes;
 	int		i;
 	int		j;
-	char	*result;
+	char	*res;
 
 	i = 0;
 	j = 0;
 	nb_quotes = nb_of_quotes(input);
-	result = malloc((ft_strlen(input) - nb_quotes + 1) * sizeof(char));
-	if (!result)
+	res = malloc((ft_strlen(input) - nb_quotes + 1) * sizeof(char));
+	if (!res)
 	{
 		/* gestion de leaks */
 	}
@@ -143,13 +143,13 @@ char	*rem_sin_quotes(char *input)
 	{
 		if (input[i] != '\'')
 		{
-			result[j] = input[i];
+			res[j] = input[i];
 			j++;
 			i++;
 		}
 		else
 			i++;
 	}
-	result[j] = '\0';
-	return (result);
+	res[j] = '\0';
+	return (res);
 }
