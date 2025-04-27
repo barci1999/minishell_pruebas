@@ -6,12 +6,11 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/26 21:23:45 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/27 19:29:14 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pruebas.h"
-
 
 char	*take_cmd_path(char *comprove, t_general *data_gen)
 {
@@ -42,8 +41,7 @@ char	*take_cmd_path(char *comprove, t_general *data_gen)
 	return (ft_free_mat(paths), NULL);
 }
 
-char	*asig_cmd_path(char **mat_content, t_general *data_gen,
-		t_list *list)
+char	*asig_cmd_path(char **mat_content, t_general *data_gen, t_list *list)
 {
 	int		i;
 	char	*result;
@@ -84,8 +82,8 @@ char	**assig_cmd_args(char *cmd_name, char **mat, t_list *list)
 	int		i;
 	size_t	m;
 	size_t	arg_count;
-	(void)list;
 
+	(void)list;
 	i = 0;
 	m = -1;
 	arg_count = 0;
@@ -103,7 +101,6 @@ char	**assig_cmd_args(char *cmd_name, char **mat, t_list *list)
 		return (NULL);
 	while (mat[i] && !is_redirec(mat[i]))
 	{
-		
 		res[++m] = ft_strdup(mat[i++]);
 		if (!res[m])
 			return (ft_free_mat(res), NULL);
@@ -133,19 +130,19 @@ char	*asigg_cmd_name(char *cmd_path, t_list *list)
 	else
 		return (NULL);
 }
-static int analize_quote(char *src)
-{
-	int i = -1;
-	if(!src)
-		return(0);
-	while (src[++i])
-	{
-		if(src[i] == '\'' || src[i] == '\"')
-			return(1);
-	}
-	return(0);
-	
-}
+// static int analize_quote(char *src)
+// {
+// 	int i = -1;
+// 	if(!src)
+// 		return(0);
+// 	while (src[++i])
+// 	{
+// 		if(src[i] == '\'' || src[i] == '\"')
+// 			return(1);
+// 	}
+// 	return(0);
+
+// }
 static size_t number_of_cmd_arg(char *src)
 {
 	int i = 0;
@@ -154,7 +151,8 @@ static size_t number_of_cmd_arg(char *src)
 	{
 		if(!is_space(src[i]) && src[i] != '\'' && src[i] != '\"')
 		{
-			while(!is_space(src[i]) && src[i])
+			while(!is_space(src[i]) && (src[i] != '\'' && src[i] != '\"')
+					&& src[i])
 			{
 				i++;
 			}
@@ -165,63 +163,58 @@ static size_t number_of_cmd_arg(char *src)
 			i++;
 			while (src[i] != '\'' && src[i])
 				i++;
-			result++;		
+			result++;
 		}
 		else if(src[i] == '\"')
 		{
 			i++;
 			while (src[i] != '\"' && src[i])
 				i++;
-			result++;		
+			result++;
 		}
 		i++;
 	}
-	printf("%zu\n",result);
 	return(result);
-	
+
 }
-static char **take_the_arg(char *src)
+static char	**take_the_arg(char *src)
 {
-	//int i = 0;
-	char **result;
-	int r = 0;
-	int i = 0;
-	int j = 0;
-	char quote;
-	if(analize_quote(src) == 0)
+	char	**result;
+	int		r;
+	int		i;
+	int		j;
+	char	quote;
+
+	r = 0;
+	i = 0;
+	result = malloc(sizeof(char *) * (number_of_cmd_arg(src) + 1));
+	if (!result)
+		return (NULL);
+	while (src[i])
 	{
-		result = ft_split_quotes(src,' ');
-		return(result);
-	}
-	else
-	{
-		result = malloc((number_of_cmd_arg(src)+1) * sizeof(char *));
-		while(src[i])
-		{
-			if(!is_space(src[i]) && src[i] != '\'' && src[i] != '\"')
-			{
-				while(src[i] && !is_space(src[i]))
-					i++;
-				result[r] = ft_substr(src,j,(i-j));
-				r++;
-				j = i;
-			}
-			else if(src[i] == '\'' || src[i] == '\"')
-			{
-				quote = src[i];
-				i++;
-				j = i;
-				while(src[i] != quote && src[i])
-					i++;
-				result[r] = ft_strtrim(ft_substr(src,j ,(i - j)), " \t\v\n\r\b\f");
-				r++;
-				j = i;
-			}
+		while (src[i] == ' ')
 			i++;
+		if (src[i] == '\'' || src[i] == '\"')
+		{
+			quote = src[i];
+			i++;
+			j = i;
+			while (src[i] && src[i] != quote)
+				i++;
+			result[r++] = ft_substr(src, j, i - j);
+			if (src[i] == quote)
+				i++;
+		}
+		else if (src[i])
+		{
+			j = i;
+			while (src[i] && src[i] != ' ' && src[i] != '\'' && src[i] != '\"')
+				i++;
+			result[r++] = ft_substr(src, j, i - j);
 		}
 	}
 	result[r] = NULL;
-	return(result);
+	return (result[r] = NULL, result);
 }
 t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 {
@@ -232,8 +225,7 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 	data_gen->tem_heredoc = 0;
 	while (current)
 	{
-		// mat_content = ft_split_quotes(current->content, ' ');
-		mat_content = take_the_arg(current->content); 
+		mat_content = take_the_arg(current->content);
 		if (!mat_content)
 			return (ft_free_mat(mat_content), NULL);
 		current->cmd_path = asig_cmd_path(mat_content, data_gen, list);
