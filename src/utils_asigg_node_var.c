@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/27 19:29:14 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/04/28 23:28:02 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,18 @@ static size_t number_of_cmd_arg(char *src)
 	return(result);
 
 }
+static void change_str_expand(char **to_expand)
+{
+	char *temp = ft_substr(to_expand[0],1,ft_strlen(to_expand[0]));
+	if(!temp)
+	{
+		ft_free_mat(to_expand);
+		exit(1);
+	}
+	free(to_expand[0]);
+	to_expand[0] = getenv(temp);
+	free(temp);
+}
 static char	**take_the_arg(char *src)
 {
 	char	**result;
@@ -201,19 +213,31 @@ static char	**take_the_arg(char *src)
 			j = i;
 			while (src[i] && src[i] != quote)
 				i++;
-			result[r++] = ft_substr(src, j, i - j);
+			result[r] = ft_substr(src, j, i - j);
+			if(!result[r])
+				exit(1);
+			if(src[j - 1] != '\'')
+			{
+				if(result[r][0] == '$')
+					change_str_expand(&result[r]);
+			}
 			if (src[i] == quote)
 				i++;
+			r++;
 		}
 		else if (src[i])
 		{
 			j = i;
 			while (src[i] && src[i] != ' ' && src[i] != '\'' && src[i] != '\"')
 				i++;
-			result[r++] = ft_substr(src, j, i - j);
+			result[r] = ft_substr(src, j, i - j);
+			if(!result[r])
+				exit(1);
+			if(result[r][0] == '$')
+				change_str_expand(&result[r]);
+			r++;
 		}
 	}
-	result[r] = NULL;
 	return (result[r] = NULL, result);
 }
 t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
