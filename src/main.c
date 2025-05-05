@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/05 18:11:33 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:23:40 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int	main(int argc, char **argv, char **envp)
 	if(envp)
 		data_gen.my_env = ft_dup_mat(envp);
 	//else
-		//my_env = gen_env();		
+		//data_gen.my_env = gen_env();		
 	while (1)
 	{
 		input = readline("minishell -> ");

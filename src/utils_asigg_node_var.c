@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/05 17:12:22 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:29:41 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ char	*take_cmd_path(char *comprove, t_general *data_gen)
 		if (!cmd_path)
 			return (ft_free_mat(paths), NULL);
 		if (access(cmd_path, X_OK) == 0)
-			return (ft_free_mat(paths),cmd_path);
+			return (ft_free_mat(paths), cmd_path);
 		free(cmd_path);
 		i++;
 	}
-	return (ft_free_mat(paths),free(temp), NULL);
+	return (ft_free_mat(paths), free(temp), NULL);
 }
 
 char	*asig_cmd_path(char **mat_content, t_general *data_gen, t_list *list)
@@ -117,14 +117,14 @@ char	*asigg_cmd_name(char *cmd_path, t_list *list)
 	{
 		result = ft_strdup(cmd_path);
 		if (!result)
-			return (free(cmd_path),NULL);
+			return (free(cmd_path), NULL);
 		return (result);
 	}
 	if (ft_strrchr(cmd_path, '/') != NULL)
 	{
 		result = ft_strdup((ft_strrchr(cmd_path, '/') + 1));
 		if (!result)
-			return (free(cmd_path),NULL);
+			return (free(cmd_path), NULL);
 		return (result);
 	}
 	else
@@ -143,40 +143,41 @@ char	*asigg_cmd_name(char *cmd_path, t_list *list)
 // 	return(0);
 
 // }
-static size_t	number_of_cmd_arg(char *src)
+static size_t number_of_cmd_arg(const char *src)
 {
-	int		i;
-	size_t	result;
+    size_t count = 0;
+    int i = 0;
+    char quote;
 
-	i = 0;
-	result = 0;
-	while (src[i])
-	{
-		if ((!is_space(src[i]) && src[i] != '\'' && src[i] != '\"') && src[i])
-		{
-			while (src[i] && !is_space(src[i]) && (src[i] != '\''
-					&& src[i] != '\"'))
-				i++;
-			result++;
-		}
-		if (src[i] && src[i] == '\'')
-		{
-			i++;
-			while (src[i] && src[i] != '\'')
-				i++;
-			result++;
-		}
-		else if (src[i] && src[i] == '\"')
-		{
-			i++;
-			while (src[i] && src[i] != '\"')
-				i++;
-			result++;
-		}
-		if (src[i])
-			i++;
-	}
-	return (result);
+    while (src[i])
+    {
+        // Saltar espacios
+        while (src[i] && is_space(src[i]))
+            i++;
+
+        if (!src[i])
+            break;
+
+        // Contar un nuevo argumento
+        count++;
+
+        // Procesar si encontramos comillas (simples o dobles)
+        if (src[i] == '\'' || src[i] == '\"')
+        {
+            quote = src[i++];
+            while (src[i] && src[i] != quote)
+                i++; // Salir al encontrar la comilla de cierre
+            if (src[i] == quote)
+                i++; // Salir de las comillas
+        }
+        else
+        {
+            // Si no es comilla, simplemente saltamos hasta el siguiente espacio
+            while (src[i] && !is_space(src[i]) && src[i] != '\'' && src[i] != '\"')
+                i++;
+        }
+    }
+    return count;
 }
 static void	change_str_expand(char **to_expand)
 {
@@ -192,56 +193,92 @@ static void	change_str_expand(char **to_expand)
 	to_expand[0] = getenv(temp);
 	free(temp);
 }
-static char	**take_the_arg(char *src)
+char **take_the_arg(const char *src)
 {
-	char	**result;
-	int		r;
-	int		i;
-	int		j;
-	char	quote;
+    int i = 0;
+    int arg_index = 0;
+    char quote;
+    size_t start;
+    char *sub_arg;
+    char **args;
+    char *temp;
 
-	r = 0;
-	i = 0;
-	result = malloc(sizeof(char *) * (number_of_cmd_arg(src) + 1));
-	if (!result)
-		return (NULL);
-	while (src[i])
-	{
-		while (src[i] == ' ')
-			i++;
-		if (src[i] == '\'' || src[i] == '\"')
-		{
-			quote = src[i];
-			i++;
-			j = i;
-			while (src[i] && src[i] != quote)
-				i++;
-			result[r] = ft_substr(src, j, i - j);
-			if (!result[r])
-				exit(1);
-			if (src[j - 1] != '\'')
-			{
-				if (result[r][0] == '$')
-					change_str_expand(&result[r]);
-			}
-			if (src[i] == quote)
-				i++;
-			r++;
-		}
-		else if (src[i])
-		{
-			j = i;
-			while (src[i] && src[i] != ' ' && src[i] != '\'' && src[i] != '\"')
-				i++;
-			result[r] = ft_substr(src, j, i - j);
-			if (!result[r])
-				exit(1);
-			if (result[r][0] == '$')
-				change_str_expand(&result[r]);
-			r++;
-		}
-	}
-	return (result[r] = NULL, result);
+    // Asignar el espacio para los argumentos
+    args = malloc(sizeof(char *) * (number_of_cmd_arg(src) + 1));
+    if (!args)
+        return (NULL);
+
+    while (src[i])
+    {
+        // Saltamos los espacios al principio de cada ciclo
+        while (src[i] && is_space(src[i]))
+            i++;
+
+        if (!src[i])
+            break;
+
+        // Inicializar el nuevo argumento como NULL
+        char *arg = NULL;
+
+        // Procesar comillas
+        if (src[i] == '\'' || src[i] == '"')
+        {
+            quote = src[i++];  // Encontramos una comilla (simple o doble)
+            start = i;
+
+            // Buscar el cierre de la comilla
+            while (src[i] && src[i] != quote)
+                i++;
+
+            // Substring entre las comillas
+            sub_arg = ft_substr(src, start, i - start);
+
+            if (arg == NULL)
+                arg = ft_strdup(sub_arg); // Si es el primer fragmento, lo asignamos
+            else
+            {
+                temp = ft_strjoin(arg, sub_arg);  // Concatenamos con el argumento previo
+                free(arg);
+                arg = temp;
+            }
+            free(sub_arg);
+
+            // Asegurarse de que terminamos en la comilla de cierre
+            if (src[i] == quote)
+                i++;
+        }
+        else
+        {
+            // Si no es una comilla, procesamos hasta el siguiente espacio o comillas
+            start = i;
+            while (src[i] && !is_space(src[i]) && src[i] != '\'' && src[i] != '"')
+                i++;
+
+            sub_arg = ft_substr(src, start, i - start);
+
+            if (arg == NULL)
+                arg = ft_strdup(sub_arg);
+            else
+            {
+                temp = ft_strjoin(arg, sub_arg);
+                free(arg);
+                arg = temp;
+            }
+            free(sub_arg);
+        }
+
+        // Si el argumento empieza con un `$`, procesarlo para expansión
+        if (arg && arg[0] == '$')
+            change_str_expand(&arg);
+
+        // Asignamos el argumento final al arreglo de argumentos
+        args[arg_index++] = arg;
+    }
+
+    // Terminamos la lista de argumentos con NULL
+    args[arg_index] = NULL;
+
+    return (args);
 }
 t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 {
@@ -255,6 +292,7 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 		mat_content = take_the_arg(current->content);
 		if (!mat_content)
 			return (ft_free_mat(mat_content), NULL);
+		printf("%zu\n",ft_matlen(mat_content));
 		current->cmd_path = asig_cmd_path(mat_content, data_gen, list);
 		current->cmd_name = asigg_cmd_name(current->cmd_path, list);
 		current->cmd_arg = assig_cmd_args(current->cmd_name, mat_content, list);

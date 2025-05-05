@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:53:46 by pablalva          #+#    #+#             */
-/*   Updated: 2024/10/02 11:52:14 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:53:22 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*s3;
 
 	s3 = NULL;
+	if (!s1 || !s2)
+		return (NULL);
 	len_1 = ft_strlen(s1);
 	len_2 = ft_strlen(s2);
 	s3 = ft_calloc((len_1 + len_2 + 1), sizeof(char));
 	if (s3 == NULL)
-	{
-		free(s3);
 		return (NULL);
-	}
 	len_3 = len_1 + len_2 + 1;
 	ft_strlcat(s3, s1, len_3);
 	ft_strlcat(s3, s2, len_3);
