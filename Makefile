@@ -3,7 +3,7 @@ NAME	= mini
 CC	= cc
 
 # Opciones de compilación (solo para compilar .c a .o)
-CFLAGS = -Wall -Werror -Wextra -I./include -I libft -I printf
+CFLAGS = -Wall -Werror -Wextra -g3 -I./include -I libft -I printf
 
 # Directorios de las bibliotecas
 LIBFT_DIR = ./libft

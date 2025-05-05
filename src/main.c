@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/26 14:03:23 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/05 18:11:33 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int	main(int argc, char **argv, char **envp)
 		//my_env = gen_env();		
 	while (1)
 	{
-		input = readline("minishell> ");
+		input = readline("minishell -> ");
 		if (input == NULL)
 			break ;
 		if (*input != '\0')
@@ -162,6 +162,7 @@ int	main(int argc, char **argv, char **envp)
 					temp = asigg_cont_list(mat_to_list(ft_split_quotes(input,'|')),&data_gen);
 					print_cmd_list(temp);
 					free_list(&temp);
+					free(input);
 				}
 				else
 				{
@@ -169,9 +170,11 @@ int	main(int argc, char **argv, char **envp)
 					temp = asigg_cont_list(temp,&data_gen);
 					print_cmd_list(temp);
 					free_list(&temp);
+					free(input);
 					
 				}
 			}
 	}
+	ft_free_mat(data_gen.my_env);
 	return (0);
 }

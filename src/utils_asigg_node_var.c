@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/28 23:28:02 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:12:22 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ char	*take_cmd_path(char *comprove, t_general *data_gen)
 	paths = take_paths_env(data_gen->my_env);
 	while (paths[i] != NULL)
 	{
-		temp = ft_get_strjoin(paths[i], "/");
+		temp = ft_strjoin(paths[i], "/");
 		if (!temp)
 			return (ft_free_mat(paths), NULL);
 		cmd_path = ft_get_strjoin(temp, comprove);
 		if (!cmd_path)
 			return (ft_free_mat(paths), NULL);
 		if (access(cmd_path, X_OK) == 0)
-			return (cmd_path);
+			return (ft_free_mat(paths),cmd_path);
 		free(cmd_path);
 		i++;
 	}
-	return (ft_free_mat(paths), NULL);
+	return (ft_free_mat(paths),free(temp), NULL);
 }
 
 char	*asig_cmd_path(char **mat_content, t_general *data_gen, t_list *list)
@@ -117,14 +117,14 @@ char	*asigg_cmd_name(char *cmd_path, t_list *list)
 	{
 		result = ft_strdup(cmd_path);
 		if (!result)
-			return (NULL);
+			return (free(cmd_path),NULL);
 		return (result);
 	}
 	if (ft_strrchr(cmd_path, '/') != NULL)
 	{
-		result = ft_strdup(ft_strrchr(cmd_path, '/') + 1);
+		result = ft_strdup((ft_strrchr(cmd_path, '/') + 1));
 		if (!result)
-			return (free(cmd_path), NULL);
+			return (free(cmd_path),NULL);
 		return (result);
 	}
 	else
@@ -143,44 +143,47 @@ char	*asigg_cmd_name(char *cmd_path, t_list *list)
 // 	return(0);
 
 // }
-static size_t number_of_cmd_arg(char *src)
+static size_t	number_of_cmd_arg(char *src)
 {
-	int i = 0;
-	size_t result = 0;
+	int		i;
+	size_t	result;
+
+	i = 0;
+	result = 0;
 	while (src[i])
 	{
-		if(!is_space(src[i]) && src[i] != '\'' && src[i] != '\"')
+		if ((!is_space(src[i]) && src[i] != '\'' && src[i] != '\"') && src[i])
 		{
-			while(!is_space(src[i]) && (src[i] != '\'' && src[i] != '\"')
-					&& src[i])
-			{
+			while (src[i] && !is_space(src[i]) && (src[i] != '\''
+					&& src[i] != '\"'))
 				i++;
-			}
 			result++;
 		}
-		if(src[i] == '\'')
+		if (src[i] && src[i] == '\'')
 		{
 			i++;
-			while (src[i] != '\'' && src[i])
+			while (src[i] && src[i] != '\'')
 				i++;
 			result++;
 		}
-		else if(src[i] == '\"')
+		else if (src[i] && src[i] == '\"')
 		{
 			i++;
-			while (src[i] != '\"' && src[i])
+			while (src[i] && src[i] != '\"')
 				i++;
 			result++;
 		}
-		i++;
+		if (src[i])
+			i++;
 	}
-	return(result);
-
+	return (result);
 }
-static void change_str_expand(char **to_expand)
+static void	change_str_expand(char **to_expand)
 {
-	char *temp = ft_substr(to_expand[0],1,ft_strlen(to_expand[0]));
-	if(!temp)
+	char	*temp;
+
+	temp = ft_substr(to_expand[0], 1, ft_strlen(to_expand[0]));
+	if (!temp)
 	{
 		ft_free_mat(to_expand);
 		exit(1);
@@ -214,11 +217,11 @@ static char	**take_the_arg(char *src)
 			while (src[i] && src[i] != quote)
 				i++;
 			result[r] = ft_substr(src, j, i - j);
-			if(!result[r])
+			if (!result[r])
 				exit(1);
-			if(src[j - 1] != '\'')
+			if (src[j - 1] != '\'')
 			{
-				if(result[r][0] == '$')
+				if (result[r][0] == '$')
 					change_str_expand(&result[r]);
 			}
 			if (src[i] == quote)
@@ -231,9 +234,9 @@ static char	**take_the_arg(char *src)
 			while (src[i] && src[i] != ' ' && src[i] != '\'' && src[i] != '\"')
 				i++;
 			result[r] = ft_substr(src, j, i - j);
-			if(!result[r])
+			if (!result[r])
 				exit(1);
-			if(result[r][0] == '$')
+			if (result[r][0] == '$')
 				change_str_expand(&result[r]);
 			r++;
 		}
@@ -259,6 +262,7 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 		current->redirecc = assig_redirecc(mat_content, list);
 		current->fd = assig_fd(mat_content, data_gen, list);
 		current = current->next;
+		ft_free_mat(mat_content);
 	}
 	return (list);
 }

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 13:27:21 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/26 18:39:11 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:35:48 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,9 @@ int	is_cmd(char *comprove, t_general *data_gen)
 		if (!cmd_path)
 			return (ft_free_mat(paths), 0);
 		if (access(cmd_path, X_OK) == 0)
-			return (ft_free_mat(paths), 1);
+			return (ft_free_mat(paths),free(cmd_path), 1);
 		free(cmd_path);
 		i++;
 	}
-	return (ft_free_mat(paths), 0);
+	return (ft_free_mat(paths),0);
 }

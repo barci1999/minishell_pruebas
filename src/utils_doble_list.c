@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/04/26 14:03:56 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:24:27 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,19 @@ void	free_list(t_list **list)
 {
 	t_list	*temp;
 
-	while ((*list)->next != NULL)
+	while (*list)
 	{
 		temp = *list;
 		*list = (*list)->next;
+
+		free(temp->cmd_name);
+		free(temp->cmd_path);
+		free(temp->content);
+		free(temp->delim);
+		ft_free_mat(temp->cmd_arg);
+		ft_free_mat(temp->redirecc);
+		ft_free_mat(temp->fd);
+
 		free(temp);
 	}
 	*list = NULL;
@@ -80,5 +89,6 @@ t_list	*mat_to_list(char **mat)
 		if (node_to_end(&list, new_doble_node(mat[i])) == -1)
 			return (free_list(&list), ft_free_mat(mat), NULL);
 	}
+	ft_free_mat(mat);
 	return (list);
 }
