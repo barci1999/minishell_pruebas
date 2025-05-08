@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/07 22:00:38 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:57:48 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,16 +174,15 @@ static size_t	number_of_cmd_arg(const char *src)
 				}
 				i++;
 			}
-			if(src[i] == '\0')
+			if (src[i] == '\0')
 			{
 				result++;
-				break;
+				break ;
 			}
-			if(is_quote(src[i]))
+			if (is_quote(src[i]))
 				i++;
 			while (is_space(src[i]))
 				i++;
-			
 		}
 		else if (!is_quote(src[i]) && src[i])
 		{
@@ -198,21 +197,22 @@ static size_t	number_of_cmd_arg(const char *src)
 			}
 			if (is_space(src[i]) || src[i] == '\0')
 				result++;
-			if(src[i] && !is_quote(src[i]))
+			if (src[i] && !is_quote(src[i]))
 				i++;
 		}
 	}
 	return (result);
 }
-static void primt_mat(char **mat)
+static void	primt_mat(char **mat)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (mat[i])
 	{
-		printf("%s\n",mat[i]);
+		printf("%s\n", mat[i]);
 		i++;
 	}
-	
 }
 
 // static void	change_str_expand(char **to_expand)
@@ -229,118 +229,113 @@ static void primt_mat(char **mat)
 // 	to_expand[0] = getenv(temp);
 // 	free(temp);
 // }
-static char *add_chr_to_str(char *src,char c)
+char	*add_chr_to_str(char *src, char c)
 {
-	char *result;
-	int j = 0;
-	int i = 0;
-	if(src == NULL)
+	char	*result;
+	int		len;
+	int		i;
+
+	len = 0;
+	i = 0;
+	if (src != NULL)
+		len = ft_strlen(src);
+	result = malloc((len + 2) * sizeof(char));
+	if (result == NULL)
+		return (NULL);
+	while (i < len)
 	{
-		result = malloc(2 * sizeof(char));
-		return(result[0] = c,result[1] = '\0',result);
-	}
-	result = malloc((ft_strlen(src) + 2) * sizeof(char));
-	while (src[i])
-	{
-		result[j] = src[i];
-		j++;
+		result[i] = src[i];
 		i++;
 	}
-	result[j] = c;
-	j++;
-	result[j] = '\0';
-	free(src);
-	return(result);
-	
+	result[i++] = c;
+	result[i] = '\0';
+	if (src)
+		free(src);
+	return (result);
 }
-static void	in_double_quote(char *src,int *i,char ***matrix,int m)
+static void	in_double_quote(char *src, int *i, char ***matrix, int m)
 {
-	char *temp;
+	char	*temp;
+
 	while (src[*i] == '\"')
 		(*i)++;
 	while (src[*i])
 	{
-		if(is_quote(src[*i]) || is_space(src[*i] || src[*i] == '\0'))
+		if (src[*i] == '\"' || is_space(src[*i] || src[*i] == '\0'))
 		{
-			if(is_quote(src[*i]) || is_space(src[*i]))
+			if (is_quote(src[*i]) || is_space(src[*i]))
 				(*i)++;
-			break;
+			break ;
 		}
-		temp = add_chr_to_str(matrix[0][m],src[*i]);
+		temp = add_chr_to_str(matrix[0][m], src[*i]);
 		matrix[0][m] = ft_strdup(temp);
+		printf("%s\n",matrix[0][m]);
 		free(temp);
 		(*i)++;
 	}
-	
 }
 
-static void	in_single_quote(char *src,int *i,char ***matrix,int m)
+static void	in_single_quote(char *src, int *i, char ***matrix, int m)
 {
-	char *temp;
+	char	*temp;
+
 	while (src[*i] == '\'')
 		(*i)++;
 	while (src[*i])
 	{
-		if(is_quote(src[*i]) || is_space(src[*i] || src[*i] == '\0'))
+		if (src[*i] == '\'' || is_space(src[*i] || src[*i] == '\0'))
 		{
-			if(is_quote(src[*i]) || is_space(src[*i]))
+			if (is_quote(src[*i]) || is_space(src[*i]))
 				(*i)++;
-			break;
+			break ;
 		}
-		temp = add_chr_to_str(matrix[0][m],src[*i]);
+		temp = add_chr_to_str(matrix[0][m], src[*i]);
 		matrix[0][m] = ft_strdup(temp);
 		free(temp);
 		(*i)++;
 	}
-	
 }
-static void	no_quote(char *src,int *i,char ***matrix,int m)
+static void	no_quote(char *src, int *i, char ***matrix, int m)
 {
-	char *temp;
+	char	*temp;
+
 	while (src[*i])
 	{
-		if(is_quote(src[*i]) || is_space(src[*i]) || src[*i] == '\0')
-			break;
-		temp = add_chr_to_str(matrix[0][m],src[*i]);
+		if (is_quote(src[*i]) || is_space(src[*i]) || src[*i] == '\0')
+			break ;
+		temp = add_chr_to_str(matrix[0][m], src[*i]);
 		matrix[0][m] = ft_strdup(temp);
 		free(temp);
 		(*i)++;
 	}
-	
 }
 char	**take_the_arg(char *src)
 {
-	int i = 0;
-	int m = 0;
-	char **matrix;
-	matrix = malloc((number_of_cmd_arg(src) +1) * sizeof(char *));
+	int		i;
+	size_t	m;
+	char	**matrix;
+
+	i = 0;
+	m = -1;
+	matrix = malloc((number_of_cmd_arg(src) + 1) * sizeof(char *));
+	while (++m <= number_of_cmd_arg(src))
+		matrix[m] = NULL;
+	m = 0;
 	while (src[i])
 	{
 		while (src[i] && is_space(src[i]))
 			i++;
-		if(src[i] == '\'')
-		{
-			in_single_quote(src,&i,&matrix,m);
-			if(is_space(src[i]) || src[i] == '\0')
-				m++;
-		}
-		else if(src[i] == '\"')
-		{
-			/* falta integracion de la expansion de la variables */
-			in_double_quote(src,&i,&matrix,m);
-			if(is_space(src[i]) || src[i] == '\0')
-				m++;
-		}
-		else if(!is_quote(src[i]) && (!is_space(src[i])))
-		{
-			/* falta integracion de la expansion de las variables */
-			no_quote(src,&i,&matrix,m);
-			if(is_space(src[i]) || src[i] == '\0')
-				m++;
-		}		
+		if (src[i] == '\'')
+			in_single_quote(src, &i, &matrix, m);
+		else if (src[i] == '\"')
+			in_double_quote(src, &i, &matrix, m);
+		else if (!is_quote(src[i]) && (!is_space(src[i])))
+			no_quote(src, &i, &matrix, m);
+		if (is_space(src[i]) || src[i] == '\0')
+			m++;
 	}
 	matrix[m] = NULL;
-	return(matrix);
+	return (matrix[m] = NULL, matrix);
 }
 t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
 {
