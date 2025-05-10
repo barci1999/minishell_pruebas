@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/10 18:20:19 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:46:16 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,17 +190,6 @@ static size_t	number_of_cmd_arg(const char *src)
 	}
 	return (result);
 }
-static void	primt_mat(char **mat)
-{
-	int	i;
-
-	i = 0;
-	while (mat[i])
-	{
-		printf("%s\n", mat[i]);
-		i++;
-	}
-}
 char *add_expand_str(char *src,char *matrix,int *i)
 {
 	char *expanded;
@@ -258,7 +247,7 @@ static void	in_double_quote(char *src, int *i, char ***matrix, int m)
 				(*i)++;
 			break ;
 		}
-		else if(src[*i] == '$' && src[*i+1])
+		else if(src[*i] == '$' && src[*i + 1])
 		{
 			(*i)++;
 			temp = add_expand_str(src,matrix[0][m], i);
@@ -336,9 +325,6 @@ char	**take_the_arg(char *src)
 		if (is_space(src[i]) || src[i] == '\0')
 			m++;
 	}
-	matrix[m] = NULL;
-	primt_mat(matrix);
-	exit(0);
 	return (matrix[m] = NULL, matrix);
 }
 t_list	*asigg_cont_list(t_list *list, t_general *data_gen)

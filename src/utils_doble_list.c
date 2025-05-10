@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/05 15:24:27 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:43:49 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ t_list	*mat_to_list(char **mat)
 	{
 		if (node_to_end(&list, new_doble_node(mat[i])) == -1)
 			return (free_list(&list), ft_free_mat(mat), NULL);
+		
 	}
 	ft_free_mat(mat);
 	return (list);
