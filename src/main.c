@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/05 18:23:40 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:26:53 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,11 @@ int	main(int argc, char **argv, char **envp)
 				add_history(input);
 				if(num_pipes(input,'|') != 0)
 				{
+					if(nbr_quotes_ok(input) == false)
+					{	
+						printf("error en numero de comillas\n");
+						exit(1);
+					}
 					temp = asigg_cont_list(mat_to_list(ft_split_quotes(input,'|')),&data_gen);
 					print_cmd_list(temp);
 					free_list(&temp);
@@ -166,6 +171,11 @@ int	main(int argc, char **argv, char **envp)
 				}
 				else
 				{
+					if(nbr_quotes_ok(input) == false)
+					{	
+						printf("error en numero de comillas\n");
+						exit(1);
+					}
 					node_to_end(&temp,new_doble_node(input));
 					temp = asigg_cont_list(temp,&data_gen);
 					print_cmd_list(temp);

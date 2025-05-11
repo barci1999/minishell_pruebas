@@ -14,7 +14,8 @@ LIBS = -L$(LIBFT_DIR) -lft -L$(PRINT_DIR) -lftprintf -lreadline
 
 # Archivos fuente
 SRCS = src/main.c src/utils_doble_list.c src/utils_enums.c src/util_sintax.c src/utils_sintax2.c src/utils_sintax3.c\
-		src/utils_expand_2.c  src/utils_asigg_node_var.c borrar.c src/utils_env.c src/detectors_and_counters.c src/utils_asigg_node_var_2.c
+		src/utils_expand_2.c  src/utils_asigg_node_var.c borrar.c src/utils_env.c src/counters.c src/utils_asigg_node_var_2.c\
+		src/detectors.c
 
 # Archivos objeto
 OBJS = $(SRCS:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/07 20:26:45 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:23:46 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <sys/stat.h>
+# include <stdbool.h>
 
 typedef struct s_general
 {
@@ -146,6 +147,9 @@ char                *expand_var(char *input, size_t i, size_t j);
 // char	            **split_pipes(char *input);
 // int 	            in_quotes(char **input,int i, int j);
 // int                 is_quote(char c);
+/* counters */
+bool	nbr_quotes_ok(char *src);
+
 size_t	num_pipes(char *input, char c);
 
 /* funciones env */

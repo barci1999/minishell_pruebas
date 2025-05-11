@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 13:26:04 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/07 14:45:01 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:06:02 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ char	*ft_get_strjoin(char *s1, char *s2)
 	char	*str;
 	int		i;
 	int		j;
+
 	size_s1 = ft_get_strlen(s1);
 	size_s2 = ft_get_strlen(s2);
 	str = malloc(sizeof(char) * (size_s1 + size_s2 + 1));
@@ -112,7 +113,7 @@ char	*ft_get_strjoin(char *s1, char *s2)
 	while (j < size_s2)
 		str[i++] = s2[j++];
 	str[i] = '\0';
-	if(s1)
+	if (s1)
 		free(s1);
 	return (str);
 }

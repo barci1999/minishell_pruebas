@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 10:19:18 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/05 14:47:02 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/11 13:06:16 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*ft_strdup(const char *s1)
 {
 	char			*cpy;
 	unsigned long	n;
+
 	if (s1 == NULL)
 		return (NULL);
 	n = ft_strlen(s1);
