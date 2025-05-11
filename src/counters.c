@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 13:27:21 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/11 13:35:22 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/11 16:36:07 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,5 @@ bool nbr_quotes_ok(char *src)
 		else
 			i++;
 	}
-	printf("%i  %i\n",double_quote,single_quote);
-	return analize_nbr(&double_quote, &single_quote);
+	return (analize_nbr(&double_quote, &single_quote));
 }

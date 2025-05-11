@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/11 13:23:46 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/11 20:28:10 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <sys/stat.h>
 # include <stdbool.h>
+# include <fcntl.h>
 
 typedef struct s_general
 {
@@ -93,7 +94,7 @@ typedef struct t_list
     char            *cmd_name;  // NULL             //  cat
     char            **redirecc; // NULL             //  <
     char            **fd;       // NULL             //  infile
-    char            *delim;     // NULL             //  EOF
+    char            **delim;     // NULL             //  EOF
     struct t_list   *next;      // siguiente nodo   //  siguiente nodo
     struct t_list   *prev;      // anterior nodo    //  anterior nodo
 
@@ -116,6 +117,9 @@ int               node_to_end(t_list **list, t_list *insert);
 t_list              *new_doble_node(char *token);
 t_list              *ft_lstlast(t_list *lst);
 
+/* heredocs functions */
+void comprove_heredocs(t_list *list);
+int have_a_heredoc(t_list *node);
 
 
 
@@ -163,7 +167,7 @@ t_list	            *asigg_cont_list(t_list * list,t_general *data_gen);
 char	**assig_redirecc(char **mat, t_list *list);
 char	**assig_fd(char **mat, t_general *data_gen, t_list *list);
 size_t	nb_redirrec(char **mat);
-char	*assig_delim(char **mat, t_list *list);
+char	**assig_delim(char **mat, t_list *list);
 char	*asigg_cmd_name(char *cmd_path, t_list *list);
 char	**assig_cmd_args(char *cmd_name, char **mat, t_list *list);
 int	is_redirec(char *str);
