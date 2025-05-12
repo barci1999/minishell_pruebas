@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/10 20:46:16 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/12 12:29:50 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ static size_t	number_of_cmd_arg(const char *src)
 			{
 				if (src[i] == quote)
 				{
-					if (src[i + 1] == '\0' || is_space(src[i + 1]))
+					if (src[i + 1] == '\0' || ft_is_space(src[i + 1]))
 					{
 						result++;
 						break ;
@@ -168,12 +168,12 @@ static size_t	number_of_cmd_arg(const char *src)
 			}
 			if (is_quote(src[i]))
 				i++;
-			while (is_space(src[i]))
+			while (ft_is_space(src[i]))
 				i++;
 		}
 		else if (!is_quote(src[i]) && src[i])
 		{
-			while (src[i] && !is_space(src[i]))
+			while (src[i] && !ft_is_space(src[i]))
 			{
 				if (is_quote(src[i]))
 				{
@@ -182,7 +182,7 @@ static size_t	number_of_cmd_arg(const char *src)
 				}
 				i++;
 			}
-			if (is_space(src[i]) || src[i] == '\0')
+			if (ft_is_space(src[i]) || src[i] == '\0')
 				result++;
 			if (src[i] && !is_quote(src[i]))
 				i++;
@@ -196,7 +196,7 @@ char *add_expand_str(char *src,char *matrix,int *i)
 	char *result = NULL;
 	int j = *i;
 	(void)matrix;
-	while( src[j] && !is_space(src[j]) && !is_quote(src[j]))
+	while( src[j] && !ft_is_space(src[j]) && !is_quote(src[j]))
 		j++;
 	expanded = getenv(ft_substr(src,*i,j - *i));
 	result = malloc((((ft_strlen(expanded) + ft_strlen(src)) + 1)) * sizeof(char));
@@ -241,9 +241,9 @@ static void	in_double_quote(char *src, int *i, char ***matrix, int m)
 		(*i)++;
 	while (src[*i])
 	{
-		if (src[*i] == '\"' || is_space(src[*i] || src[*i] == '\0'))
+		if (src[*i] == '\"' || ft_is_space(src[*i] || src[*i] == '\0'))
 		{
-			if (is_quote(src[*i]) || is_space(src[*i]))
+			if (is_quote(src[*i]) || ft_is_space(src[*i]))
 				(*i)++;
 			break ;
 		}
@@ -268,9 +268,9 @@ static void	in_single_quote(char *src, int *i, char ***matrix, int m)
 		(*i)++;
 	while (src[*i])
 	{
-		if (src[*i] == '\'' || is_space(src[*i] || src[*i] == '\0'))
+		if (src[*i] == '\'' || ft_is_space(src[*i] || src[*i] == '\0'))
 		{
-			if (is_quote(src[*i]) || is_space(src[*i]))
+			if (is_quote(src[*i]) || ft_is_space(src[*i]))
 				(*i)++;
 			break ;
 		}
@@ -286,7 +286,7 @@ static void	no_quote(char *src, int *i, char ***matrix, int m)
 
 	while (src[*i])
 	{
-		if (is_quote(src[*i]) || is_space(src[*i]) || src[*i] == '\0')
+		if (is_quote(src[*i]) || ft_is_space(src[*i]) || src[*i] == '\0')
 			break ;
 		else if (src[*i] == '$' && src[*i+1])
 		{
@@ -314,15 +314,15 @@ char	**take_the_arg(char *src)
 	m = 0;
 	while (src[i])
 	{
-		while (src[i] && is_space(src[i]))
+		while (src[i] && ft_is_space(src[i]))
 			i++;
 		if (src[i] == '\'')
 			in_single_quote(src, &i, &matrix, m);
 		else if (src[i] == '\"')
 			in_double_quote(src, &i, &matrix, m);
-		else if (!is_quote(src[i]) && (!is_space(src[i])))
+		else if (!is_quote(src[i]) && (!ft_is_space(src[i])))
 			no_quote(src, &i, &matrix, m);
-		if (is_space(src[i]) || src[i] == '\0')
+		if (ft_is_space(src[i]) || src[i] == '\0')
 			m++;
 	}
 	return (matrix[m] = NULL, matrix);

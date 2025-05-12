@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/11 20:28:10 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/12 12:58:40 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,12 @@ typedef struct s_general
 
 typedef enum e_token_type
 {
-    CMD,          // Comando (por ejemplo, 'ls', 'cat', etc.)
-    ARG,          // Argumento de un comando (por ejemplo, 'archivo.txt','directorio', etc.)
     PIPE,         // Operador pipe '|'
-    REDIR_IN,     // Redirección de entrada '<'
-    REDIR_OUT,    // Redirección de salida '>'
-    REDIR_APPEND, // Redirección de salida en modo append '>>'
+    STD_IN,     // Redirección de entrada '<'
     HEREDOC,      // Redirección de entrada con delimitador '<<'
-    ENV_VAR,      // Variables de entorno, por ejemplo '$HOME'
-    DOLLAR_EXIT,  // Expansión de $? para el estado de salida
-    QUOTE,        // Comillas simples (') o dobles (")
-    WORD,         // Token inválido o no reconocido
     FD,           // entrada de la redireccion
-    BUILTIN,
-    DELIM,
+    STD_OUT,
+    FD_APPEND,
 }                   t_token_type;
 
 typedef enum e_signal_type
@@ -104,73 +96,50 @@ typedef struct t_list
 
 void                print_cmd_list(t_list *list);
 
-/* tokens functions  */
-t_token_type        classify_tokken(char *token);
-t_list              *tokenize(char *input);
-void                change_word(t_list **list);
-int                 is_builting(char *token);
-int	                is_space(char c);
 
 /* list fuctions  */
 void                free_list(t_list **list);
 int               node_to_end(t_list **list, t_list *insert);
 t_list              *new_doble_node(char *token);
-t_list              *ft_lstlast(t_list *lst);
 
 /* heredocs functions */
+
 void comprove_heredocs(t_list *list);
+void	open_all_herdocs(t_list *list);
+void	open_the_heredoc(t_list *list, int redir_index, int delim_index);
+
+/* execution functions */
+
+void execute_list(t_list *list);
+
+/* detectors */
+
+
+int                 is_builting(char *token);
 int have_a_heredoc(t_list *node);
-
-
-
-/* Sintax functions  */
-void                sintax_list(t_list **list);
-int                 sintax_heredoc(t_token_type type,t_list *comprove);
-int                 sintax_env_var(t_token_type type,t_list *comprove);
-int                 sintax_redir_in(t_token_type type ,t_list *comprove);
-int                 sintax_fd(t_token_type type,t_list *comprove);
-int                 sintax_cmd(t_token_type type,t_list *comprove);
-int                 sintax_arg(t_token_type type,t_list *comprove);
-int                 sintax_pipe(t_token_type type,t_list *comprove);
-int                 sintax_redirs_out(t_token_type type,t_list *comprove);
-int                 sintax_redir_in(t_token_type type,t_list *comprove);
-int                 sintax_builting(t_token_type type, t_list *comprove);
-void                fun_error_sintax(char *error,t_list **list);
-int                 sintax_dollar_exit(t_token_type type, t_list *comprove);
-
-/* Expand Vatriable  */
-
-size_t              nb_of_quotes(char *input);
-char                *rem_sin_quotes(char *input);
-char                *expand_str(char *input);
-char                *expand_var(char *input, size_t i, size_t j);
-
-/* pruebas de funciones */
-//size_t              num_pipes(char *input);
-// void	            rem_space(char **input, int *i, int *j);
-// char	            **split_pipes(char *input);
-// int 	            in_quotes(char **input,int i, int j);
-// int                 is_quote(char c);
-/* counters */
+int	is_redirec(char *str);
+int                 is_cmd(char *comprove,t_general *data_gen);
+t_token_type identify_reddir_in(t_list *node);
+t_token_type identify_reddir_out(t_list *node);
 bool	nbr_quotes_ok(char *src);
 
+/* counters */
+
+size_t	nb_redirrec(char **mat);
 size_t	num_pipes(char *input, char c);
 
 /* funciones env */
 char	            **take_paths_env(char **envp);
 char	            *take_cmd_path(char *comprove, t_general *data_gen);
-int                 is_cmd(char *comprove,t_general *data_gen);
 
 /* funciones de asignacion de variables a los nodos */
 t_list              *mat_to_list(char **mat);
 t_list	            *asigg_cont_list(t_list * list,t_general *data_gen);
 char	**assig_redirecc(char **mat, t_list *list);
 char	**assig_fd(char **mat, t_general *data_gen, t_list *list);
-size_t	nb_redirrec(char **mat);
 char	**assig_delim(char **mat, t_list *list);
 char	*asigg_cmd_name(char *cmd_path, t_list *list);
 char	**assig_cmd_args(char *cmd_name, char **mat, t_list *list);
-int	is_redirec(char *str);
 char	*asig_cmd_path(char **mat_content, t_general *data_gen, t_list *list);
 char	*take_cmd_path(char *comprove, t_general *data_gen);
 #endif
