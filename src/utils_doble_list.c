@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/10 20:43:49 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/12 21:25:28 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,26 @@ int	node_to_end(t_list **list, t_list *insert)
 void	free_list(t_list **list)
 {
 	t_list	*temp;
+	t_list	*next;
 
-	while (*list)
+	if (!list || !*list)
+		return;
+	
+	temp = *list;
+	while (temp)
 	{
-		temp = *list;
-		*list = (*list)->next;
+		next = temp->next;
 
 		free(temp->cmd_name);
 		free(temp->cmd_path);
 		free(temp->content);
-		free(temp->delim);
+		ft_free_mat(temp->delim);
 		ft_free_mat(temp->cmd_arg);
 		ft_free_mat(temp->redirecc);
 		ft_free_mat(temp->fd);
 
 		free(temp);
+		temp = next;
 	}
 	*list = NULL;
 }
@@ -88,8 +93,23 @@ t_list	*mat_to_list(char **mat)
 	{
 		if (node_to_end(&list, new_doble_node(mat[i])) == -1)
 			return (free_list(&list), ft_free_mat(mat), NULL);
-		
 	}
 	ft_free_mat(mat);
 	return (list);
+}
+size_t	list_size(t_list **list)
+{
+	size_t	result;
+	t_list	*current;
+
+	if (!*list)
+		return (0);
+	result = 0;
+	current = *list;
+	while (current)
+	{
+		result++;
+		current = current->next;
+	}
+	return (result);
 }

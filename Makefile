@@ -22,7 +22,8 @@ SRCS =  src/main.c\
 		src/utils_asigg_node_var_2.c\
 		src/detectors.c\
 		src/heredocs.c\
-		src/execution.c
+		src/execution.c\
+		src/procces.c\
 
 # Archivos objeto
 OBJS = $(SRCS:.c=.o)
