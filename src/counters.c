@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 13:27:21 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/11 16:36:07 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:43:54 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,15 @@ static bool	analize_nbr(int *double_quote, int *single_quote)
 	else
 		return (false);
 }
-bool nbr_quotes_ok(char *src)
+bool	nbr_quotes_ok(char *src)
 {
-	int i = 0;
-	int double_quote = 0;
-	int single_quote = 0;
+	int	i;
+	int	double_quote;
+	int	single_quote;
 
+	i = 0;
+	double_quote = 0;
+	single_quote = 0;
 	while (src[i])
 	{
 		if (src[i] == '\"')

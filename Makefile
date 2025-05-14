@@ -21,9 +21,12 @@ SRCS =  src/main.c\
 		src/counters.c\
 		src/utils_asigg_node_var_2.c\
 		src/detectors.c\
+		src/detectors_2.c\
 		src/heredocs.c\
 		src/execution.c\
+		src/redirections.c\
 		src/procces.c\
+
 
 # Archivos objeto
 OBJS = $(SRCS:.c=.o)

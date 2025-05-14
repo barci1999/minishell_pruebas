@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/12 12:24:59 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:06:52 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 					temp = asigg_cont_list(temp,&data_gen);
 				}
 				comprove_heredocs(temp);
-				execute_list(temp);
+				execute_list(temp,data_gen);
 				print_cmd_list(temp);
 				free_list(&temp);
 				free(input);	

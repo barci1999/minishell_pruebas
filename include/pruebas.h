@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/12 20:58:41 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:42:04 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ typedef struct s_general
 {
 	char		**my_env;
 	int			tem_heredoc;
+	pid_t		*pids;
+	int			**pipes;
 
 }				t_general;
 
@@ -95,6 +97,10 @@ typedef struct t_list
 
 void			print_cmd_list(t_list *list);
 
+/*    liberacion y errores  */
+
+void			free_int_matrix(int **matrix, size_t len);
+
 /* list fuctions      */
 
 void			free_list(t_list **list);
@@ -108,14 +114,19 @@ void			comprove_heredocs(t_list *list);
 void			open_all_herdocs(t_list *list);
 void			open_the_heredoc(t_list *list, int redir_index,
 					int delim_index);
+					
+/* redirection functions */
+void	open_and_redir_out(t_list *node, t_general *general, int i);
+void	open_and_redir_in(t_list *node, t_general *general, int i);
 
 /* execution functions */
 
-void			execute_list(t_list *list);
+void			execute_list(t_list *list, t_general general);
 
 /* procces function    */
 
 pid_t			*gen_pid_array(size_t nbr_proces);
+int				**gen_pipes_array(size_t n_cmd);
 
 /* detectors           */
 
@@ -125,6 +136,8 @@ int				is_redirec(char *str);
 int				is_cmd(char *comprove, t_general *data_gen);
 t_token_type	identify_reddir_in(t_list *node);
 t_token_type	identify_reddir_out(t_list *node);
+int				return_fd_in(t_list *node);
+int				return_fd_out(t_list *node);
 
 /* counters */
 

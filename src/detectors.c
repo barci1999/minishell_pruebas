@@ -6,11 +6,11 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:07:13 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/12 12:30:05 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:44:02 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include "pruebas.h"
 
 int	is_cmd(char *comprove, t_general *data_gen)
 {
@@ -22,8 +22,8 @@ int	is_cmd(char *comprove, t_general *data_gen)
 
 	i = 0;
 	temp = NULL;
-	if(is_builting(comprove))
-		return(1);
+	if (is_builting(comprove))
+		return (1);
 	if (ft_strchr(comprove, '/'))
 	{
 		if (access(comprove, X_OK) == 0 && stat(comprove, &sb) == 0
@@ -41,11 +41,11 @@ int	is_cmd(char *comprove, t_general *data_gen)
 		if (!cmd_path)
 			return (ft_free_mat(paths), 0);
 		if (access(cmd_path, X_OK) == 0)
-			return (ft_free_mat(paths),free(cmd_path), 1);
+			return (ft_free_mat(paths), free(cmd_path), 1);
 		free(cmd_path);
 		i++;
 	}
-	return (ft_free_mat(paths),0);
+	return (ft_free_mat(paths), 0);
 }
 int	is_builting(char *token)
 {
@@ -80,14 +80,14 @@ int	is_redirec(char *str)
 	else
 		return (0);
 }
-int have_a_heredoc(t_list *node)
+int	have_a_heredoc(t_list *node)
 {
 	int i = 0;
 	while (node->redirecc[i])
 	{
-		if(ft_strcmp(node->redirecc[i],"<<") == 0)
-			return(1);
-		i++;	
+		if (ft_strcmp(node->redirecc[i], "<<") == 0)
+			return (1);
+		i++;
 	}
-	return(0);
+	return (0);
 }
