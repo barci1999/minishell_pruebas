@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/12 18:05:42 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:24:40 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,6 @@ static void	in_double_quote(char *src, int *i, char ***matrix, int m)
 		else
 			temp = add_chr_to_str(matrix[0][m], src[*i]);
 		matrix[0][m] = ft_strdup(temp);
-		printf("%s\n",matrix[0][m]);
 		free(temp);
 		(*i)++;
 	}

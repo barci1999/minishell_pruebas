@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/14 18:42:04 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:16:48 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <unistd.h>
+# include <wait.h>
 
 typedef struct s_general
 {
@@ -29,6 +30,7 @@ typedef struct s_general
 	int			tem_heredoc;
 	pid_t		*pids;
 	int			**pipes;
+	int			last_exit_code;
 
 }				t_general;
 

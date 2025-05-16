@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:39:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/14 18:44:26 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:47:46 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	open_and_redir_in(t_list *node, t_general *general, int i)
 	int	fd;
 
 	fd = -2;
+	printf("esto es la entrada %s\n",node->fd[return_fd_in(node)]);
 	if (!node->prev && identify_reddir_in(node) == STD_IN)
 		return ;
 	if (!node->prev && identify_reddir_in(node) != STD_IN)
@@ -30,9 +31,11 @@ void	open_and_redir_in(t_list *node, t_general *general, int i)
 		close(general->pipes[i - 1][0]);
 		return ;
 	}
+	printf("%i\n",identify_reddir_in(node));
 	if (fd == -1)
 	{
 		perror("Error abriendo archivo para entrada");
+		exit(1);
 		return ;
 	}
 	dup2(fd, STDIN_FILENO);
@@ -40,9 +43,11 @@ void	open_and_redir_in(t_list *node, t_general *general, int i)
 }
 void	open_and_redir_out(t_list *node, t_general *general, int i)
 {
-	int fd;
+	int	fd;
 
 	fd = -2;
+	printf("esto es la salida %s\n",node->fd[return_fd_out(node)]);
+	ft_putendl_fd(node->fd[return_fd_out(node)],0);
 	if (!node->next && identify_reddir_out(node) == STD_OUT)
 		return ;
 	else if (!node->next && (identify_reddir_out(node) == FD
