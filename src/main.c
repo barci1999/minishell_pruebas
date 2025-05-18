@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/16 18:02:21 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/18 18:10:46 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int argc, char **argv, char **envp)
 				else
 				{
 					node_to_end(&temp,new_doble_node(input));
+					
 					temp = asigg_cont_list(temp,&data_gen);
 				}
 				comprove_heredocs(temp);

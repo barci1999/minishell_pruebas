@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:39:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/16 17:47:46 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/18 21:38:19 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	open_and_redir_in(t_list *node, t_general *general, int i)
 	int	fd;
 
 	fd = -2;
-	printf("esto es la entrada %s\n",node->fd[return_fd_in(node)]);
 	if (!node->prev && identify_reddir_in(node) == STD_IN)
 		return ;
 	if (!node->prev && identify_reddir_in(node) != STD_IN)
@@ -27,11 +26,10 @@ void	open_and_redir_in(t_list *node, t_general *general, int i)
 		fd = open(node->fd[return_fd_in(node)], O_RDONLY);
 	else if (node->prev && identify_reddir_in(node) == PIPE)
 	{
-		dup2(general->pipes[i - 1][0], STDIN_FILENO);
-		close(general->pipes[i - 1][0]);
+		dup2(general->pipes[i][0], STDIN_FILENO);
+		close(general->pipes[i][1]);
 		return ;
 	}
-	printf("%i\n",identify_reddir_in(node));
 	if (fd == -1)
 	{
 		perror("Error abriendo archivo para entrada");
@@ -41,30 +39,57 @@ void	open_and_redir_in(t_list *node, t_general *general, int i)
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 }
-void	open_and_redir_out(t_list *node, t_general *general, int i)
+static void	no_node_next(t_list *node, int *fd)
 {
-	int	fd;
-
-	fd = -2;
-	printf("esto es la salida %s\n",node->fd[return_fd_out(node)]);
-	ft_putendl_fd(node->fd[return_fd_out(node)],0);
 	if (!node->next && identify_reddir_out(node) == STD_OUT)
 		return ;
 	else if (!node->next && (identify_reddir_out(node) == FD
 			|| identify_reddir_out(node) == FD_APPEND))
 	{
 		if (identify_reddir_out(node) == FD)
-			fd = open(node->fd[return_fd_out(node)],
+			*fd = open(node->fd[return_fd_out(node)],
 					O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else if (identify_reddir_out(node) == FD_APPEND)
-			fd = open(node->fd[return_fd_out(node)],
+			*fd = open(node->fd[return_fd_out(node)],
+					O_WRONLY | O_CREAT | O_APPEND, 0644);
+	}
+}
+static void	node_next(t_list *node, t_general *general, int *i, int *fd)
+{
+	if (node->next && (identify_reddir_out(node) == FD
+			|| identify_reddir_out(node) == FD_APPEND))
+	{
+		if (identify_reddir_out(node) == FD)
+			*fd = open(node->fd[return_fd_out(node)],
+					O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else if (identify_reddir_out(node) == FD_APPEND)
+			*fd = open(node->fd[return_fd_out(node)],
 					O_WRONLY | O_CREAT | O_APPEND, 0644);
 	}
 	else if (node->next && identify_reddir_out(node) == PIPE)
 	{
-		dup2(general->pipes[i + 1][1], STDOUT_FILENO);
-		close(general->pipes[i + 1][1]);
+		dup2(general->pipes[*i][1], STDOUT_FILENO);
+		close(general->pipes[*i][1]);
+		close(general->pipes[*i][0]);
 		return ;
+	}
+}
+void	open_and_redir_out(t_list *node, t_general *general, int i)
+{
+	int	fd;
+
+	fd = -2;
+	if (!node->next)
+	{
+		no_node_next(node,&fd);
+		if (!node->next && identify_reddir_out(node) == STD_OUT)
+			return ;
+	}
+	else if (node->next)
+	{
+		node_next(node, general, &i, &fd);
+		if (node->next && identify_reddir_out(node) == PIPE)
+			return ;
 	}
 	if (fd == -1)
 	{
@@ -73,4 +98,6 @@ void	open_and_redir_out(t_list *node, t_general *general, int i)
 	}
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
+	close(general->pipes[i][0]);
+	close(general->pipes[i][1]);
 }

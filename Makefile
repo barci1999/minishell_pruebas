@@ -26,6 +26,7 @@ SRCS =  src/main.c\
 		src/execution.c\
 		src/redirections.c\
 		src/procces.c\
+		src/builtings/echo.c
 
 
 # Archivos objeto

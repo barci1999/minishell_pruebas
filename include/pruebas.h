@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/16 15:16:48 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/18 19:13:59 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,10 @@ typedef struct t_list
 	struct t_list *prev; // anterior nodo    //  anterior nodo
 
 }				t_list;
+
+/*   funciones de builtings */
+void execute_builting(t_list *node);
+void	ft_echo(char **args);
 
 /* funcciones a borrar  */
 
