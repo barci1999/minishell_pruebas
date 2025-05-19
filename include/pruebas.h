@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/18 19:13:59 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:06:47 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <wait.h>
+#
 
 typedef struct s_general
 {
@@ -90,14 +91,41 @@ typedef struct t_list
 	char **redirecc;     // NULL             //  <
 	char **fd;           // NULL             //  infile
 	char **delim;        // NULL             //  EOF
+	int 	order;
+	char *variable;
 	struct t_list *next; // siguiente nodo   //  siguiente nodo
 	struct t_list *prev; // anterior nodo    //  anterior nodo
 
 }				t_list;
 
+typedef struct s_mini
+{
+	t_list *first_node;   // Apunta al primer nodo de la lista de variables de entorno
+	t_list *node_inter;   // Iterador temporal para recorrer la lista
+	int total_nodes;      // Número total de variables en la lista
+}					t_mini;
+
 /*   funciones de builtings */
-void execute_builting(t_list *node);
+
+void execute_builting(t_list *node,t_mini *mini);
 void	ft_echo(char **args);
+int	ft_export(char **args, t_mini *mini);
+int	export_args(char **args, t_mini *mini);
+int	print_single_export(t_list *node);
+void	nodes_order(t_mini *mini);
+void	add_or_update_variable(t_mini *mini, char *var, char *value);
+t_list	*new_node_export(char *var, char *value);
+int	is_valid_variable_export(char *var);
+char	*ft_strndup(const char *s, size_t len);
+
+/* enviroment functions */
+
+
+t_list	*create_env_node(char *var, char *value);
+void	add_env_var(t_mini *mini, char *var, char *value);
+void	init_env_list(t_mini *mini, char **envp);
+void	free_env_list(t_mini *mini);
+
 
 /* funcciones a borrar  */
 
@@ -127,7 +155,7 @@ void	open_and_redir_in(t_list *node, t_general *general, int i);
 
 /* execution functions */
 
-void			execute_list(t_list *list, t_general general);
+void			execute_list(t_list *list, t_general general,t_mini *mini);
 
 /* procces function    */
 

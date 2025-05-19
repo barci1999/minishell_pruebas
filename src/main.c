@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/18 18:10:46 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:26:35 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*input = NULL;
 	t_list *temp = NULL;
+	t_mini mini;
 	t_general data_gen;
 	ft_memset(&temp,0,sizeof(temp));
 
@@ -25,6 +26,9 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	if(envp)
 		data_gen.my_env = ft_dup_mat(envp);
+	mini.first_node = NULL;
+	mini.total_nodes = 0;
+	init_env_list(&mini, envp);
 	//else
 		//data_gen.my_env = gen_env();		
 	while (1)
@@ -45,11 +49,13 @@ int	main(int argc, char **argv, char **envp)
 				else
 				{
 					node_to_end(&temp,new_doble_node(input));
-					
 					temp = asigg_cont_list(temp,&data_gen);
 				}
 				comprove_heredocs(temp);
-				execute_list(temp,data_gen);
+				if(num_pipes(input,'|') == 0 && is_builting(temp->cmd_path))
+					execute_builting(temp,&mini);
+				if(num_pipes(input,'|') != 0)
+					execute_list(temp,data_gen,&mini);
 				print_cmd_list(temp);
 				free_list(&temp);
 				free(input);	

@@ -6,19 +6,21 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/18 21:29:59 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:11:51 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pruebas.h"
 
-void execute_builting(t_list *node)
+void execute_builting(t_list *node,t_mini *mini)
 {
 	if(ft_strcmp(node->cmd_path,"echo") == 0)
 		ft_echo(node->cmd_arg);
+	if(ft_strcmp(node->cmd_path,"export") == 0)
+		ft_export(node->cmd_arg,mini);
 }
 
-void 	execute_node(t_list *node,t_general *general)
+void 	execute_node(t_list *node,t_general *general,t_mini *mini)
 {
 	if (!is_builting(node->cmd_path))
 	{
@@ -26,11 +28,11 @@ void 	execute_node(t_list *node,t_general *general)
 	}
 	else if (is_builting(node->cmd_path))
 	{
-		execute_builting(node);
+		execute_builting(node,mini);
 		exit(1);
 	}
 }
-void	execute_list(t_list *list, t_general general)
+void	execute_list(t_list *list, t_general general,t_mini *mini)
 {
 	t_list	*current;
 	int		i;
@@ -56,7 +58,7 @@ void	execute_list(t_list *list, t_general general)
 		{
 			open_and_redir_in(current, &general, i);
 			open_and_redir_out(current, &general, i);
-			execute_node(current,&general);
+			execute_node(current,&general,mini);
 		}
 		else
 		{
