@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 17:26:35 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:13:46 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 	if (argc < 1)
 		return (1);
-	if(envp)
-		data_gen.my_env = ft_dup_mat(envp);
 	mini.first_node = NULL;
 	mini.total_nodes = 0;
 	init_env_list(&mini, envp);
@@ -45,19 +43,30 @@ int	main(int argc, char **argv, char **envp)
 				}
 				add_history(input);
 				if(num_pipes(input,'|') != 0)
-					temp = asigg_cont_list(mat_to_list(ft_split_quotes(input,'|')),&data_gen);
+				{
+					temp = asigg_cont_list(mat_to_list(ft_split_quotes(input,'|')),&data_gen,&mini);
+				}
 				else
 				{
 					node_to_end(&temp,new_doble_node(input));
-					temp = asigg_cont_list(temp,&data_gen);
+					temp = asigg_cont_list(temp,&data_gen,&mini);
 				}
-				comprove_heredocs(temp);
-				if(num_pipes(input,'|') == 0 && is_builting(temp->cmd_path))
-					execute_builting(temp,&mini);
-				if(num_pipes(input,'|') != 0)
-					execute_list(temp,data_gen,&mini);
-				print_cmd_list(temp);
-				free_list(&temp);
+				if(temp)
+				{
+					comprove_heredocs(temp);
+					if(num_pipes(input,'|') == 0 && is_builting(temp->cmd_path))
+						execute_builting(temp,&mini);
+					else
+					{
+						execute_list(temp,data_gen,&mini);
+					}
+					print_cmd_list(temp);
+					free_list(&temp);
+				}
+				else
+					{
+						ft_putendl_fd("Error",0);
+					}
 				free(input);	
 			}
 	}

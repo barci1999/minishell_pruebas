@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 17:06:47 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:01:47 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,13 @@ void	nodes_order(t_mini *mini);
 void	add_or_update_variable(t_mini *mini, char *var, char *value);
 t_list	*new_node_export(char *var, char *value);
 int	is_valid_variable_export(char *var);
-char	*ft_strndup(const char *s, size_t len);
+int	ft_env(char **args, t_mini *mini);
+void	ft_pwd(void);
+void	new_pwd(char *new_path);
+void	previous_pwd(void);
+void	ft_cd(char **args);
+int	ft_exit(char **exit_args);
+int	ft_unset(char **args, t_mini *mini);
 
 /* enviroment functions */
 
@@ -125,6 +131,8 @@ t_list	*create_env_node(char *var, char *value);
 void	add_env_var(t_mini *mini, char *var, char *value);
 void	init_env_list(t_mini *mini, char **envp);
 void	free_env_list(t_mini *mini);
+char	**env_list_to_array(t_mini *mini);
+char	*build_env_string(t_list *node);
 
 
 /* funcciones a borrar  */
@@ -186,7 +194,7 @@ char			*take_cmd_path(char *comprove, t_general *data_gen);
 /* funciones de asignacion de variables a los nodos */
 
 t_list			*mat_to_list(char **mat);
-t_list			*asigg_cont_list(t_list *list, t_general *data_gen);
+t_list			*asigg_cont_list(t_list *list, t_general *data_gen,t_mini *mini);
 char			**assig_redirecc(char **mat, t_list *list);
 char			**assig_fd(char **mat, t_general *data_gen, t_list *list);
 char			**assig_delim(char **mat, t_list *list);

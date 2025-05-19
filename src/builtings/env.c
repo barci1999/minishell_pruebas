@@ -1,38 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_env.c                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 17:06:44 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 20:06:13 by pablalva         ###   ########.fr       */
+/*   Created: 2025/05/19 18:03:39 by pablalva          #+#    #+#             */
+/*   Updated: 2025/05/19 18:04:03 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"pruebas.h"
 
-char	**take_paths_env(char **envp)
+int	ft_env(char **args, t_mini *mini)
 {
-	int		i;
-	char	*path_env;
-	char	**paths;
-	i = 0;
-	paths = NULL;
-	path_env = NULL;
-	while (*envp)
+	t_list	*temp;
+	if (args[1])
 	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
+		printf("minishell: env: Args not allowed\n");
+		return (1);
+	}
+	temp = mini->first_node;
+	while (temp)
+	{
+		if (temp->variable && temp->content)
 		{
-			path_env = envp[i] + 5;
-			break ;
+			printf("%s=%s\n", temp->variable, temp->content);
 		}
-		envp++;
+		temp = temp->next;
 	}
-	paths = ft_split(path_env, ':');
-	if (paths == NULL)
-	{
-		return(NULL);
-	}
-	return (paths);
+	printf("se ha usado mi env\n");
+	return (0);
 }

@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_env.c                                        :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 17:06:44 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 20:06:13 by pablalva         ###   ########.fr       */
+/*   Created: 2025/05/19 19:04:51 by pablalva          #+#    #+#             */
+/*   Updated: 2025/05/19 19:05:07 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include"libft.h"
 
-char	**take_paths_env(char **envp)
+char	*ft_strndup(const char *s, size_t len)
 {
-	int		i;
-	char	*path_env;
-	char	**paths;
-	i = 0;
-	paths = NULL;
-	path_env = NULL;
-	while (*envp)
-	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-		{
-			path_env = envp[i] + 5;
-			break ;
-		}
-		envp++;
-	}
-	paths = ft_split(path_env, ':');
-	if (paths == NULL)
-	{
-		return(NULL);
-	}
-	return (paths);
+	char	*dest;
+	char	*start;
+	size_t	i;
+
+	if (s == NULL)
+		return (NULL);
+	dest = (char *)malloc(len + 1);
+	if (dest == NULL)
+		return (NULL);
+	start = dest;
+	for (i = 0; i < len && s[i] != '\0'; i++)
+		*dest++ = s[i];
+	*dest = '\0';
+	return (start);
 }

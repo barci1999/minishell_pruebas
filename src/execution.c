@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 17:11:51 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/19 19:52:03 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,18 @@ void execute_builting(t_list *node,t_mini *mini)
 {
 	if(ft_strcmp(node->cmd_path,"echo") == 0)
 		ft_echo(node->cmd_arg);
-	if(ft_strcmp(node->cmd_path,"export") == 0)
+	else if(ft_strcmp(node->cmd_path,"export") == 0)
 		ft_export(node->cmd_arg,mini);
+	else if(ft_strcmp(node->cmd_path,"env") == 0)
+		ft_env(node->cmd_arg,mini);
+	else if(ft_strcmp(node->cmd_path,"pwd") == 0)
+		ft_pwd();
+	else if(ft_strcmp(node->cmd_path,"cd") == 0)
+		ft_cd(node->cmd_arg);
+	else if(ft_strcmp(node->cmd_path,"exit") == 0)
+		ft_exit(node->cmd_arg);
+	else if(ft_strcmp(node->cmd_path,"unset")  == 0)
+		ft_unset(node->cmd_arg,mini);
 }
 
 void 	execute_node(t_list *node,t_general *general,t_mini *mini)

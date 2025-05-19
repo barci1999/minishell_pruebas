@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:13:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 17:07:46 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/19 19:06:10 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,30 @@ void	free_env_list(t_mini *mini)
 	mini->first_node = NULL;
 	mini->total_nodes = 0;
 }
-char	*ft_strndup(const char *s, size_t len)
+char	**env_list_to_array(t_mini *mini)
 {
-	char	*dest;
-	char	*start;
-	size_t	i;
+	char	**envp;
+	t_list	*current;
+	int		i;
 
-	if (s == NULL)
+	i = 0;
+	current = mini->first_node;
+	envp = malloc(sizeof(char *) * (mini->total_nodes + 1));
+	if (!envp)
 		return (NULL);
-	dest = (char *)malloc(len + 1);
-	if (dest == NULL)
-		return (NULL);
-	start = dest;
-	for (i = 0; i < len && s[i] != '\0'; i++)
-		*dest++ = s[i];
-	*dest = '\0';
-	return (start);
+	while (current)
+	{
+		envp[i] = build_env_string(current);
+		if (!envp[i])
+		{
+			while (i > 0)
+				free(envp[--i]);
+			free(envp);
+			return (NULL);
+		}
+		current = current->next;
+		i++;
+	}
+	envp[i] = NULL;
+	return (envp);
 }

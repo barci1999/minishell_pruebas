@@ -31,6 +31,13 @@ SRCS =  src/main.c\
 		src/builtings/export.c\
 		src/builtings/utils_export.c\
 		src/builtings/utils_export_2.c\
+		src/builtings/env.c\
+		src/builtings/pwd.c\
+		src/builtings/cd.c\
+		src/builtings/exit.c\
+		src/builtings/unset.c\
+		src/enviroment/utils_enviroment_2.c\
+		
 
 
 # Archivos objeto

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:07:13 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/14 18:44:02 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:14:19 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	is_cmd(char *comprove, t_general *data_gen)
 		return (0);
 	}
 	paths = take_paths_env(data_gen->my_env);
+	if(!paths)
+		return(0);
 	while (paths[i])
 	{
 		temp = ft_strjoin(paths[i], "/");

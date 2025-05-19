@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/16 15:24:40 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/19 20:11:42 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,19 +327,21 @@ char	**take_the_arg(char *src)
 	}
 	return (matrix[m] = NULL, matrix);
 }
-t_list	*asigg_cont_list(t_list *list, t_general *data_gen)
+t_list	*asigg_cont_list(t_list *list, t_general *data_gen,t_mini *mini)
 {
 	t_list	*current;
 	char	**mat_content;
-
 	current = list;
 	data_gen->tem_heredoc = 0;
+	data_gen->my_env = env_list_to_array(mini);
 	while (current)
 	{
 		mat_content = take_the_arg(current->content);
 		if (!mat_content)
 			return (ft_free_mat(mat_content), NULL);
 		current->cmd_path = asig_cmd_path(mat_content, data_gen, list);
+		if(!current->cmd_path)
+			return(NULL);
 		current->cmd_name = asigg_cmd_name(current->cmd_path, list);
 		current->cmd_arg = assig_cmd_args(current->cmd_name, mat_content, list);
 		current->delim = assig_delim(mat_content, list);
