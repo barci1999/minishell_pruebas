@@ -25,6 +25,7 @@ SRCS =  src/main.c\
 		src/detectors_2.c\
 		src/heredocs.c\
 		src/execution.c\
+		src/expand_str.c\
 		src/redirections.c\
 		src/procces.c\
 		src/enviroment/utils_enviroment.c\

@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/20 16:40:51 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/20 17:49:29 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,5 +213,10 @@ char			**assig_cmd_args(char *cmd_name, char **mat, t_list *list);
 char			*asig_cmd_path(char **mat_content, t_general *data_gen,
 					t_list *list);
 char			*take_cmd_path(char *comprove, t_general *data_gen);
+
+/*    expancion de variable    */
+
+int	is_quote(char c);
+char *add_expand_str(char *src,char *matrix,int *i);
 
 #endif

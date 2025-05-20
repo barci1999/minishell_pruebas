@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_asigg_node_var.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 20:11:42 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:49:18 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ char	*asigg_cmd_name(char *cmd_path, t_list *list)
 	else
 		return (NULL);
 }
-static int	is_quote(char c)
+int	is_quote(char c)
 {
 	if (c == '\'' || c == '\"')
 		return (1);
@@ -190,25 +190,7 @@ static size_t	number_of_cmd_arg(const char *src)
 	}
 	return (result);
 }
-char *add_expand_str(char *src,char *matrix,int *i)
-{
-	char *expanded;
-	char *result = NULL;
-	int j = *i;
-	(void)matrix;
-	while( src[j] && !ft_is_space(src[j]) && !is_quote(src[j]))
-		j++;
-	expanded = getenv(ft_substr(src,*i,j - *i));
-	result = malloc((((ft_strlen(expanded) + ft_strlen(src)) + 1)) * sizeof(char));
-	if(!result)
-	{
-		/* gestion de leaks*/
-	}
-	ft_strlcpy(result,matrix,ft_strlen(matrix) + 1);
-	ft_strlcat(result,expanded,ft_strlen(matrix) + ft_strlen(expanded) + 1);
-	*i = j - 1;
-	return(result);
-}
+
 char	*add_chr_to_str(char *src, char c)
 {
 	char	*result;
