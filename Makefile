@@ -19,6 +19,7 @@ SRCS =  src/main.c\
 		borrar.c\
 		src/utils_env.c\
 		src/counters.c\
+		src/ctrls.c\
 		src/utils_asigg_node_var_2.c\
 		src/detectors.c\
 		src/detectors_2.c\
