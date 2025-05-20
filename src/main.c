@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/20 12:49:38 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:43:14 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,16 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	mini.first_node = NULL;
 	mini.total_nodes = 0;
-	init_env_list(&mini, envp);	
+	init_env_list(&mini, envp);
+	ctrls(0);
 	while (1)
 	{
 		input = readline("minishell -> ");
 		if (input == NULL)
+		{
+			printf("🟡 Se ha usado Ctrl-D\n");
 			break ;
+		}
 		if (*input != '\0')
 			{
 				add_history(input);

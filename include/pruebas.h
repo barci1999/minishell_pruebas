@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pruebas.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 20:01:47 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:40:51 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,12 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <wait.h>
-#
+# include <signal.h>
+
+typedef struct s_shell
+{
+	int				last_exit_status;
+}					t_shell;
 
 typedef struct s_general
 {
@@ -104,6 +109,11 @@ typedef struct s_mini
 	t_list *node_inter;   // Iterador temporal para recorrer la lista
 	int total_nodes;      // Número total de variables en la lista
 }					t_mini;
+
+/*    funciones ctrls      */
+void	ctrls(int is_child);
+void	ctrl_child(int signal, t_shell *shell);
+void	ctrl_minishell(int signal, t_shell *shell);
 
 /*   funciones de builtings */
 
