@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/20 16:43:14 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/20 17:37:37 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char **argv, char **envp)
 							execute_builting(temp,&mini);
 						else
 							execute_list(temp,data_gen,&mini);
-						print_cmd_list(temp);
+						//print_cmd_list(temp);
 						free_list(&temp);
 					}
 					else
