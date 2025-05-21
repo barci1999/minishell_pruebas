@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/21 18:54:57 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/21 20:10:27 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	main(int argc, char **argv, char **envp)
 							execute_list(temp,data_gen,&mini);
 						//print_cmd_list(temp);
 						free_list(&temp);
+						free_env_array(data_gen.my_env);//free añadido para liberar el array
+						data_gen.my_env = NULL;//esto es una recomendacion
 					}
 					else
 						ft_putendl_fd("Error",0);
@@ -66,6 +68,7 @@ int	main(int argc, char **argv, char **envp)
 				free(input);	
 			}
 	}
+	free_env_list(&mini);
 	return (0);
 }
 
