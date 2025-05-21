@@ -6,11 +6,9 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:44:17 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/05/21 18:55:36 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/21 20:48:54 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "pruebas.h"
 
 #include "pruebas.h"
 
@@ -76,7 +74,7 @@ char *add_expand_str(char *src, char *matrix, int *i)
     char *expanded;
     char *result;
 
-	*var_name = extract_var_name(src, i);
+	var_name = extract_var_name(src, i);
     if (!var_name)
         return (NULL);
 

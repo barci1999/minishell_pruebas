@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/21 18:51:36 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/21 20:49:13 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,8 @@ void	init_env_list(t_mini *mini, char **envp);
 void	free_env_list(t_mini *mini);
 char	**env_list_to_array(t_mini *mini);
 char	*build_env_string(t_list *node);
+
+void	free_env_array(char **envp);
 
 
 /* funcciones a borrar  */
