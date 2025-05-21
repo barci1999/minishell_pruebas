@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/20 17:37:37 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/21 18:54:57 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,3 +68,5 @@ int	main(int argc, char **argv, char **envp)
 	}
 	return (0);
 }
+
+//he usado esto valgrind --leak-check=full ./mini
