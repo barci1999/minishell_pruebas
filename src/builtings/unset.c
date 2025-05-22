@@ -6,11 +6,11 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:44:27 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/21 20:48:00 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/22 15:51:45 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include "pruebas.h"
 
 int	ft_unset_env(t_mini *mini, char *variable)
 {
@@ -19,9 +19,9 @@ int	ft_unset_env(t_mini *mini, char *variable)
 	node = mini->first_node;
 	while (node)
 	{
-		if (ft_strcmp(node->variable, variable) == 0)
+		if (node->variable && ft_strcmp(node->variable, variable) == 0)
 		{
-			printf("%s\n",node->variable);
+			printf("%s\n", node->variable);
 			if (node->prev == NULL)
 				mini->first_node = node->next;
 			else
@@ -38,6 +38,8 @@ int	ft_unset_env(t_mini *mini, char *variable)
 	}
 	return (1);
 }
+// se cambia el if (ft_strcmp(node->variable, variable) == 0)
+// por si es NULL y podria dar un error.
 
 int	process_unset_argument(t_mini *mini, char *arg)
 {
@@ -59,7 +61,7 @@ int	process_unset_argument(t_mini *mini, char *arg)
 	return (0);
 }
 
-int	ft_unset(char **args,t_mini *mini)
+int	ft_unset(char **args, t_mini *mini)
 {
 	int	i;
 
@@ -72,5 +74,8 @@ int	ft_unset(char **args,t_mini *mini)
 		i++;
 	}
 	printf("se ha usado mi unset\n");
+	if (mini->total_nodes != count_nodes(mini))
+		printf("Unset ha fallado\n");
 	return (0);
 }
+// se añade ese if al final para una mejor gestion de errores

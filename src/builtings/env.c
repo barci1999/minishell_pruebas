@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:03:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 18:04:03 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:48:33 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include "pruebas.h"
 
 int	ft_env(char **args, t_mini *mini)
 {
-	t_list	*temp;
+	t_list *temp;
 	if (args[1])
 	{
 		printf("minishell: env: Args not allowed\n");
