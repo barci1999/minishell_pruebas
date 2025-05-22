@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 19:08:00 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/21 20:39:17 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/22 15:52:50 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,3 +40,18 @@ void	free_env_array(char **envp)
 	}
 	free(envp);
 }
+
+
+int count_nodes(t_mini *mini)
+{
+    int count = 0;
+    t_list *node = mini->first_node;
+    while (node)
+    {
+        count++;
+        node = node->next;
+    }
+    return count;
+}
+//La uso en cada lugar donde se modifique total_nodes
+//para comprobar si se actualiza el contador de total_nodes y si están sincronizados

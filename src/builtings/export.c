@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:08:47 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 16:37:13 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/22 15:51:10 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include "pruebas.h"
 
 static void	print_export_list(t_mini *mini)
 {
@@ -22,7 +22,7 @@ static void	print_export_list(t_mini *mini)
 	printed = 0;
 	total = list_size(&mini->first_node);
 	nodes_order(mini);
-	current_order = 0; // Asigna el "order" a cada nodo
+	current_order = 0;
 	while (printed < total)
 	{
 		node = mini->first_node;
@@ -32,7 +32,6 @@ static void	print_export_list(t_mini *mini)
 			{
 				print_single_export(node);
 				printed++;
-				// Avanza al siguiente "order"
 				break ;
 			}
 			node = node->next;
@@ -40,8 +39,11 @@ static void	print_export_list(t_mini *mini)
 		current_order++;
 	}
 }
+
 int	ft_export(char **args, t_mini *mini)
 {
+	int	result;
+
 	if (!args[1])
 	{
 		mini->total_nodes = list_size(&mini->first_node);
@@ -50,5 +52,9 @@ int	ft_export(char **args, t_mini *mini)
 		return (0);
 	}
 	printf("se ha usado mi export\n");
-	return (export_args(args, mini));
+	result = export_args(args, mini);
+	if (mini->total_nodes != count_nodes(mini))
+		printf("Export ha fallado\n");
+	return (result);
 }
+//se añade ese if al final para una mejor gestion de errores
