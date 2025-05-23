@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:44:17 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/05/21 20:48:54 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:35:34 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,31 @@ char *concat_expanded(char *matrix, char *expanded)
     return result;
 }
 
-char *add_expand_str(char *src, char *matrix, int *i)
+char *get_env_value(t_mini *mini, char *var_name)
+{
+    t_list *node;
+    
+    node = mini->first_node;
+    while (node)
+    {
+        if (ft_strcmp(node->variable, var_name) == 0)
+            return node->content;
+        node = node->next;
+    }
+    return NULL;
+}
+
+char *add_expand_str(t_mini *mini, char *src, char *matrix, int *i)
 {
     char *var_name;
     char *expanded;
     char *result;
 
-	var_name = extract_var_name(src, i);
+    var_name = extract_var_name(src, i);
     if (!var_name)
         return (NULL);
 
-    expanded = getenv(var_name);
+    expanded = get_env_value(mini, var_name);
     if (!expanded)
         expanded = "";
 
@@ -86,6 +100,7 @@ char *add_expand_str(char *src, char *matrix, int *i)
     free(var_name);
     return result;
 }
+
 // Se pone result[0] = '\0'; antes de usar ft_strlcat,
 // garantizando que la concatenación no acceda a memoria no inicializada.
 
@@ -95,3 +110,5 @@ char *add_expand_str(char *src, char *matrix, int *i)
 // Antes se hacía getenv(ft_substr(...)) directamente,
 // que genera una asignación dinámica que no se libera, provocando fugas.
 // Ahora se guarda la variable temporal (var_name) y se libera al final.
+
+//Falta revisar si usar la copia del env provoca fugas de memoria.

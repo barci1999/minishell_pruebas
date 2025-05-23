@@ -6,11 +6,11 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:37:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/22 20:49:27 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:43:02 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include "pruebas.h"
 
 static int	check_long_number(char *str)
 {
@@ -64,95 +64,58 @@ static int	transform_number(char *str, long long *result)
 		digit = digit * 10 + (str[i] - '0');
 		i++;
 	}
-	// if (digit > LLONG_MAX + sign)
-	// 	return (0);
-	// *result = (long long)digit - sign;
 	*result = digit * sign;
 	return (1);
 }
+// se quita el proceso de restar o sumar sign
+// y pasa a una variable para despues multilpicar
+// convirtiendo i en 1 o -1, (antes era 0 o 1)
 
-// static int	final_numbers(char *str, long long *result)
-// {
-// 	long long	number;
-// 	int			i;
-
-// 	i = 0;
-// 	if (str[i] == '\0')
-// 		return (0);
-// 	if (transform_number(str, &number) == 0)
-// 		return (0);
-// 	if (str[i] == '-')
-// 	{
-// 		number = number + 1;
-// 		*result = -number;
-// 	}
-// 	else
-// 		*result = number;
-// 	return (1);
-// }
-
-static int final_numbers(char *str, long long *result)
+static int	final_numbers(char *str, long long *result)
 {
 	if (str[0] == '\0')
 		return (0);
-	return transform_number(str, result);
+	return (transform_number(str, result));
 }
+// como ya no se requiere hacer la suma de 1 por el signo se retira el if y el else,
+// junto a sus respectivas variebles necesarias (number e i)
+// reduciendo la funcion a una comprobacion de si str es NULL y el llamar a transformer_numbers
 
-// static int	multiple_args(char **exit_args, int argc)
-// {
-// 	long long	exit_code;
-// 	char		*trimmed_arg;
-
-// 	trimmed_arg = ft_strtrim(exit_args[1], " \f\r\n\t\v");
-// 	if (!trimmed_arg)
-// 		return (2);
-// 	if (final_numbers(trimmed_arg, &exit_code) == 0)
-// 	{
-// 		printf("exit\n");
-// 		printf("minishell: exit: %s: numeric argument required\n",
-// 			exit_args[1]);
-// 		free(trimmed_arg);
-// 		return (2);
-// 	}
-// 	//final_numbers(trimmed_arg, &exit_code);
-// 	free(trimmed_arg);
-// 	if (argc > 2)
-// 	{
-// 		printf("exit\n");
-// 		printf("minishell: exit: too many arguments\n");
-// 		return (-1);
-// 	}
-// 	return (exit_code % 256);
-// }
-
-static int multiple_args(char **exit_args, int argc)
+static int	multiple_args(char **exit_args, int argc)
 {
-    long long exit_code;
-    char *trimmed_arg;
+	long long	exit_code;
+	char		*trimmed_arg;
 
-    trimmed_arg = ft_strtrim(exit_args[1], " \f\r\n\t\v");
-    if (!trimmed_arg)
-        return (2);
-
-    if (final_numbers(trimmed_arg, &exit_code) == 0)
-    {
-        printf("exit\n");
-        printf("minishell: exit: %s: numeric argument required\n",
-            exit_args[1]);
-        free(trimmed_arg);
-        return (2);
-    }
-    free(trimmed_arg);
-    if (argc > 2)
-    {
-        printf("exit\n");
-        printf("minishell: exit: too many arguments\n");
-        return (-1);
-    }
+	trimmed_arg = ft_strtrim(exit_args[1], " \f\r\n\t\v");
+	if (!trimmed_arg)
+		return (2);
+	if (final_numbers(trimmed_arg, &exit_code) == 0)
+	{
+		printf("exit\n");
+		printf("minishell: exit: %s: numeric argument required\n",
+			exit_args[1]);
+		free(trimmed_arg);
+		return (2);
+	}
+	free(trimmed_arg);
+	if (argc > 2)
+	{
+		printf("exit\n");
+		printf("minishell: exit: too many arguments\n");
+		return (-1);
+	}
 	printf("[multiple_args] exit_code raw = %lld\n", exit_code);
-    return ((exit_code % 256) + 256) % 256;
+	return (((exit_code % 256) + 256) % 256);
 }
-
+// se quita el final_numbers(trimmed_arg, &exit_code); enciam del free(trimmed_arg, &exit_code)
+// y se mejora el return (añadiendo + 256 ) %256);
+// de esta forma ya no hay que gestionar el signo anteriormente
+// si es 42 pasa esto (42 % 256) + 256 = 42 + 256 = 298
+// 							298 % 256 = 42
+// y con - 10 pasa esto (-10 % 256) = -10
+// 						-10 + 256 = 246
+// 						246 % 256 = 246 ✅
+// asi se asegura de dar el codigo de salida correcto
 
 int	ft_exit(char **exit_args)
 {
@@ -173,7 +136,9 @@ int	ft_exit(char **exit_args)
 		printf("se ha usado mi exit pero no sale por muchos argumentos\n");
 		return (1);
 	}
-	printf("se ha usado mi exit con numeros\n");
-	printf("[ft_exit] exit_status = %d\n", exit_status);
+	// printf("se ha usado mi exit con numeros\n");
+	// printf("[ft_exit] exit_status = %d\n", exit_status);
 	exit(exit_status);
 }
+// con estos cambios es mas legible y funciona correctamente los LLONG_MIN  y LLONG_MAX
+// y diferentes numeros entre medias y si se sale de estos numeros da el codigo de error correcto

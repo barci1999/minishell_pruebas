@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/21 18:53:27 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:18:22 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ char	*add_chr_to_str(char *src, char c)
 		free(src);
 	return (result);
 }
-static void	in_double_quote(char *src, int *i, char ***matrix, int m)
+static void	in_double_quote(char *src, int *i, char ***matrix, int m, t_mini *mini)
 {
 	char	*temp = NULL;
 
@@ -232,7 +232,7 @@ static void	in_double_quote(char *src, int *i, char ***matrix, int m)
 		else if(src[*i] == '$' && src[*i + 1])
 		{
 			(*i)++;
-			temp = add_expand_str(src,matrix[0][m], i);
+			temp = add_expand_str(mini, src,matrix[0][m], i);
 		}
 		else
 			temp = add_chr_to_str(matrix[0][m], src[*i]);
@@ -262,7 +262,7 @@ static void	in_single_quote(char *src, int *i, char ***matrix, int m)
 		(*i)++;
 	}
 }
-static void	no_quote(char *src, int *i, char ***matrix, int m)
+static void	no_quote(char *src, int *i, char ***matrix, int m, t_mini *mini)
 {
 	char	*temp = NULL;
 
@@ -273,7 +273,7 @@ static void	no_quote(char *src, int *i, char ***matrix, int m)
 		else if (src[*i] == '$' && src[*i+1])
 		{
 			(*i)++;
-			temp = add_expand_str(src,matrix[0][m], i);
+			temp = add_expand_str(mini,src,matrix[0][m], i);
 		}
 		else
 			temp = add_chr_to_str(matrix[0][m], src[*i]);
@@ -282,7 +282,7 @@ static void	no_quote(char *src, int *i, char ***matrix, int m)
 		(*i)++;
 	}
 }
-char	**take_the_arg(char *src)
+char	**take_the_arg(char *src, t_mini *mini)
 {
 	int		i;
 	size_t	m;
@@ -301,15 +301,15 @@ char	**take_the_arg(char *src)
 		if (src[i] == '\'')
 			in_single_quote(src, &i, &matrix, m);
 		else if (src[i] == '\"')
-			in_double_quote(src, &i, &matrix, m);
+			in_double_quote(src, &i, &matrix, m, mini);
 		else if (!is_quote(src[i]) && (!ft_is_space(src[i])))
-			no_quote(src, &i, &matrix, m);
+			no_quote(src, &i, &matrix, m, mini);
 		if (ft_is_space(src[i]) || src[i] == '\0')
 			m++;
 	}
 	return (matrix[m] = NULL, matrix);
 }
-t_list	*asigg_cont_list(t_list *list, t_general *data_gen,t_mini *mini)
+t_list	*asigg_cont_list(t_list *list, t_general *data_gen, t_mini *mini)
 {
 	t_list	*current;
 	char	**mat_content;
@@ -318,7 +318,7 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen,t_mini *mini)
 	data_gen->my_env = env_list_to_array(mini);
 	while (current)
 	{
-		mat_content = take_the_arg(current->content);
+		mat_content = take_the_arg(current->content, mini);
 		if (!mat_content)
 			return (ft_free_mat(mat_content), NULL);
 		current->cmd_path = asig_cmd_path(mat_content, data_gen, list);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:08:34 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/18 19:09:13 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:26:14 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include "pruebas.h"
 
 static int	is_n_flag(const char *str)
 {
@@ -40,7 +40,6 @@ void	ft_echo(char **args)
 		new_line = 0;
 		i++;
 	}
-
 	while (args[i])
 	{
 		printf("%s", args[i]);
@@ -48,7 +47,6 @@ void	ft_echo(char **args)
 			printf(" ");
 		i++;
 	}
-
 	if (new_line)
 		printf("\n");
 	printf("se ha usado mi echo\n");

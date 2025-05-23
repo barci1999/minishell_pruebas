@@ -3,20 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:09:34 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 18:10:21 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:35:26 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include "pruebas.h"
 
 void	previous_pwd(void)
 {
 	char	*oldpwd;
 
-	;
 	oldpwd = getenv("PWD");
 	if (oldpwd)
 		setenv("OLDPWD", oldpwd, 1);

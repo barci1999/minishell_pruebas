@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:40:20 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 16:54:31 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/23 16:35:35 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include "pruebas.h"
 
 int	is_valid_variable_export(char *var)
 {

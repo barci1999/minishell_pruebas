@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/22 15:48:22 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/23 17:45:40 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ char			*take_cmd_path(char *comprove, t_general *data_gen);
 /*    expancion de variable    */
 
 int				is_quote(char c);
-char			*add_expand_str(char *src, char *matrix, int *i);
+char			*add_expand_str(t_mini *mini, char *src, char *matrix, int *i);
 int				count_nodes(t_mini *mini);
 
 #endif
