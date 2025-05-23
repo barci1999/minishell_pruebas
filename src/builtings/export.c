@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:08:47 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/22 15:51:10 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:23:40 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,4 @@ int	ft_export(char **args, t_mini *mini)
 		printf("Export ha fallado\n");
 	return (result);
 }
-//se añade ese if al final para una mejor gestion de errores
+// se añade ese if al final para una mejor gestion de errores
