@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:37:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/23 18:19:59 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/23 18:43:02 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static int	multiple_args(char **exit_args, int argc)
 // y se mejora el return (añadiendo + 256 ) %256);
 // de esta forma ya no hay que gestionar el signo anteriormente
 // si es 42 pasa esto (42 % 256) + 256 = 42 + 256 = 298
-// 						298 % 256 = 42
+// 							298 % 256 = 42
 // y con - 10 pasa esto (-10 % 256) = -10
 // 						-10 + 256 = 246
 // 						246 % 256 = 246 ✅
