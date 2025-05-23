@@ -1,5 +1,8 @@
 {
     "files.associations": {
         "pruebas.h": "c"
-    }
+        },
+            "editor.rulers":[
+                80
+            ]
 }
