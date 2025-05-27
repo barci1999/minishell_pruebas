@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:50:42 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/11 20:58:05 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:14:36 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,17 @@ void	comprove_heredocs(t_list *list)
 			current = current->next;
 	}
 }
+
+
+//esto funciona bien
+// minishell -> cat << ls
+// heredoc-> hola
+// heredoc-> ls
+// hola
+
+//pero esto no debe funcionar
+// minishell -> << ls
+// heredoc-> jhhola 
+// heredoc-> 
+// heredoc-> ls
+// borrar.c  include  libft  Makefile  mini  printf  src  temp_here_0
