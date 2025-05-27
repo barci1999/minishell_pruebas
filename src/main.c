@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/21 20:10:27 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/27 18:14:31 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	main(int argc, char **argv, char **envp)
 {
+	t_shell shell;
 	char	*input = NULL;
 	t_list *temp = NULL;
 	t_mini mini;
@@ -24,6 +25,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 	if (argc < 1)
 		return (1);
+	shell.last_exit_status = 0;
 	mini.first_node = NULL;
 	mini.total_nodes = 0;
 	init_env_list(&mini, envp);
@@ -52,11 +54,14 @@ int	main(int argc, char **argv, char **envp)
 					}
 					if(temp)
 					{
-						comprove_heredocs(temp);
-						if(num_pipes(input,'|') == 0 && is_builting(temp->cmd_path))
-							execute_builting(temp,&mini);
-						else
-							execute_list(temp,data_gen,&mini);
+						//comprove_heredocs(temp);
+						if (comprove_heredocs(temp) == 0)
+						{
+							if(num_pipes(input,'|') == 0 && is_builting(temp->cmd_path))
+								execute_builting(temp,&mini);
+							else
+								execute_list(temp,data_gen,&mini);
+						}
 						//print_cmd_list(temp);
 						free_list(&temp);
 						free_env_array(data_gen.my_env);//free añadido para liberar el array
