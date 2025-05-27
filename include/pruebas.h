@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/23 17:45:40 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/27 18:13:40 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,8 +163,8 @@ size_t			list_size(t_list **list);
 
 /* heredocs functions */
 
-void			comprove_heredocs(t_list *list);
-void			open_all_herdocs(t_list *list);
+int			comprove_heredocs(t_list *list);
+int			open_all_herdocs(t_list *list);
 void			open_the_heredoc(t_list *list, int redir_index,
 					int delim_index);
 
