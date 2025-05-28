@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/28 19:49:41 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/28 20:55:06 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,16 @@ int	main(int argc, char **argv, char **envp)
 					if(temp)
 					{
 						comprove_heredocs(temp);
-						if(num_pipes(input,'|') == 0 && is_builting(temp->cmd_path))
+							if(num_pipes(input,'|') == 0 && is_builting(temp->cmd_path))
+							{
 								execute_builting(temp,&mini);
+								close_herdocs(temp,&data_gen);
+							}
 							else
+							{
 								execute_list(temp,data_gen,&mini);
+								close_herdocs(temp,&data_gen);
+							}
 						//print_cmd_list(temp);
 						free_list(&temp);
 						free_env_array(data_gen.my_env);//free añadido para liberar el array
@@ -74,4 +80,4 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-//he usado esto valgrind --leak-check=full ./mini
+//he usado esto valgrind --leak-check=full --trace-children=yes --track-fd=yes ./mini

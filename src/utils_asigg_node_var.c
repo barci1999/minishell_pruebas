@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_asigg_node_var.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/28 18:39:29 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/28 21:51:55 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,8 +322,6 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen, t_mini *mini)
 		if (!mat_content)
 			return (ft_free_mat(mat_content), NULL);
 		current->cmd_path = asig_cmd_path(mat_content, data_gen, list);
-		if(!current->cmd_path)
-			return(NULL);
 		current->cmd_name = asigg_cmd_name(current->cmd_path, list);
 		current->cmd_arg = assig_cmd_args(current->cmd_name, mat_content, list);
 		current->delim = assig_delim(mat_content, list);

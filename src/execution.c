@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/28 20:03:21 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/28 21:55:01 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void 	execute_node(t_list *node,t_general *general,t_mini *mini)
 {
 	if (!is_builting(node->cmd_path))
 	{
-		execve(node->cmd_path,node->cmd_arg,general->my_env);
+		if(execve(node->cmd_path,node->cmd_arg,general->my_env) ==  -1)
+			exit(1);
 	}
 	else if (is_builting(node->cmd_path))
 	{
@@ -93,5 +94,6 @@ void	execute_list(t_list *list, t_general general,t_mini *mini)
 			general.last_exit_code = WEXITSTATUS(status);
 		j++;
 	}
+	close_herdocs(list,&general);
 	
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:50:42 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/28 18:24:46 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/28 22:01:48 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,20 @@ void	comprove_heredocs(t_list *list)
 		}
 		else
 			current = current->next;
+	}
+}
+void close_herdocs(t_list *list,t_general *gen)
+{
+	t_list *current;
+	current = list;
+	int i = 0;
+	char *temp;
+	while (i <= gen->tem_heredoc)
+	{
+		temp = ft_strjoin("temp_here_",ft_itoa(i));
+		if(access(temp,F_OK) != -1)
+			unlink(temp);
+		free(temp);
+		i++;
 	}
 }
