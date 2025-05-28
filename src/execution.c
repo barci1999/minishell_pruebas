@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 19:52:03 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/28 20:03:21 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,14 @@ void	execute_list(t_list *list, t_general general,t_mini *mini)
 	int		i;
 	pid_t pid;
 	int status;
+	int total_cmds =(int)list_size(&list);
+	int pipe_index = 0;
 	int j = 0;
 
 	current = list;
 	i = 0;
-	general.pids = gen_pid_array(list_size(&list));
-	general.pipes = gen_pipes_array(list_size(&list));
+	general.pids = gen_pid_array((size_t)total_cmds);
+	general.pipes = gen_pipes_array((size_t)total_cmds);
 	if (!general.pids || !general.pipes)
 	{
 		free_list(&list);
@@ -66,16 +68,17 @@ void	execute_list(t_list *list, t_general general,t_mini *mini)
 			exit (1);
 		if(pid == 0)
 		{
-			open_and_redir_in(current, &general, i);
-			open_and_redir_out(current, &general, i);
+			open_and_redir_in(current, &general, pipe_index);
+			open_and_redir_out(current, &general, pipe_index,total_cmds);
 			execute_node(current,&general,mini);
 		}
 		else
 		{
-			if (i < (int)list_size(&list) - 1)
+			if (identify_reddir_out(current) == PIPE && pipe_index < total_cmds - 1)
 			{
 				close(general.pipes[i][0]);
 				close(general.pipes[i][1]);
+				pipe_index++;
 			}
 			general.pids[i] = pid;
 			current = current->next;

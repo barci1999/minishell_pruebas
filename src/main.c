@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/27 18:14:31 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/28 19:49:41 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,11 @@ int	main(int argc, char **argv, char **envp)
 					}
 					if(temp)
 					{
-						//comprove_heredocs(temp);
-						if (comprove_heredocs(temp) == 0)
-						{
-							if(num_pipes(input,'|') == 0 && is_builting(temp->cmd_path))
+						comprove_heredocs(temp);
+						if(num_pipes(input,'|') == 0 && is_builting(temp->cmd_path))
 								execute_builting(temp,&mini);
 							else
 								execute_list(temp,data_gen,&mini);
-						}
 						//print_cmd_list(temp);
 						free_list(&temp);
 						free_env_array(data_gen.my_env);//free añadido para liberar el array

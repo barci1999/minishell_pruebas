@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:50:42 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/27 18:14:21 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/28 18:24:46 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,39 +40,13 @@ void	open_the_heredoc(t_list *list, int redir_index, int delim_index)
 	close(fd);
 }
 
-// void	open_all_herdocs(t_list *list)
-// {
-// 	int	i;
-// 	int	delim_index;
-
-// 	i = 0;
-// 	delim_index = 0;
-// 	while (list->redirecc[i])
-// 	{
-// 		if (ft_strcmp(list->redirecc[i], "<<") == 0)
-// 		{
-// 			open_the_heredoc(list, i, delim_index);
-// 			delim_index++;
-// 		}
-// 		i++;
-// 	}
-// }
-
-int	open_all_herdocs(t_list *list)
+void	open_all_herdocs(t_list *list)
 {
 	int	i;
 	int	delim_index;
 
 	i = 0;
 	delim_index = 0;
-	if (list->redirecc && list->redirecc[0]
-		&& ft_strcmp(list->redirecc[0], "<<") == 0
-		&& list->cmd_name && list->delim && list->delim[0]
-		&& ft_strcmp(list->cmd_name, list->delim[0]) == 0)
-	{
-		printf("minishell: syntax error near unexpected token `<<'\n");
-		return (1);
-	}
 	while (list->redirecc[i])
 	{
 		if (ft_strcmp(list->redirecc[i], "<<") == 0)
@@ -82,39 +56,21 @@ int	open_all_herdocs(t_list *list)
 		}
 		i++;
 	}
-	return (0);
 }
 
-int	comprove_heredocs(t_list *list)
+
+void	comprove_heredocs(t_list *list)
 {
 	t_list *current;
-	
 	current = list;
 	while (current)
 	{
 		if (have_a_heredoc(current) == 1)
 		{
-			if (open_all_herdocs(current) == 1)
-				return (1);
+			open_all_herdocs(current);
+			current = current->next;
 		}
-		current = current->next;
+		else
+			current = current->next;
 	}
-	return (0);
 }
-
-// void	comprove_heredocs(t_list *list)
-// {
-// 	t_list *current;
-// 	current = list;
-// 	while (current)
-// 	{
-// 		if (have_a_heredoc(current) == 1)
-// 		{
-// 			open_all_herdocs(current);
-// 			current = current->next;
-// 		}
-// 		else
-// 			current = current->next;
-// 	}
-// 	printf("entra aqui al salir del if\n");
-// }
