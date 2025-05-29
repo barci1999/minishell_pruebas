@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:39:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/28 19:42:51 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/29 18:23:57 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	open_and_redir_in(t_list *node, t_general *general, int i)
 		fd = open(node->fd[return_fd_in(node)], O_RDONLY);
 	else if (node->prev && identify_reddir_in(node) == PIPE)
 	{
-		if(!general->pipes[i])
+		if (!general->pipes[i])
 		{
 			printf("coca cola\n");
-			printf("%i\n",i);
+			printf("%i\n", i);
 		}
 		dup2(general->pipes[i][0], STDIN_FILENO);
 		close(general->pipes[i][1]);
@@ -82,19 +82,22 @@ void	open_and_redir_in(t_list *node, t_general *general, int i)
 // 		return ;
 // 	}
 // }
-void open_and_redir_out(t_list *node, t_general *general, int i, int total_cmds)
+void	open_and_redir_out(t_list *node, t_general *general, int i,
+		int total_cmds)
 {
-	int fd = -1;
-	int out_type = identify_reddir_out(node);
+	int		fd;
+	int		out_type;
+	char	*filename;
 
+	fd = -1;
+	out_type = identify_reddir_out(node);
 	if (out_type == FD || out_type == FD_APPEND)
 	{
-		char *filename = node->fd[return_fd_out(node)];
+		filename = node->fd[return_fd_out(node)];
 		if (out_type == FD)
 			fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		else
 			fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-
 		if (fd == -1)
 		{
 			perror("Error abriendo archivo para salida");

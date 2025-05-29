@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/28 20:55:06 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/29 10:54:37 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 								execute_list(temp,data_gen,&mini);
 								close_herdocs(temp,&data_gen);
 							}
-						//print_cmd_list(temp);
+						print_cmd_list(temp);
 						free_list(&temp);
 						free_env_array(data_gen.my_env);//free añadido para liberar el array
 						data_gen.my_env = NULL;//esto es una recomendacion
