@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/28 20:53:20 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:39:37 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,47 +48,20 @@ typedef enum e_token_type
 	FD,      // entrada de la redireccion
 	STD_OUT,
 	FD_APPEND,
+	
 }				t_token_type;
-
-typedef enum e_signal_type
+typedef enum e_status_tyoe
 {
-	SIG_INT,  // CTRL+C (Interrupción)
-	SIG_QUIT, // CTRL+\ (Quit)
-	SIG_EOF,  // CTRL+D (Fin de archivo)
-	SIG_NONE  // Sin señal
-}				t_signal_type;
-
-typedef enum e_builtin_type
-{
-	ECHO,        // Comando echo con opción -n
-	CD,          // Comando cd con rutas absolutas o relativas
-	PWD,         // Comando pwd
-	EXPORT,      // Comando export
-	UNSET,       // Comando unset
-	ENV,         // Comando env
-	EXIT,        // Comando exit
-	BUILTIN_NONE // No es un comando interno
-}				t_builtin_type;
-
-typedef enum e_exec_status
-{
-	EXEC_SUCCESS, // Ejecución exitosa
-	EXEC_FAILURE, // Fallo en la ejecución
-	EXEC_RUNNING, // Comando en ejecución
-	EXEC_EXIT     // Terminación del shell (exit)
-}				t_exec_status;
-
-typedef enum e_expansion_type
-{
-	EXPAND_NONE,        // No expansión
-	EXPAND_ENV_VAR,     // Expansión de variable de entorno (por ejemplo, $HOME)
-	EXPAND_EXIT_STATUS, // Expansión de $? (estado de salida)
-	EXPAND_UNKNOWN      // Expansión desconocida o no válida
-}				t_expansion_type;
+	CMD,
+	REDIREC,
+	WORD,
+	OK,
+	SYN_ERROR,
+	MALLOC_ERROR,
+}				t_status_type;
 
 typedef struct t_list
 {
-	t_token_type token; // 1º paso           // 2º paso
 	char *content;      // infile < cat -e  //  infile < cat -e
 	char *cmd_path;     // NULL             //  /usr/bin/cat
 	char **cmd_arg;     // NULL             //  infile | < | cat | -e
@@ -172,10 +145,18 @@ void			open_the_heredoc(t_list *list, int redir_index,
 /* redirection functions */
 void			open_and_redir_out(t_list *node, t_general *general, int i,int total_comds);
 void			open_and_redir_in(t_list *node, t_general *general, int i);
+t_status_type	mod_redir_and_fd(t_list *list, char **mat_content, int *i,
+		t_general *data_gen);
+		t_status_type	handle_fd_redir(t_list *list, char **mat_content, int *i);
+		t_status_type	handle_heredoc(t_list *list, char **mat_content, int *i,
+		t_general *data_gen);
+		t_status_type	handle_quoted_heredoc(t_list *list, char **mat_content, int *i);
+		t_status_type	handle_simple_heredoc(t_list *list, char **mat_content, int *i);
 
 /* execution functions */
 
 void			execute_list(t_list *list, t_general general, t_mini *mini);
+void	execute_builtin_with_redir(t_list *node, t_general *data_gen, t_mini *mini);
 
 /* procces function    */
 
@@ -192,6 +173,7 @@ t_token_type	identify_reddir_in(t_list *node);
 t_token_type	identify_reddir_out(t_list *node);
 int				return_fd_in(t_list *node);
 int				return_fd_out(t_list *node);
+t_status_type	update_status(char **math_content, int *i, t_general *data_gen);
 
 /* counters */
 
@@ -222,5 +204,10 @@ char			*take_cmd_path(char *comprove, t_general *data_gen);
 int				is_quote(char c);
 char			*add_expand_str(t_mini *mini, char *src, char *matrix, int *i);
 int				count_nodes(t_mini *mini);
-
+void	assig_var_node(char **math_content, t_list *list, t_general *data_gen);
+t_status_type	safe_add_str(char ***mat, char *str);
+t_status_type	mod_cmd_and_args(t_list *list, char **math_content, int *i,
+		t_general *data_gen);
+char	**add_str_to_mat(char **src, char *to_add);
+char	*take_the_redir(char **str);
 #endif

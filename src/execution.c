@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/28 21:55:01 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:39:18 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void execute_builting(t_list *node,t_mini *mini)
 {
+	
 	if(ft_strcmp(node->cmd_path,"echo") == 0)
 		ft_echo(node->cmd_arg);
 	else if(ft_strcmp(node->cmd_path,"export") == 0)
@@ -30,6 +31,7 @@ void execute_builting(t_list *node,t_mini *mini)
 		ft_unset(node->cmd_arg,mini);
 }
 
+
 void 	execute_node(t_list *node,t_general *general,t_mini *mini)
 {
 	if (!is_builting(node->cmd_path))
@@ -42,6 +44,26 @@ void 	execute_node(t_list *node,t_general *general,t_mini *mini)
 		execute_builting(node,mini);
 		exit(1);
 	}
+}
+void	execute_builtin_with_redir(t_list *node, t_general *data_gen, t_mini *mini)
+{
+	int	saved_stdout;
+	int	saved_stdin;
+
+	saved_stdout = dup(STDOUT_FILENO);
+	saved_stdin = dup(STDIN_FILENO);
+	if (node->redirecc)
+	{
+		open_and_redir_in(node, data_gen, 0);
+		open_and_redir_out(node, data_gen, 0, 0);
+	}
+	execute_builting(node, mini);
+
+	// Restaurar stdout y stdin originales
+	dup2(saved_stdout, STDOUT_FILENO);
+	dup2(saved_stdin, STDIN_FILENO);
+	close(saved_stdout);
+	close(saved_stdin);
 }
 void	execute_list(t_list *list, t_general general,t_mini *mini)
 {
