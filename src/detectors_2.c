@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:37:19 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/16 18:08:55 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:27:27 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,13 @@ t_token_type	identify_reddir_out(t_list *node)
 	if (result == STD_OUT && node->next)
 		result = PIPE;
 	return (result);
+}
+t_status_type	update_status(char **math_content, int *i, t_general *data_gen)
+{
+	if (is_redirec(math_content[*i]))
+		return (REDIREC);
+	else if (is_cmd(math_content[*i], data_gen) == 1)
+		return (CMD);
+	else
+		return (WORD);
 }

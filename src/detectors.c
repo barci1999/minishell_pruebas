@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:07:13 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/29 15:58:13 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/30 19:10:17 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	is_redirec(char *str)
 int	have_a_heredoc(t_list *node)
 {
 	int i = 0;
+	if(!node->redirecc)
+		return(0);
 	while (node->redirecc[i])
 	{
 		if (ft_strcmp(node->redirecc[i], "<<") == 0)
