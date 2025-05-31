@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/30 21:39:37 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/31 16:20:18 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void			print_cmd_list(t_list *list);
 
 /*    liberacion y errores  */
 
-void			free_int_matrix(int **matrix, size_t len);
+void			ft_free_mat_int(int **matrix, size_t len);
 
 /* list fuctions      */
 
@@ -157,6 +157,8 @@ t_status_type	mod_redir_and_fd(t_list *list, char **mat_content, int *i,
 
 void			execute_list(t_list *list, t_general general, t_mini *mini);
 void	execute_builtin_with_redir(t_list *node, t_general *data_gen, t_mini *mini);
+void close_all_pipes(int total_cmds,t_general *general);
+void wait_all_procces(t_general *general,int i);
 
 /* procces function    */
 

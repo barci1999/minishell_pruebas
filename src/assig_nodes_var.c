@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/30 20:09:04 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:19:04 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,12 @@ t_status_type	mod_cmd_and_args(t_list *list, char **math_content, int *i,
 		t_general *data_gen)
 {
 	if(is_builting(math_content[*i]))
+	{
 		list->cmd_path = ft_strdup(math_content[*i]);
+	}
 	else
 	{
 		list->cmd_path = take_cmd_path(math_content[*i], data_gen);
-		printf("%s\n",list->cmd_path);
 	}
 	list->cmd_arg = add_str_to_mat(list->cmd_arg, math_content[*i]);
 	if (!list->cmd_arg)

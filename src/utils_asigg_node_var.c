@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/30 20:09:49 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:23:09 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,13 +321,7 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen, t_mini *mini)
 		mat_content = take_the_arg(current->content, mini);
 		if (!mat_content)
 			return (ft_free_mat(mat_content), NULL);
-		assig_var_node(mat_content,list,data_gen);
-		// current->cmd_path = asig_cmd_path(mat_content, data_gen, list);
-		// current->cmd_name = asigg_cmd_name(current->cmd_path, list);
-		// current->cmd_arg = assig_cmd_args(current->cmd_name, mat_content, list);
-		// current->delim = assig_delim(mat_content, list);
-		// current->redirecc = assig_redirecc(mat_content, list);
-		// current->fd = assig_fd(mat_content, data_gen, list);
+		assig_var_node(mat_content,current,data_gen);
 		current = current->next;
 		ft_free_mat(mat_content);
 	}

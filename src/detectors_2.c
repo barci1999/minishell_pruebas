@@ -6,17 +6,19 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:37:19 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/30 18:27:27 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:35:54 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pruebas.h"
 
-int return_fd_in(t_list *node)
+int	return_fd_in(t_list *node)
 {
-	int i = 0;
-	int last_index = -1;
+	int	i;
+	int	last_index;
 
+	i = 0;
+	last_index = -1;
 	while (node->redirecc[i])
 	{
 		if (ft_strcmp(node->redirecc[i], "<") == 0
@@ -24,13 +26,15 @@ int return_fd_in(t_list *node)
 			last_index = i;
 		i++;
 	}
-	return last_index; // puede ser -1 si no hay redirección de entrada
+	return (last_index); // puede ser -1 si no hay redirección de entrada
 }
-int return_fd_out(t_list *node)
+int	return_fd_out(t_list *node)
 {
-	int i = 0;
-	int last_index = -1;
+	int	i;
+	int	last_index;
 
+	i = 0;
+	last_index = -1;
 	while (node->redirecc[i])
 	{
 		if (ft_strcmp(node->redirecc[i], ">") == 0
@@ -38,7 +42,7 @@ int return_fd_out(t_list *node)
 			last_index = i;
 		i++;
 	}
-	return last_index; // puede ser -1 si no hay redirección de salida
+	return (last_index); // puede ser -1 si no hay redirección de salida
 }
 t_token_type	identify_reddir_in(t_list *node)
 {
@@ -47,6 +51,13 @@ t_token_type	identify_reddir_in(t_list *node)
 
 	i = 0;
 	result = STD_IN;
+	if (!node->redirecc)
+	{
+		if (node->prev)
+			return (PIPE);
+		else
+			return (STD_IN);
+	}
 	while (node->redirecc[i])
 	{
 		if (ft_strcmp(node->redirecc[i], "<<") == 0)
@@ -61,11 +72,18 @@ t_token_type	identify_reddir_in(t_list *node)
 }
 t_token_type	identify_reddir_out(t_list *node)
 {
-	int i;
-	t_token_type result;
+	int				i;
+	t_token_type	result;
 
 	i = 0;
 	result = STD_OUT;
+	if (!node->redirecc)
+	{
+		if (node->next)
+			return (PIPE);
+		else
+			return (STD_OUT);
+	}
 	while (node->redirecc[i])
 	{
 		if (ft_strcmp(node->redirecc[i], ">") == 0)
