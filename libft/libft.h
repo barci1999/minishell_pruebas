@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 20:31:01 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 19:05:28 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/31 16:09:33 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void		ft_free_mat(char **mat);
 char		**ft_dup_mat(char **src);
 char		**ft_split_quotes(char *input, char c);
 int			ft_is_space(char c);
-char	*ft_strndup(const char *s, size_t len);
+char		*ft_strndup(const char *s, size_t len);
+void		ft_free_mat_int(int **matrix, size_t len);
 
 #endif

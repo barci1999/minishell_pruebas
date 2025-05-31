@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/30 21:40:32 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:25:41 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ int	main(int argc, char **argv, char **envp)
 				else 
 				{
 					if(num_pipes(input,'|') != 0)
+					{
 						temp = asigg_cont_list(mat_to_list(ft_split_quotes(input,'|')),&data_gen,&mini);
+					}
 					else
 					{
 						node_to_end(&temp,new_doble_node(input));
@@ -55,19 +57,17 @@ int	main(int argc, char **argv, char **envp)
 					if(temp)
 					{
 						comprove_heredocs(temp);
-						print_cmd_list(temp);
+						///print_cmd_list(temp);
 							if(num_pipes(input,'|') == 0 && is_builting(temp->cmd_path))
 							{
-								if(temp->redirecc)
-									execute_builtin_with_redir(temp,&data_gen,&mini);
-								//close_herdocs(temp,&data_gen);
+								execute_builtin_with_redir(temp,&data_gen,&mini);
+								close_herdocs(temp,&data_gen);
 							}
 							else
 							{
 								execute_list(temp,data_gen,&mini);
 								close_herdocs(temp,&data_gen);
 							}
-								printf("patata\n");
 						free_list(&temp);
 						free_env_array(data_gen.my_env);//free añadido para liberar el array
 						data_gen.my_env = NULL;//esto es una recomendacion
