@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/31 13:25:41 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/01 19:39:25 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ int	main(int argc, char **argv, char **envp)
 					else
 					{
 						node_to_end(&temp,new_doble_node(input));
-						temp = asigg_cont_list(temp,&data_gen,&mini);
+						temp = asigg_cont_list(temp,&data_gen,&mini);			
 					}
 					if(temp)
 					{
 						comprove_heredocs(temp);
-						///print_cmd_list(temp);
+						print_cmd_list(temp);
 							if(num_pipes(input,'|') == 0 && is_builting(temp->cmd_path))
 							{
 								execute_builtin_with_redir(temp,&data_gen,&mini);

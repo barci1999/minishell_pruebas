@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:16:14 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/23 16:34:39 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/31 16:33:19 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static int	cd_argument(char *path)
 	return (0);
 }
 
-// Esta función está diseñada para cambiar al directorio de inicio del usuario ($HOME).
+// Esta función está diseñada para cambiar al directorio de inicio del usuario
+// ($HOME).
 static int	cd_home(void)
 {
 	char	*home;

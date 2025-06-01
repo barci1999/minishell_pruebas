@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils_enviroment_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 19:08:00 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/22 15:52:50 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/31 16:31:04 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include "pruebas.h"
+
 char	*build_env_string(t_list *node)
 {
 	char	*env_string;
@@ -28,11 +29,11 @@ char	*build_env_string(t_list *node)
 
 void	free_env_array(char **envp)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	if (!envp)
-		return;
+		return ;
 	while (envp[i])
 	{
 		free(envp[i]);
@@ -41,17 +42,20 @@ void	free_env_array(char **envp)
 	free(envp);
 }
 
-
-int count_nodes(t_mini *mini)
+int	count_nodes(t_mini *mini)
 {
-    int count = 0;
-    t_list *node = mini->first_node;
-    while (node)
-    {
-        count++;
-        node = node->next;
-    }
-    return count;
+	int		count;
+	t_list	*node;
+
+	count = 0;
+	node = mini->first_node;
+	while (node)
+	{
+		count++;
+		node = node->next;
+	}
+	return (count);
 }
-//La uso en cada lugar donde se modifique total_nodes
-//para comprobar si se actualiza el contador de total_nodes y si están sincronizados
+// La uso en cada lugar donde se modifique total_nodes
+// para comprobar si se actualiza el contador de total_nodes y si están
+// sincronizados

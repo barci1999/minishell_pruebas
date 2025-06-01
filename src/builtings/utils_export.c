@@ -3,41 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:09:06 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/23 16:38:05 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/31 16:31:24 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pruebas.h"
-
-// void	add_or_update_variable(t_mini *mini, char *var, char *value)
-// {
-// 	t_list	*node;
-// 	t_list	*new_node;
-
-// 	node = mini->first_node;
-// 	while (node != NULL)
-// 	{
-// 		if (ft_strcmp(node->variable, var) == 0)
-// 		{
-// 			free(node->content);
-// 			if (value)
-// 			{
-// 				node->content = ft_strdup(value);
-// 			}
-// 			else
-// 				node->content = NULL;
-// 			return ;
-// 		}
-// 		node = node->next;
-// 	}
-// 	new_node = new_node_export(var, value);
-// 	if (!new_node)
-// 		return ;
-// 	node_to_end(&mini->first_node, new_node);
-// }
 
 void	add_or_update_variable(t_mini *mini, char *var, char *value)
 {
@@ -58,13 +31,13 @@ void	add_or_update_variable(t_mini *mini, char *var, char *value)
 		node = node->next;
 	}
 	add_env_var(mini, var, value);
+}
 	// Añadir nueva variable correctamente
 	// También crea un nodo.
 	// Lo añade a la lista.
 	// Y incrementa total_nodes,que era lo que faltaba antes.
 	// Por ahora se quedara la funcion NEW_NODE_EXPORT por si acaso
 	// si se confirma que no es necesaria se eliminara
-}
 
 void	nodes_order(t_mini *mini)
 {

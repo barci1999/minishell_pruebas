@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:07:13 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/30 19:10:17 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/01 18:45:38 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,8 @@ int	have_a_heredoc(t_list *node)
 		i++;
 	}
 	return (0);
+}
+int is_operator_char(char c)
+{
+	return (c == '>' || c == '<');
 }
