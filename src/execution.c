@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/31 16:22:59 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/05/31 20:42:35 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,9 @@ void	execute_list(t_list *list, t_general general, t_mini *mini)
 	i = 0;
 	general.pids = gen_pid_array((size_t)total_cmds);
 	general.pipes = gen_pipes_array((size_t)total_cmds);
-	if (!general.pids || !general.pipes)
+	if (!general.pids)
 	{
+		ft_putstr_fd("cocacola\n",0);
 		free_list(&list);
 		exit(1);
 	}

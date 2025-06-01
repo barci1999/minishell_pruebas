@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:37:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/23 18:43:02 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/05/31 16:33:09 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,11 @@ static int	final_numbers(char *str, long long *result)
 		return (0);
 	return (transform_number(str, result));
 }
-// como ya no se requiere hacer la suma de 1 por el signo se retira el if y el else,
+// como ya no se requiere hacer la suma de 1 por el signo se retira el if
+// y el else,
 // junto a sus respectivas variebles necesarias (number e i)
-// reduciendo la funcion a una comprobacion de si str es NULL y el llamar a transformer_numbers
+// reduciendo la funcion a una comprobacion de si str es NULL y el llamar a 
+// transformer_numbers
 
 static int	multiple_args(char **exit_args, int argc)
 {
@@ -107,7 +109,8 @@ static int	multiple_args(char **exit_args, int argc)
 	printf("[multiple_args] exit_code raw = %lld\n", exit_code);
 	return (((exit_code % 256) + 256) % 256);
 }
-// se quita el final_numbers(trimmed_arg, &exit_code); enciam del free(trimmed_arg, &exit_code)
+// se quita el final_numbers(trimmed_arg, &exit_code); enciam del 
+// free(trimmed_arg, &exit_code)
 // y se mejora el return (añadiendo + 256 ) %256);
 // de esta forma ya no hay que gestionar el signo anteriormente
 // si es 42 pasa esto (42 % 256) + 256 = 42 + 256 = 298
@@ -136,9 +139,11 @@ int	ft_exit(char **exit_args)
 		printf("se ha usado mi exit pero no sale por muchos argumentos\n");
 		return (1);
 	}
-	// printf("se ha usado mi exit con numeros\n");
-	// printf("[ft_exit] exit_status = %d\n", exit_status);
 	exit(exit_status);
 }
-// con estos cambios es mas legible y funciona correctamente los LLONG_MIN  y LLONG_MAX
-// y diferentes numeros entre medias y si se sale de estos numeros da el codigo de error correcto
+	// printf("se ha usado mi exit con numeros\n");
+	// printf("[ft_exit] exit_status = %d\n", exit_status);
+// con estos cambios es mas legible y funciona correctamente los LLONG_MIN  
+// y LLONG_MAX
+// y diferentes numeros entre medias y si se sale de estos numeros da el codigo 
+// de error correcto

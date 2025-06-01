@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   utils_enviroment.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:13:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/22 15:09:16 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/01 19:00:41 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include "pruebas.h"
+
 t_list	*create_env_node(char *var, char *value)
 {
 	t_list	*new;
@@ -67,10 +68,11 @@ void	init_env_list(t_mini *mini, char **envp)
 		i++;
 	}
 }
+
 void	free_env_list(t_mini *mini)
 {
-	t_list *current;
-	t_list *tmp;
+	t_list	*current;
+	t_list	*tmp;
 
 	current = mini->first_node;
 	while (current)
