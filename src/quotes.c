@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:35:23 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/01 19:59:44 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/01 21:53:22 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ char	*add_chr_to_str(char *src, char c)
 		free(src);
 	return (result);
 }
-void	in_double_quote(char *src, int *i, char ***matrix, int m,
-		t_mini *mini)
+
+void	in_double_quote(char *src, int *i, char ***matrix, int m, t_mini *mini)
 {
 	char	*temp;
 
@@ -86,17 +86,16 @@ void	in_single_quote(char *src, int *i, char ***matrix, int m)
 		(*i)++;
 	}
 }
+
 void	no_quote(char *src, int *i, char ***matrix, size_t *m, t_mini *mini)
 {
-	char	*temp = NULL;
+	char	*temp;
 
+	temp = NULL;
 	while (src[*i])
 	{
-		// Si encuentra un espacio o una comilla, termina el token actual
 		if (is_quote(src[*i]) || ft_is_space(src[*i]))
-			break;
-
-		// Si detecta una redirección, guarda el token actual (si existe) y procesa la redirección
+			break ;
 		if (src[*i] == '>' || src[*i] == '<')
 		{
 			if (temp && ft_strlen(temp) > 0)
@@ -106,8 +105,6 @@ void	no_quote(char *src, int *i, char ***matrix, size_t *m, t_mini *mini)
 				temp = NULL;
 				(*m)++;
 			}
-
-			// Maneja >> o << como un solo token
 			if (src[*i + 1] == src[*i])
 			{
 				matrix[0][*m] = malloc(3);
@@ -124,7 +121,7 @@ void	no_quote(char *src, int *i, char ***matrix, size_t *m, t_mini *mini)
 				(*i)++;
 			}
 			(*m)++;
-			return; // Salimos para que take_the_arg vuelva a analizar la siguiente palabra
+			return ;
 		}
 		else if (src[*i] == '$' && src[*i + 1])
 		{
@@ -137,7 +134,6 @@ void	no_quote(char *src, int *i, char ***matrix, size_t *m, t_mini *mini)
 			(*i)++;
 		}
 	}
-
 	if (temp && ft_strlen(temp) > 0)
 	{
 		matrix[0][*m] = ft_strdup(temp);
@@ -145,31 +141,34 @@ void	no_quote(char *src, int *i, char ***matrix, size_t *m, t_mini *mini)
 		(*m)++;
 	}
 }
+
 char	**take_the_arg(char *src, t_mini *mini)
 {
-	int i = 0;
-	size_t m = 0;
-	char **matrix = malloc((number_of_cmd_arg(src) + 1) * sizeof(char *));
+	int		i;
+	size_t	m;
+	char	**matrix;
+	size_t j;
+	j = 0;
+	i = 0;
+	m = 0;
+	matrix = malloc((number_of_cmd_arg(src) + 1) * sizeof(char *));
 	if (!matrix)
-		return NULL;
-	for (size_t j = 0; j <= number_of_cmd_arg(src); j++)
-		matrix[j] = NULL;
-
+		return (NULL);
+	while (j >= number_of_cmd_arg(src))
+		matrix[j++] = NULL;
 	while (src[i])
 	{
 		while (src[i] && ft_is_space(src[i]))
 			i++;
-
 		if (src[i] == '\'')
 			in_single_quote(src, &i, &matrix, m++);
 		else if (src[i] == '"')
 			in_double_quote(src, &i, &matrix, m++, mini);
 		else if (src[i])
 			no_quote(src, &i, &matrix, &m, mini);
-
 		while (src[i] && ft_is_space(src[i]))
 			i++;
 	}
 	matrix[m] = NULL;
-	return matrix;
+	return (matrix);
 }
