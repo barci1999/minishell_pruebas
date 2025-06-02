@@ -58,7 +58,7 @@ $(NAME): $(OBJS)
 	$(CC) $(OBJS) $(CFLAGS) $(LIBS) -o $(NAME)
 
 # Regla para compilar los archivos .c a .o
-%.o: %.c includes/pipex.h
+%.o: %.c 
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Regla de limpieza (eliminar objetos .o)

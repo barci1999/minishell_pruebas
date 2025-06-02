@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/31 20:42:35 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/02 17:47:11 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	execute_builting(t_list *node, t_mini *mini)
 {
+	printf("%s\n",node->cmd_path);
 	if (ft_strcmp(node->cmd_path, "echo") == 0)
 	{
 		ft_echo(node->cmd_arg);

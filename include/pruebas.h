@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/01 19:12:25 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/02 18:27:52 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,9 +214,9 @@ t_status_type	mod_cmd_and_args(t_list *list, char **math_content, int *i,
 char			**add_str_to_mat(char **src, char *to_add);
 char			*take_the_redir(char **str);
 char			**take_the_arg(char *src, t_mini *mini);
-void no_quote(char *src, int *i, char ***matrix, size_t *m, t_mini *mini);
-void			in_single_quote(char *src, int *i, char ***matrix, int m);
-void			in_double_quote(char *src, int *i, char ***matrix, int m,
+void no_quote(char *src, int *i, char ***matrix, int *m, t_mini *mini);
+void			in_single_quote(char *src, int *i, char ***matrix, int *m);
+void			in_double_quote(char *src, int *i, char ***matrix, int *m,
 					t_mini *mini);
 char			*add_chr_to_str(char *src, char c);
 size_t			number_of_cmd_arg(const char *src);

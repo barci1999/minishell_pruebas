@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/31 16:35:23 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/01 21:53:22 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:28:48 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ char	*add_chr_to_str(char *src, char c)
 	}
 	result[i++] = c;
 	result[i] = '\0';
-	if (src)
-		free(src);
+	// if (src)
+	// 	free(src);
 	return (result);
 }
 
-void	in_double_quote(char *src, int *i, char ***matrix, int m, t_mini *mini)
+void	in_double_quote(char *src, int *i, char ***matrix, int *m, t_mini *mini)
 {
 	char	*temp;
 
@@ -48,24 +48,40 @@ void	in_double_quote(char *src, int *i, char ***matrix, int m, t_mini *mini)
 	{
 		if (src[*i] == '\"' || ft_is_space(src[*i] || src[*i] == '\0'))
 		{
-			if (is_quote(src[*i]) || ft_is_space(src[*i]))
-				(*i)++;
-			break ;
+			if ((src[*i+1]))
+			{
+				if(ft_is_space(src[*i+1]))
+				{
+					(*m)++;
+					break ;
+				}
+			}
 		}
 		else if (src[*i] == '$' && src[*i + 1])
 		{
 			(*i)++;
-			temp = add_expand_str(mini, src, matrix[0][m], i);
+			
+			printf("%s\n",matrix[0][*m]);
+			temp = add_expand_str(mini, src, matrix[0][*m], i);
+			(*i)++;
 		}
 		else
-			temp = add_chr_to_str(matrix[0][m], src[*i]);
-		matrix[0][m] = ft_strdup(temp);
-		free(temp);
+		{
+			temp = add_chr_to_str(matrix[0][*m], src[*i]);
+		}
+		matrix[0][*m] = ft_strdup(temp);
+		if(!temp)
+			free(temp);
+		if(src[*i + 1] == ' ')
+		{
+			(*m)++;
+			break;
+		}
 		(*i)++;
 	}
 }
 
-void	in_single_quote(char *src, int *i, char ***matrix, int m)
+void	in_single_quote(char *src, int *i, char ***matrix, int *m)
 {
 	char	*temp;
 
@@ -74,20 +90,24 @@ void	in_single_quote(char *src, int *i, char ***matrix, int m)
 		(*i)++;
 	while (src[*i])
 	{
-		if (src[*i] == '\'' || ft_is_space(src[*i] || src[*i] == '\0'))
+		if (src[*i] == '\'' || ft_is_space(src[*i]) || src[*i] == '\0')
 		{
-			if (is_quote(src[*i]) || ft_is_space(src[*i]))
-				(*i)++;
+			if ((src[*i+1]))
+			{
+				if(ft_is_space(src[*i+1]))
+					(*m)++;
+			}
 			break ;
 		}
-		temp = add_chr_to_str(matrix[0][m], src[*i]);
-		matrix[0][m] = ft_strdup(temp);
+		temp = add_chr_to_str(matrix[0][*m], src[*i]);
+		matrix[0][*m] = ft_strdup(temp);
+		printf("%s\n",matrix[0][*m]);
 		free(temp);
 		(*i)++;
 	}
 }
 
-void	no_quote(char *src, int *i, char ***matrix, size_t *m, t_mini *mini)
+void	no_quote(char *src, int *i, char ***matrix, int *m, t_mini *mini)
 {
 	char	*temp;
 
@@ -95,7 +115,9 @@ void	no_quote(char *src, int *i, char ***matrix, size_t *m, t_mini *mini)
 	while (src[*i])
 	{
 		if (is_quote(src[*i]) || ft_is_space(src[*i]))
+		{
 			break ;
+		}
 		if (src[*i] == '>' || src[*i] == '<')
 		{
 			if (temp && ft_strlen(temp) > 0)
@@ -127,6 +149,7 @@ void	no_quote(char *src, int *i, char ***matrix, size_t *m, t_mini *mini)
 		{
 			(*i)++;
 			temp = add_expand_str(mini, src, temp, i);
+			(*i)++;
 		}
 		else
 		{
@@ -145,8 +168,9 @@ void	no_quote(char *src, int *i, char ***matrix, size_t *m, t_mini *mini)
 char	**take_the_arg(char *src, t_mini *mini)
 {
 	int		i;
-	size_t	m;
+	int	m;
 	char	**matrix;
+	matrix = NULL;
 	size_t j;
 	j = 0;
 	i = 0;
@@ -154,21 +178,28 @@ char	**take_the_arg(char *src, t_mini *mini)
 	matrix = malloc((number_of_cmd_arg(src) + 1) * sizeof(char *));
 	if (!matrix)
 		return (NULL);
-	while (j >= number_of_cmd_arg(src))
+	while (j <= number_of_cmd_arg(src))
 		matrix[j++] = NULL;
-	while (src[i])
+	while (src  && src[i])
 	{
 		while (src[i] && ft_is_space(src[i]))
+		{
 			i++;
+		}
 		if (src[i] == '\'')
-			in_single_quote(src, &i, &matrix, m++);
-		else if (src[i] == '"')
-			in_double_quote(src, &i, &matrix, m++, mini);
-		else if (src[i])
-			no_quote(src, &i, &matrix, &m, mini);
-		while (src[i] && ft_is_space(src[i]))
+		{
+			in_single_quote(src, &i, &matrix, &m);
 			i++;
+		}
+		else if (src[i] == '"')
+		{
+			in_double_quote(src, &i, &matrix, &m, mini);
+			i++;
+		}
+		else if (src[i])
+		{
+			no_quote(src, &i, &matrix, &m, mini);
+		}
 	}
-	matrix[m] = NULL;
 	return (matrix);
 }

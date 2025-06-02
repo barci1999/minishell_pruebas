@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 15:57:09 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/20 18:51:46 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/02 21:17:48 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ size_t	ft_strlen(const char *s)
 	int	i;
 
 	i = 0;
-	while (s[i] != '\0')
+	if (*s == '\0')
+		return (0);
+	while (s[i])
 		i++;
 	return (i);
 }
@@ -28,4 +30,3 @@ size_t	ft_strlen(const char *s)
 	//printf("%d",strlen(NULL));
 	return(0);
 }*/
-
