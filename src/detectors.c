@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:07:13 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/01 18:45:38 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/03 12:56:14 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int	is_cmd(char *comprove, t_general *data_gen)
 }
 int	is_builting(char *token)
 {
+	printf("AHHHHH %s\n", token);
 	if (!token)
 		return (0);
 	else if (ft_strcmp(token, "echo") == 0)
