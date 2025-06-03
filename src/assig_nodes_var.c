@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/01 19:45:59 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/02 19:27:41 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,22 +99,23 @@ t_status_type	safe_add_str(char ***mat, char *str)
 		return (MALLOC_ERROR);
 	return (OK);
 }
-void print_mat(char **mat)
-{
-	int i = 0;
-	while (mat[i])
-	{
-		printf("%s\n",mat[i]);
-		i++;
-	}
-}
+// void print_mat(char **mat)
+// {
+// 	int i = 0;
+// 	while (mat[i])
+// 	{
+// 		printf("%s\n",mat[i]);
+// 		i++;
+// 	}
+// }
 void	assig_var_node(char **math_content, t_list *list, t_general *data_gen)
 {
 	t_status_type	flag;
 	int				i;
 
 	i = 0;
-	print_mat(math_content);
+	flag = OK;
+	//print_mat(math_content);
 	while (math_content[i])
 	{
 		if (update_status(math_content, &i, data_gen) == CMD)
@@ -127,10 +128,13 @@ void	assig_var_node(char **math_content, t_list *list, t_general *data_gen)
 		}
 		else
 		{
-			// añadir salida por error de sintaxis
+			printf("error en word\n");
+			exit(1);
 		}
 		if (flag != OK)
 		{
+			printf("error en las funciones\n");
+			exit(1);
 			// añadir salida por error de sintaxis
 		}
 	}

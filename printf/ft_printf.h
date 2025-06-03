@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/06 12:34:51 by pablalva          #+#    #+#             */
-/*   Updated: 2024/10/09 15:46:41 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/02 21:07:50 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
+
 
 int		ft_printf(char const *format, ...);
 int		ft_putchar(int c);

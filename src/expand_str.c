@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:44:17 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/05/28 18:31:41 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/02 19:34:27 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,17 @@ char *add_expand_str(t_mini *mini, char *src, char *matrix, int *i)
     char *result;
 
     var_name = extract_var_name(src, i);
+  //  printf("%s\n",var_name);
     if (!var_name)
         return (NULL);
 
     expanded = get_env_value(mini, var_name);
+//    printf("%s\n",expanded);
     if (!expanded)
         expanded = "";
 
     result = concat_expanded(matrix, expanded);
+   // printf("%s\n",result);
     free(var_name);
     return result;
 }

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/19 16:06:40 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/02 22:07:08 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_list	*new_doble_node(char *token)
 {
 	t_list	*new_node;
-
 	new_node = malloc(1 * sizeof(t_list));
 	if (!new_node)
 		return (free(token), NULL);
@@ -91,6 +90,7 @@ t_list	*mat_to_list(char **mat)
 
 	list = NULL;
 	i = -1;
+
 	while (mat[++i])
 	{
 		if (node_to_end(&list, new_doble_node(mat[i])) == -1)
