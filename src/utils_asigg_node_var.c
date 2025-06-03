@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/02 18:47:33 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:23:50 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen, t_mini *mini)
 	data_gen->my_env = env_list_to_array(mini);
 	while (current)
 	{
-		mat_content = take_the_arg(current->content, mini);
+		mat_content = fukking_quotes(list->content,mini);
 		if (!mat_content)
 			return (ft_free_mat(mat_content), NULL);
 		assig_var_node(mat_content, current, data_gen);

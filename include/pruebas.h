@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/02 18:27:52 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:19:40 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,11 +213,20 @@ t_status_type	mod_cmd_and_args(t_list *list, char **math_content, int *i,
 					t_general *data_gen);
 char			**add_str_to_mat(char **src, char *to_add);
 char			*take_the_redir(char **str);
-char			**take_the_arg(char *src, t_mini *mini);
-void no_quote(char *src, int *i, char ***matrix, int *m, t_mini *mini);
-void			in_single_quote(char *src, int *i, char ***matrix, int *m);
-void			in_double_quote(char *src, int *i, char ***matrix, int *m,
-					t_mini *mini);
+//char			**take_the_arg(char *src, t_mini *mini);
+//void no_quote(char *src, int *i, char ***matrix, int *m, t_mini *mini);
+//void			in_single_quote(char *src, int *i, char ***matrix, int *m);
+//void			in_double_quote(char *src, int *i, char ***matrix, int *m,
+//					t_mini *mini);
 char			*add_chr_to_str(char *src, char c);
 size_t			number_of_cmd_arg(const char *src);
+char *get_env_value(t_mini *mini, char *var_name);
+void	no_quote(char *src, char *result,int *i, t_mini *mini);
+void	doble_quote(char *src, char *result, int *i,t_mini *mini);
+char	**fukking_quotes(char *src,t_mini *mini);
+void	single_quote(char *result, int *i, char *src);
+void	evalue_next_char(char *src, int *i, int *m, char *result);
+char	*take_the_expand(char *src, int *i,t_mini *mini);
+char	*ft_free_strjoin(char *s1, char *s2);
+int is_char_redirect(char c);
 #endif

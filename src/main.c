@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/02 21:48:35 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:13:45 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	main(int argc, char **argv, char **envp)
 					}
 					else
 					{
-						printf("esto es inpunt->%s\n",input);
 						node_to_end(&temp,new_doble_node(input));
 						temp = asigg_cont_list(temp,&data_gen,&mini);			
 					}
