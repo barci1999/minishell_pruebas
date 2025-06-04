@@ -42,6 +42,7 @@ SRCS =  src/main.c\
 		src/status_redirecc.c\
 		src/assig_nodes_var.c\
 		src/quotes.c\
+		src/quotes_2.c\
 		
 
 

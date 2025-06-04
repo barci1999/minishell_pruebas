@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/02 19:27:41 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/03 14:21:29 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_status_type	mod_cmd_and_args(t_list *list, char **math_content, int *i,
 		return (MALLOC_ERROR);
 	(*i)++;
 	while (math_content[*i] && update_status(math_content, i,
-			data_gen) == WORD)
+			data_gen) != REDIREC)
 	{
 		list->cmd_arg = add_str_to_mat(list->cmd_arg, math_content[*i]);
 		if (!list->cmd_arg)
