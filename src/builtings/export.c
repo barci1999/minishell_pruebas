@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:08:47 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/23 18:23:40 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/05 18:17:58 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
 
 static void	print_export_list(t_mini *mini)
 {
@@ -51,7 +51,6 @@ int	ft_export(char **args, t_mini *mini)
 		print_export_list(mini);
 		return (0);
 	}
-	printf("se ha usado mi export\n");
 	result = export_args(args, mini);
 	if (mini->total_nodes != count_nodes(mini))
 		printf("Export ha fallado\n");

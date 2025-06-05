@@ -6,11 +6,11 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 14:54:24 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
 
 t_list	*new_doble_node(char *token)
 {

@@ -6,11 +6,11 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:50:42 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:01:59 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
 
 void	open_the_heredoc(t_list *list, int redir_index, int delim_index)
 {

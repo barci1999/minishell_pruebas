@@ -6,11 +6,13 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/03 14:13:45 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:29:20 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
+
+int	g_exit_status = 0;
 
 int	main(int argc, char **argv, char **envp)
 {

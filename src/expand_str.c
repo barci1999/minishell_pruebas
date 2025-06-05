@@ -6,11 +6,11 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:44:17 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/05 14:55:26 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
 
 char	*extract_var_name(char *src, int *index)
 {

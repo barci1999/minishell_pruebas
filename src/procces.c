@@ -6,11 +6,11 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 20:41:33 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:00:48 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:41:57 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
 
 pid_t	*gen_pid_array(size_t nbr_proces)
 {
@@ -76,7 +76,18 @@ void	wait_all_procces(t_general *general, int i)
 	{
 		waitpid(general->pids[j], &status, 0);
 		if (j == i - 1)
-			general->last_exit_code = WEXITSTATUS(status);
+		{
+			if (WIFEXITED(status))
+			{
+				g_exit_status = WEXITSTATUS(status);
+				general->last_exit_code = g_exit_status;
+			}
+			else if (WIFSIGNALED(status))
+			{
+				g_exit_status = 128 + WTERMSIG(status);
+				general->last_exit_code = g_exit_status;
+			}
+		}
 		j++;
 	}
 }

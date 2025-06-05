@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:09:34 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/23 16:35:26 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/05 18:33:13 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
 
 void	previous_pwd(void)
 {
@@ -34,7 +34,7 @@ void	new_pwd(char *new_path)
 	free(new_path);
 }
 
-void	ft_pwd(void)
+int	ft_pwd(void)
 {
 	char		*cwd;
 	const char	*pwd_env;
@@ -46,16 +46,18 @@ void	ft_pwd(void)
 		if (pwd_env)
 		{
 			printf("%s\n", pwd_env);
+			return (0);
 		}
 		else
 		{
 			perror("pwd");
+			return (1);
 		}
 	}
 	else
 	{
 		printf("%s\n", cwd);
 		free(cwd);
+		return (0);
 	}
-	printf("se ha usado mi pwd\n");
 }

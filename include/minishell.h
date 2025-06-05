@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pruebas.h                                          :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:15:27 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:39:39 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRUEBAS_H
-# define PRUEBAS_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include "ft_printf.h"
 # include "libft.h"
@@ -24,6 +24,8 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <wait.h>
+
+extern int g_exit_status;
 
 typedef struct s_shell
 {
@@ -93,7 +95,7 @@ void				ctrl_minishell(int signal, t_shell *shell);
 /*   funciones de builtings */
 
 void				execute_builting(t_list *node, t_mini *mini);
-void				ft_echo(char **args);
+int				ft_echo(char **args);
 int					ft_export(char **args, t_mini *mini);
 int					export_args(char **args, t_mini *mini);
 int					print_single_export(t_list *node);
@@ -103,10 +105,10 @@ void				add_or_update_variable(t_mini *mini, char *var,
 t_list				*new_node_export(char *var, char *value);
 int					is_valid_variable_export(char *var);
 int					ft_env(char **args, t_mini *mini);
-void				ft_pwd(void);
+int				ft_pwd(void);
 void				new_pwd(char *new_path);
 void				previous_pwd(void);
-void				ft_cd(char **args);
+int				ft_cd(char **args);
 int					ft_exit(char **exit_args);
 int					ft_unset(char **args, t_mini *mini);
 

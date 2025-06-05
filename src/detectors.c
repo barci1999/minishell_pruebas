@@ -6,11 +6,11 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:07:13 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 14:53:55 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
 
 int	is_cmd(char *comprove, t_general *data_gen)
 {
