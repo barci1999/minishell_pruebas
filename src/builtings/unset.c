@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:44:27 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 19:29:41 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:38:38 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	ft_unset_env(t_mini *mini, char *variable)
 	{
 		if (node->variable && ft_strcmp(node->variable, variable) == 0)
 		{
-			printf("%s\n", node->variable);
 			if (node->prev == NULL)
 				mini->first_node = node->next;
 			else

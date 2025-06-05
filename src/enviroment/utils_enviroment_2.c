@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_enviroment_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 19:08:00 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:25:30 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,21 @@ int	count_nodes(t_mini *mini)
 	}
 	return (count);
 }
-// La uso en cada lugar donde se modifique total_nodes
-// para comprobar si se actualiza el contador de total_nodes y si están
-// sincronizados
+
+void	free_env_list(t_mini *mini)
+{
+	t_list	*current;
+	t_list	*tmp;
+
+	current = mini->first_node;
+	while (current)
+	{
+		tmp = current->next;
+		free(current->variable);
+		free(current->content);
+		free(current);
+		current = tmp;
+	}
+	mini->first_node = NULL;
+	mini->total_nodes = 0;
+}
