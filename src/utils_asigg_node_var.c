@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/04 14:27:28 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:09:07 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,14 @@ char	*asigg_cmd_name(char *cmd_path, t_list *list)
 	else
 		return (NULL);
 }
+
 int	is_quote(char c)
 {
 	if (c == '\'' || c == '\"')
 		return (1);
 	return (0);
 }
+
 size_t	number_of_cmd_arg(const char *src)
 {
 	int		i;
@@ -96,7 +98,7 @@ size_t	number_of_cmd_arg(const char *src)
 		else if (is_operator_char(src[i]))
 		{
 			if ((src[i] == '>' && src[i + 1] == '>') || (src[i] == '<' && src[i
-					+ 1] == '<'))
+						+ 1] == '<'))
 				i += 2;
 			else
 				i += 1;
@@ -124,12 +126,11 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen, t_mini *mini)
 	data_gen->my_env = env_list_to_array(mini);
 	while (current)
 	{
-		mat_content = fukking_quotes(list->content,mini);
+		mat_content = fukking_quotes(list->content, mini);
 		if (!mat_content)
 			return (ft_free_mat(mat_content), NULL);
 		assig_var_node(mat_content, current, data_gen);
 		current = current->next;
-		//ft_free_mat(mat_content);
 	}
 	return (list);
 }

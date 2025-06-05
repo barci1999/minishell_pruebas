@@ -6,11 +6,11 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 16:11:10 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/11 17:07:21 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:13:12 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"pruebas.h"
+#include "pruebas.h"
 
 char	**assig_redirecc(char **mat, t_list *list)
 {
@@ -36,31 +36,32 @@ char	**assig_redirecc(char **mat, t_list *list)
 	}
 	return (result[++r] = NULL, result);
 }
+
 char	**assig_delim(char **mat, t_list *list)
 {
-	int	i;
-	size_t nb_here;
-	char **result;
-	int r;
+	int		i;
+	size_t	nb_here;
+	char	**result;
+	int		r;
+
 	r = 0;
 	nb_here = 0;
 	i = 0;
 	(void)list;
 	while (mat[i])
 	{
-		if(ft_strcmp(mat[i],"<<") == 0)
+		if (ft_strcmp(mat[i], "<<") == 0)
 			nb_here++;
 		i++;
 	}
 	result = malloc((nb_here + 1) * sizeof(char *));
-	if(!result)
+	if (!result)
 	{
-		/* gestion  de leaks */
 	}
 	i = 0;
 	while (mat[i])
-	{	
-		if(ft_strcmp(mat[i], "<<") == 0)
+	{
+		if (ft_strcmp(mat[i], "<<") == 0)
 		{
 			result[r] = ft_strdup(mat[i + 1]);
 			r++;
@@ -68,8 +69,9 @@ char	**assig_delim(char **mat, t_list *list)
 		i++;
 	}
 	result[r] = NULL;
-	return(result);
+	return (result);
 }
+
 char	**assig_fd(char **mat, t_general *data_gen, t_list *list)
 {
 	int		i;

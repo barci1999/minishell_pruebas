@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:37:14 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/05/20 16:38:20 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/05 15:10:55 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	ctrl_minishell(int signal, t_shell *shell)
 	}
 }
 
-
 void	ctrl_child(int signal, t_shell *shell)
 {
 	if (signal == SIGINT)
@@ -51,8 +50,8 @@ void	ctrls(int is_child)
 {
 	struct sigaction	sa;
 
-	memset(&sa, 0, sizeof(sa)); // Limpia toda la estructura
-	sigemptyset(&sa.sa_mask);   // Inicializa sa_mask correctamente
+	memset(&sa, 0, sizeof(sa));
+	sigemptyset(&sa.sa_mask);
 	if (is_child)
 		sa.sa_handler = (void (*)(int))ctrl_child;
 	else

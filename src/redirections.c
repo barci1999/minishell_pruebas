@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:39:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/31 16:06:15 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:59:21 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	open_and_redir_in(t_list *node, t_general *general, int i)
 		return ;
 	}
 }
+
 void	open_and_redir_out(t_list *node, t_general *general, int i,
 		int total_cmds)
 {

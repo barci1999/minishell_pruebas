@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/02 22:07:08 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:54:24 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 t_list	*new_doble_node(char *token)
 {
 	t_list	*new_node;
+
 	new_node = malloc(1 * sizeof(t_list));
 	if (!new_node)
 		return (free(token), NULL);
@@ -25,7 +26,7 @@ t_list	*new_doble_node(char *token)
 	new_node->redirecc = NULL;
 	new_node->delim = NULL;
 	new_node->order = 0;
-	new_node->variable = NULL; 
+	new_node->variable = NULL;
 	new_node->content = ft_strtrim(token, " \t\v\n\r\b\f");
 	if (!new_node->content)
 		return (free(new_node), free(token), NULL);
@@ -62,13 +63,11 @@ void	free_list(t_list **list)
 	t_list	*next;
 
 	if (!list || !*list)
-		return;
-	
+		return ;
 	temp = *list;
 	while (temp)
 	{
 		next = temp->next;
-
 		free(temp->cmd_name);
 		free(temp->cmd_path);
 		free(temp->content);
@@ -76,7 +75,6 @@ void	free_list(t_list **list)
 		ft_free_mat(temp->cmd_arg);
 		ft_free_mat(temp->redirecc);
 		ft_free_mat(temp->fd);
-
 		free(temp);
 		temp = next;
 	}
@@ -90,7 +88,6 @@ t_list	*mat_to_list(char **mat)
 
 	list = NULL;
 	i = -1;
-
 	while (mat[++i])
 	{
 		if (node_to_end(&list, new_doble_node(mat[i])) == -1)
@@ -99,6 +96,7 @@ t_list	*mat_to_list(char **mat)
 	ft_free_mat(mat);
 	return (list);
 }
+
 size_t	list_size(t_list **list)
 {
 	size_t	result;
