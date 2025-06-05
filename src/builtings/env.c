@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:03:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/23 18:28:53 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/05 18:23:27 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
 
 int	ft_env(char **args, t_mini *mini)
 {
@@ -30,6 +30,5 @@ int	ft_env(char **args, t_mini *mini)
 		}
 		temp = temp->next;
 	}
-	printf("se ha usado mi env\n");
 	return (0);
 }

@@ -6,11 +6,11 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 20:04:44 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 14:58:57 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 16:57:17 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
 
 char	*add_chr_to_str(char *src, char c)
 {
@@ -72,6 +72,11 @@ char	*take_the_expand(char *src, int *i, t_mini *mini)
 
 	temp = NULL;
 	temp_2 = NULL;
+	if (src[*i] == '?')
+	{
+		temp_2 = ft_itoa(g_exit_status); 
+		return (temp_2);
+	}
 	while (src[*i] && (ft_isalnum(src[*i]) || src[*i] == '_'))
 	{
 		temp = add_chr_to_str(temp, src[*i]);
@@ -145,6 +150,8 @@ void	no_quote(char *src, char **result, int *i, t_mini *mini, int *m)
 		(*i)++;
 		temp = take_the_expand(src, i, mini);
 		*result = ft_free_strjoin(*result, temp);
+		return;
+		printf("%s\n",temp);
 	}
 	if (is_operator_char(src[*i]))
 	{

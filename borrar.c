@@ -1,5 +1,5 @@
 
-#include "pruebas.h"
+#include "minishell.h"
 
 #define WIDTH 48
 #define WIDTH_2 48

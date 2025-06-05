@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:44:27 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/22 15:51:45 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/05 19:29:41 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
 
 int	ft_unset_env(t_mini *mini, char *variable)
 {
@@ -43,18 +43,11 @@ int	ft_unset_env(t_mini *mini, char *variable)
 
 int	process_unset_argument(t_mini *mini, char *arg)
 {
-	char	*var_name;
-
 	if (ft_strchr(arg, '='))
 	{
-		var_name = ft_strndup(arg, ft_strchr(arg, '=') - arg);
-		if (var_name)
-		{
-			ft_unset_env(mini, var_name);
-			free(var_name);
-		}
+		return (0);
 	}
-	else if (ft_strcmp(arg, "_") != 0 && ft_strcmp(arg, "?") != 0)
+	if (ft_strcmp(arg, "_") != 0 && ft_strcmp(arg, "?") != 0)
 	{
 		ft_unset_env(mini, arg);
 	}
@@ -64,18 +57,20 @@ int	process_unset_argument(t_mini *mini, char *arg)
 int	ft_unset(char **args, t_mini *mini)
 {
 	int	i;
+	int	exit_status;
 
 	i = 1;
+	exit_status = 0;
 	if (!args[1])
 		return (0);
 	while (args[i])
 	{
-		process_unset_argument(mini, args[i]);
+		if (process_unset_argument(mini, args[i]))
+			exit_status = 1;
 		i++;
 	}
-	printf("se ha usado mi unset\n");
 	if (mini->total_nodes != count_nodes(mini))
 		printf("Unset ha fallado\n");
-	return (0);
+	return (exit_status);
 }
 // se añade ese if al final para una mejor gestion de errores

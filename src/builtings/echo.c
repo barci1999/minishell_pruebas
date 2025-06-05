@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:08:34 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/23 18:26:14 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/05 18:15:32 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
 
 static int	is_n_flag(const char *str)
 {
@@ -28,7 +28,7 @@ static int	is_n_flag(const char *str)
 	return (1);
 }
 
-void	ft_echo(char **args)
+int	ft_echo(char **args)
 {
 	int	i;
 	int	new_line;
@@ -49,5 +49,5 @@ void	ft_echo(char **args)
 	}
 	if (new_line)
 		printf("\n");
-	printf("se ha usado mi echo\n");
+	return(0);
 }

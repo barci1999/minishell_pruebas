@@ -6,11 +6,11 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:37:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/31 16:33:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 18:50:33 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pruebas.h"
+#include "minishell.h"
 
 static int	check_long_number(char *str)
 {
@@ -130,7 +130,7 @@ int	ft_exit(char **exit_args)
 		i++;
 	if (i == 1)
 	{
-		printf("se ha usado mi exit\n");
+		printf("exit\n");
 		exit(0);
 	}
 	exit_status = multiple_args(exit_args, i);
