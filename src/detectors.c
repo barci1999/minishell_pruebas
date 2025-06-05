@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:07:13 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/03 14:13:24 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:53:55 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	is_cmd(char *comprove, t_general *data_gen)
 		return (0);
 	}
 	paths = take_paths_env(data_gen->my_env);
-	if(!paths)
-		return(0);
+	if (!paths)
+		return (0);
 	while (paths[i])
 	{
 		temp = ft_strjoin(paths[i], "/");
@@ -49,6 +49,7 @@ int	is_cmd(char *comprove, t_general *data_gen)
 	}
 	return (ft_free_mat(paths), 0);
 }
+
 int	is_builting(char *token)
 {
 	if (!token)
@@ -69,24 +70,28 @@ int	is_builting(char *token)
 		return (1);
 	return (0);
 }
+
 int	is_redirec(char *str)
 {
-	if (ft_strncmp(str, "<",1) == 0)
+	if (ft_strncmp(str, "<", 1) == 0)
 		return (1);
-	else if (ft_strncmp(str, "<<",2) == 0)
+	else if (ft_strncmp(str, "<<", 2) == 0)
 		return (1);
-	else if (ft_strncmp(str, ">",1) == 0)
+	else if (ft_strncmp(str, ">", 1) == 0)
 		return (1);
-	else if (ft_strncmp(str, ">>",2) == 0)
+	else if (ft_strncmp(str, ">>", 2) == 0)
 		return (1);
 	else
 		return (0);
 }
+
 int	have_a_heredoc(t_list *node)
 {
-	int i = 0;
-	if(!node->redirecc)
-		return(0);
+	int	i;
+
+	i = 0;
+	if (!node->redirecc)
+		return (0);
 	while (node->redirecc[i])
 	{
 		if (ft_strcmp(node->redirecc[i], "<<") == 0)
@@ -95,7 +100,8 @@ int	have_a_heredoc(t_list *node)
 	}
 	return (0);
 }
-int is_operator_char(char c)
+
+int	is_operator_char(char c)
 {
 	return (c == '>' || c == '<');
 }

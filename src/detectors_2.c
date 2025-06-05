@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:37:19 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/31 13:35:54 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:53:30 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ int	return_fd_in(t_list *node)
 			last_index = i;
 		i++;
 	}
-	return (last_index); // puede ser -1 si no hay redirección de entrada
+	return (last_index);
 }
+
 int	return_fd_out(t_list *node)
 {
 	int	i;
@@ -42,8 +43,9 @@ int	return_fd_out(t_list *node)
 			last_index = i;
 		i++;
 	}
-	return (last_index); // puede ser -1 si no hay redirección de salida
+	return (last_index);
 }
+
 t_token_type	identify_reddir_in(t_list *node)
 {
 	int				i;
@@ -70,6 +72,7 @@ t_token_type	identify_reddir_in(t_list *node)
 		result = PIPE;
 	return (result);
 }
+
 t_token_type	identify_reddir_out(t_list *node)
 {
 	int				i;
@@ -96,6 +99,7 @@ t_token_type	identify_reddir_out(t_list *node)
 		result = PIPE;
 	return (result);
 }
+
 t_status_type	update_status(char **math_content, int *i, t_general *data_gen)
 {
 	if (is_redirec(math_content[*i]))

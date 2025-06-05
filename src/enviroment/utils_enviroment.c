@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:13:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/01 19:00:41 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:17:19 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	free_env_list(t_mini *mini)
 	mini->first_node = NULL;
 	mini->total_nodes = 0;
 }
+
 char	**env_list_to_array(t_mini *mini)
 {
 	char	**envp;

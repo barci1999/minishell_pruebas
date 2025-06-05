@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 20:41:33 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/31 16:20:01 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:00:48 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	**gen_pipes_array(size_t n_cmd)
 	if (!array)
 		return (NULL);
 	i = 0;
-	while (i < (n_cmd - 1))
+	while (i++ < (n_cmd - 1))
 	{
 		array[i] = malloc(2 * sizeof(int));
 		if (!array[i])
@@ -49,13 +49,14 @@ int	**gen_pipes_array(size_t n_cmd)
 			ft_free_mat_int(array, i);
 			return (NULL);
 		}
-		i++;
 	}
 	return (array);
 }
-void close_all_pipes(int total_cmds,t_general *general)
+
+void	close_all_pipes(int total_cmds, t_general *general)
 {
-	int k;
+	int	k;
+
 	k = 0;
 	while (k < total_cmds - 1)
 	{
@@ -64,10 +65,12 @@ void close_all_pipes(int total_cmds,t_general *general)
 		k++;
 	}
 }
-void wait_all_procces(t_general *general,int i)
+
+void	wait_all_procces(t_general *general, int i)
 {
-	int j;
-	int status;
+	int	j;
+	int	status;
+
 	j = 0;
 	while (j < i)
 	{

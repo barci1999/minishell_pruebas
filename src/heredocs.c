@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:50:42 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/30 18:48:29 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:01:59 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,11 @@ void	open_all_herdocs(t_list *list)
 		i++;
 	}
 }
+
 void	comprove_heredocs(t_list *list)
 {
-	t_list *current;
+	t_list	*current;
+
 	current = list;
 	while (current)
 	{
@@ -72,16 +74,19 @@ void	comprove_heredocs(t_list *list)
 			current = current->next;
 	}
 }
-void close_herdocs(t_list *list,t_general *gen)
+
+void	close_herdocs(t_list *list, t_general *gen)
 {
-	t_list *current;
+	t_list	*current;
+	int		i;
+	char	*temp;
+
 	current = list;
-	int i = 0;
-	char *temp;
+	i = 0;
 	while (i <= gen->tem_heredoc)
 	{
-		temp = ft_strjoin("temp_here_",ft_itoa(i));
-		if(access(temp,F_OK) != -1)
+		temp = ft_strjoin("temp_here_", ft_itoa(i));
+		if (access(temp, F_OK) != -1)
 			unlink(temp);
 		free(temp);
 		i++;

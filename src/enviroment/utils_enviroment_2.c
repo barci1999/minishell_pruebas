@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 19:08:00 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/31 16:31:04 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 14:16:24 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,22 @@
 char	*build_env_string(t_list *node)
 {
 	char	*env_string;
+	int		var_len;
+	int		content_len;
 	int		len;
 
 	if (!node || !node->variable || !node->content)
 		return (NULL);
-	len = strlen(node->variable) + strlen(node->content) + 2;
+	var_len = ft_strlen(node->variable);
+	content_len = ft_strlen(node->content);
+	len = var_len + content_len + 2;
 	env_string = malloc(len);
 	if (!env_string)
 		return (NULL);
-	snprintf(env_string, len, "%s=%s", node->variable, node->content);
+	ft_memcpy(env_string, node->variable, var_len);
+	env_string[var_len] = '=';
+	ft_memcpy(env_string + var_len + 1, node->content, content_len);
+	env_string[len - 1] = '\0';
 	return (env_string);
 }
 

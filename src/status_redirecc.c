@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 18:22:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/05/30 19:33:39 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:01:02 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_status_type	handle_heredoc(t_list *list, char **mat_content, int *i,
 		t_general *data_gen)
 {
 	char			*itoa_result;
-	char *temp;
+	char			*temp;
 	t_status_type	status;
 
 	if (ft_strcmp(mat_content[*i], "<<") == 0)
@@ -55,9 +55,9 @@ t_status_type	handle_heredoc(t_list *list, char **mat_content, int *i,
 	itoa_result = ft_itoa(data_gen->tem_heredoc++);
 	if (!itoa_result)
 		return (MALLOC_ERROR);
-	temp = ft_strjoin("temp_here_",itoa_result);
-	if(!temp)
-		return (free(itoa_result),MALLOC_ERROR);
+	temp = ft_strjoin("temp_here_", itoa_result);
+	if (!temp)
+		return (free(itoa_result), MALLOC_ERROR);
 	if (safe_add_str(&list->fd, temp) != OK)
 		return (free(itoa_result), MALLOC_ERROR);
 	free(temp);

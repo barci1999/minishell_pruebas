@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/03 14:21:29 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 15:04:40 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,10 @@ char	**add_str_to_mat(char **src, char *to_add)
 t_status_type	mod_cmd_and_args(t_list *list, char **math_content, int *i,
 		t_general *data_gen)
 {
-	if(is_builting(math_content[*i]))
-	{
+	if (is_builting(math_content[*i]))
 		list->cmd_path = ft_strdup(math_content[*i]);
-	}
 	else
-	{
 		list->cmd_path = take_cmd_path(math_content[*i], data_gen);
-	}
 	list->cmd_arg = add_str_to_mat(list->cmd_arg, math_content[*i]);
 	if (!list->cmd_arg)
 		return (MALLOC_ERROR);
@@ -99,15 +95,7 @@ t_status_type	safe_add_str(char ***mat, char *str)
 		return (MALLOC_ERROR);
 	return (OK);
 }
-// void print_mat(char **mat)
-// {
-// 	int i = 0;
-// 	while (mat[i])
-// 	{
-// 		printf("%s\n",mat[i]);
-// 		i++;
-// 	}
-// }
+
 void	assig_var_node(char **math_content, t_list *list, t_general *data_gen)
 {
 	t_status_type	flag;
@@ -115,17 +103,12 @@ void	assig_var_node(char **math_content, t_list *list, t_general *data_gen)
 
 	i = 0;
 	flag = OK;
-	//print_mat(math_content);
 	while (math_content[i])
 	{
 		if (update_status(math_content, &i, data_gen) == CMD)
-		{
 			flag = mod_cmd_and_args(list, math_content, &i, data_gen);
-		}
 		else if (update_status(math_content, &i, data_gen) == REDIREC)
-		{
 			flag = mod_redir_and_fd(list, math_content, &i, data_gen);
-		}
 		else
 		{
 			printf("error en word\n");
@@ -135,7 +118,6 @@ void	assig_var_node(char **math_content, t_list *list, t_general *data_gen)
 		{
 			printf("error en las funciones\n");
 			exit(1);
-			// añadir salida por error de sintaxis
 		}
 	}
 }
