@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_enviroment.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:13:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:25:25 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,20 @@ void	add_env_var(t_mini *mini, char *var, char *value)
 	mini->total_nodes++;
 }
 
+void	init_minim_env(t_mini *mini)
+{
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (cwd)
+	{
+		add_env_var(mini, ft_strdup("PWD"), cwd);
+		free(cwd);
+	}
+	add_env_var(mini, ft_strdup("SHLVL"), ft_strdup("1"));
+	add_env_var(mini, ft_strdup("_"), ft_strdup("/usr/bin/env"));
+}
+
 void	init_env_list(t_mini *mini, char **envp)
 {
 	int		i;
@@ -53,6 +67,8 @@ void	init_env_list(t_mini *mini, char **envp)
 	char	*key;
 	char	*value;
 
+	if (!envp || !envp[0])
+		init_minim_env(mini);
 	i = 0;
 	while (envp[i])
 	{
@@ -67,24 +83,6 @@ void	init_env_list(t_mini *mini, char **envp)
 		}
 		i++;
 	}
-}
-
-void	free_env_list(t_mini *mini)
-{
-	t_list	*current;
-	t_list	*tmp;
-
-	current = mini->first_node;
-	while (current)
-	{
-		tmp = current->next;
-		free(current->variable);
-		free(current->content);
-		free(current);
-		current = tmp;
-	}
-	mini->first_node = NULL;
-	mini->total_nodes = 0;
 }
 
 char	**env_list_to_array(t_mini *mini)
