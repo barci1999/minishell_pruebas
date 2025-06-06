@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 18:39:39 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:03:00 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ typedef struct s_mini
 
 /*    funciones ctrls      */
 void				ctrls(int is_child);
-void				ctrl_child(int signal, t_shell *shell);
-void				ctrl_minishell(int signal, t_shell *shell);
+void				ctrl_child(int signal);
+void				ctrl_minishell(int signal);
 
 /*   funciones de builtings */
 
