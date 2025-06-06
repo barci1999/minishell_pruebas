@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/06 17:03:00 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/06 19:13:05 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <wait.h>
+#include <sys/ioctl.h>
 
 extern int g_exit_status;
 
