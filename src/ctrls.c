@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:37:14 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/06 18:47:16 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/06 19:12:33 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	ctrl_minishell(int signal)
 	if (signal == SIGINT)
 	{
 		printf("🔴 Se ha usado Ctrl-C\n");
+		ioctl(STDIN_FILENO, TIOCSTI,"\n");
 		rl_replace_line("", 0);
-		write(1, "\n", 1);
 		rl_on_new_line();
-		rl_redisplay();
+		
 		g_exit_status = 130;
 	}
 	else if (signal == SIGQUIT)
