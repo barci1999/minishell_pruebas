@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ctrls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:37:14 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/06 18:47:16 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ctrl_minishell(int signal, t_shell *shell)
+void	ctrl_minishell(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -21,7 +21,7 @@ void	ctrl_minishell(int signal, t_shell *shell)
 		write(1, "\n", 1);
 		rl_on_new_line();
 		rl_redisplay();
-		shell->last_exit_status = 1;
+		g_exit_status = 130;
 	}
 	else if (signal == SIGQUIT)
 	{
@@ -31,18 +31,18 @@ void	ctrl_minishell(int signal, t_shell *shell)
 	}
 }
 
-void	ctrl_child(int signal, t_shell *shell)
+void	ctrl_child(int signal)
 {
 	if (signal == SIGINT)
 	{
 		printf("❌ Ctrl-C en hijo\n");
-		shell->last_exit_status = 130;
+		g_exit_status = 130;
 	}
 	else if (signal == SIGQUIT)
 	{
 		printf("❌ Ctrl-\\ en hijo\n");
 		write(1, "Quit: 3\n", 8);
-		shell->last_exit_status = 131;
+		g_exit_status = 131;
 	}
 }
 
