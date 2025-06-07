@@ -1,4 +1,4 @@
-NAME	= mini
+NAME	= minishell
 
 CC	= cc
 
@@ -42,6 +42,7 @@ SRCS =  src/main.c\
 		src/status_redirecc.c\
 		src/assig_nodes_var.c\
 		src/quotes_2.c\
+		src/detectors_3.c\
 		
 
 

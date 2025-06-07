@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:07:13 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/07 17:54:05 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,13 @@ int	is_builting(char *token)
 
 int	is_redirec(char *str)
 {
-	if (ft_strncmp(str, "<", 1) == 0)
+	if (ft_strcmp(str, "<") == 0)
 		return (1);
-	else if (ft_strncmp(str, "<<", 2) == 0)
+	else if (ft_strcmp(str, "<<") == 0)
 		return (1);
-	else if (ft_strncmp(str, ">", 1) == 0)
+	else if (ft_strcmp(str, ">") == 0)
 		return (1);
-	else if (ft_strncmp(str, ">>", 2) == 0)
+	else if (ft_strcmp(str, ">>") == 0)
 		return (1);
 	else
 		return (0);

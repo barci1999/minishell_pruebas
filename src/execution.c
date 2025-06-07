@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 19:13:58 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/07 20:22:43 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,21 @@ void	execute_builtin_with_redir(t_list *node, t_general *data_gen,
 	close(saved_stdout);
 	close(saved_stdin);
 }
+void close_unused_pipes(int pipe_index, int total_cmds, int **pipes)
+{
+	int j;
+	j = 0;
+	while (j < total_cmds -1)
+	{
+		if (j != pipe_index)
+			close(pipes[j][1]); // escritura
+		if (j != pipe_index - 1)
+			close(pipes[j][0]); // lectura
+		j++;
+	}		
+}
 
-void	execute_list(t_list *list, t_general general, t_mini *mini)
+void execute_list(t_list *list, t_general general, t_mini *mini)
 {
 	t_list	*current;
 	int		i;
@@ -76,6 +89,7 @@ void	execute_list(t_list *list, t_general general, t_mini *mini)
 	pipe_index = 0;
 	current = list;
 	i = 0;
+
 	general.pids = gen_pid_array((size_t)total_cmds);
 	general.pipes = gen_pipes_array((size_t)total_cmds);
 	if (!general.pids)
@@ -90,6 +104,7 @@ void	execute_list(t_list *list, t_general general, t_mini *mini)
 			exit(1);
 		if (pid == 0)
 		{
+			close_unused_pipes(pipe_index, total_cmds, general.pipes);
 			open_and_redir_in(current, &general, pipe_index);
 			open_and_redir_out(current, &general, pipe_index, total_cmds);
 			execute_node(current, &general, mini);
@@ -97,10 +112,10 @@ void	execute_list(t_list *list, t_general general, t_mini *mini)
 		else
 		{
 			general.pids[i] = pid;
-			if (identify_reddir_out(current) == PIPE)
-				pipe_index++;
 			current = current->next;
 			i++;
+			if (current)
+				pipe_index++;
 		}
 	}
 	close_all_pipes(total_cmds, &general);

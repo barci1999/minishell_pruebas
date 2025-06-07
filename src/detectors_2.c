@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:37:19 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/07 20:54:10 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,7 @@ t_status_type	update_status(char **math_content, int *i, t_general *data_gen)
 	else if (is_cmd(math_content[*i], data_gen) == 1)
 		return (CMD);
 	else
+	{
 		return (WORD);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/07 21:12:51 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,28 +96,47 @@ t_status_type	safe_add_str(char ***mat, char *str)
 	return (OK);
 }
 
-void	assig_var_node(char **math_content, t_list *list, t_general *data_gen)
+void	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 {
-	t_status_type	flag;
-	int				i;
+	t_status_type	type;
+	bool			cmd_started = false;
+	int				i = 0;
 
-	i = 0;
-	flag = OK;
-	while (math_content[i])
+	while (mat_content[i])
 	{
-		if (update_status(math_content, &i, data_gen) == CMD)
-			flag = mod_cmd_and_args(list, math_content, &i, data_gen);
-		else if (update_status(math_content, &i, data_gen) == REDIREC)
-			flag = mod_redir_and_fd(list, math_content, &i, data_gen);
+		type = update_status(mat_content, &i, data_gen);
+
+		if (!cmd_started && (type == CMD || type == WORD))
+		{
+			if (mod_cmd_and_args(list, mat_content, &i, data_gen) != OK)
+			{
+				printf("Error asignando comando y argumentos\n");
+				exit(1);
+			}
+			cmd_started = true;
+		}
+		else if (cmd_started && type == WORD)
+		{
+			list->cmd_arg = add_str_to_mat(list->cmd_arg, mat_content[i]);
+			if (!list->cmd_arg)
+			{
+				printf("Error guardando argumento extra\n");
+				exit(1);
+			}
+			i++;
+		}
+		else if (type == REDIREC)
+		{
+			if (mod_redir_and_fd(list, mat_content, &i, data_gen) != OK)
+			{
+				printf("Error en redirección\n");
+				exit(1);
+			}
+		}
 		else
 		{
-			printf("error en word\n");
-			exit(1);
-		}
-		if (flag != OK)
-		{
-			printf("error en las funciones\n");
-			exit(1);
+			printf("Token inesperado: %s\n", mat_content[i]);
+			exit(127);
 		}
 	}
 }
