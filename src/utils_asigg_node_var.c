@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/07 21:41:33 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*take_cmd_path(char *comprove, t_general *data_gen)
 		free(cmd_path);
 		i++;
 	}
-	return (ft_free_mat(paths), free(temp), NULL);
+	return (ft_free_mat(paths), NULL);
 }
 
 char	*asigg_cmd_name(char *cmd_path, t_list *list)
@@ -126,7 +126,7 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen, t_mini *mini)
 	data_gen->my_env = env_list_to_array(mini);
 	while (current)
 	{
-		mat_content = fukking_quotes(list->content, mini);
+		mat_content = fukking_quotes(current->content, mini);
 		if (!mat_content)
 			return (ft_free_mat(mat_content), NULL);
 		assig_var_node(mat_content, current, data_gen);

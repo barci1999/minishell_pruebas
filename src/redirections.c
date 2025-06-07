@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:39:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/07 22:17:17 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	open_and_redir_in(t_list *node, t_general *general, int i)
 		fd = open(node->fd[return_fd_in(node)], O_RDONLY);
 		if (fd == -1)
 		{
-			perror("Error abriendo archivo para entrada");
+
+			perror(node->fd[return_fd_in(node)]);
 			exit(1);
 		}
 		dup2(fd, STDIN_FILENO);
@@ -52,21 +53,32 @@ void	open_and_redir_out(t_list *node, t_general *general, int i,
 	fd = -1;
 	redir_type = identify_reddir_out(node);
 	if (redir_type == FD || redir_type == FD_APPEND)
+{
+	filename = node->fd[return_fd_out(node)];
+
+	// ⚠️ Verifica que el directorio existe
+	if (!dir_exists(filename))
 	{
-		filename = node->fd[return_fd_out(node)];
-		if (redir_type == FD)
-			fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		else
-			fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (fd == -1)
-		{
-			perror("Error abriendo archivo para salida");
-			exit(1);
-		}
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-		return ;
+		perror(filename);
+		exit(1);
 	}
+
+	// Abre el archivo según tipo de redirección
+	if (redir_type == FD)
+		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+
+	if (fd == -1)
+	{
+		perror(filename);
+		exit(1);
+	}
+
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	return;
+}
 	if (redir_type == PIPE && i < total_cmds - 1)
 	{
 		dup2(general->pipes[i][1], STDOUT_FILENO);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/06 19:13:05 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/07 22:15:22 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ int					return_fd_out(t_list *node);
 t_status_type		update_status(char **math_content, int *i,
 						t_general *data_gen);
 int					is_operator_char(char c);
+int	dir_exists(const char *filepath);
 
 /* counters */
 

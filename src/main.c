@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/06 18:44:46 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/07 22:17:41 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,10 @@ int	main(int argc, char **argv, char **envp)
 					else
 					{
 						node_to_end(&temp,new_doble_node(input));
+						//printf("holaaaaaaaaaaaaaaaa\n");
 						temp = asigg_cont_list(temp,&data_gen,&mini);			
-						print_cmd_list(temp);
 					}
+						//print_cmd_list(temp);
 					if(temp)
 					{
 						comprove_heredocs(temp);

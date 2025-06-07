@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 20:04:44 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 16:57:17 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/07 21:51:58 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,13 +126,14 @@ void	doble_quote(char *src, char **result, int *i, t_mini *mini)
 		(*i)++;
 	while (src[*i] != '\"')
 	{
-		if (src[*i + 1] && src[*i] == '$')
+		if (src[*i + 1] && src[*i] == '$' && (ft_isalnum(src[*i+1]) ||src[*i +1] == '_'))
 		{
 			(*i)++;
 			temp = take_the_expand(src, i, mini);
 			*result = ft_free_strjoin(*result, temp);
 			if (src[*i] == '\"')
 				break ;
+			//(*i)++;
 		}
 		else
 			*result = add_chr_to_str(*result, src[*i]);
@@ -145,13 +146,12 @@ void	no_quote(char *src, char **result, int *i, t_mini *mini, int *m)
 	char	*temp;
 
 	temp = NULL;
-	if (src[*i] == '$')
+	if (src [*i +1] && src[*i] == '$')
 	{
 		(*i)++;
 		temp = take_the_expand(src, i, mini);
 		*result = ft_free_strjoin(*result, temp);
 		return;
-		printf("%s\n",temp);
 	}
 	if (is_operator_char(src[*i]))
 	{
@@ -160,7 +160,7 @@ void	no_quote(char *src, char **result, int *i, t_mini *mini, int *m)
 		if (src[*i + 1] && is_operator_char(src[*i + 1]))
 		{
 			(*i)++;
-			*result = add_chr_to_str(result[*m], src[*i]);
+			*result = add_chr_to_str(*result, src[*i]);
 		}
 		if (!ft_is_space(src[*i + 1]))
 			(*m)++;

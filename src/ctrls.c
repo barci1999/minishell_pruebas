@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:37:14 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/06 19:12:33 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/07 17:59:34 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ctrl_minishell(int signal)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		
-		g_exit_status = 130;
+		g_exit_status = 1;
 	}
 	else if (signal == SIGQUIT)
 	{
