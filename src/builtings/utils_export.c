@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:09:06 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:38:22 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void	add_or_update_variable(t_mini *mini, char *var, char *value)
 	}
 	add_env_var(mini, var, value);
 }
-	// Añadir nueva variable correctamente
-	// También crea un nodo.
-	// Lo añade a la lista.
-	// Y incrementa total_nodes,que era lo que faltaba antes.
-	// Por ahora se quedara la funcion NEW_NODE_EXPORT por si acaso
-	// si se confirma que no es necesaria se eliminara
+// Añadir nueva variable correctamente
+// También crea un nodo.
+// Lo añade a la lista.
+// Y incrementa total_nodes,que era lo que faltaba antes.
+// Por ahora se quedara la funcion NEW_NODE_EXPORT por si acaso
+// si se confirma que no es necesaria se eliminara
 
 void	nodes_order(t_mini *mini)
 {
@@ -61,17 +61,6 @@ void	nodes_order(t_mini *mini)
 	}
 }
 
-int	print_single_export(t_list *node)
-{
-	if (ft_strlen(node->variable) == 1 && node->variable[0] == '_')
-		return (0);
-	if (node->content)
-		printf("declare -x %s=\"%s\"\n", node->variable, node->content);
-	else
-		printf("declare -x %s\n", node->variable);
-	return (1);
-}
-
 int	export_args(char **args, t_mini *mini)
 {
 	int		i;
@@ -93,12 +82,19 @@ int	export_args(char **args, t_mini *mini)
 			add_or_update_variable(mini, var_name, value);
 		else
 		{
-			printf("minishell: export: %s: not a valid identifier\n", var_name);
+			export_error(args[i]);
 			exit_status = 1;
 		}
 		free(var_name);
 	}
 	return (exit_status);
+}
+
+void	export_error(char *var)
+{
+	write(2, "minishell: export: ", 20);
+	write(2, var, ft_strlen(var));
+	write(2, ": not a valid identifier\n", 26);
 }
 
 t_list	*new_node_export(char *var, char *value)

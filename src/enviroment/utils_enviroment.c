@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:13:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 20:25:25 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/09 18:32:16 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ t_list	*create_env_node(char *var, char *value)
 		return (NULL);
 	ft_memset(new, 0, sizeof(t_list));
 	new->variable = ft_strdup(var);
-	new->content = ft_strdup(value);
+	if (value)
+		new->content = ft_strdup(value);
+	else
+		new->content = NULL;
 	return (new);
 }
 
@@ -31,13 +34,13 @@ void	add_env_var(t_mini *mini, char *var, char *value)
 	t_list	*temp;
 
 	new = create_env_node(var, value);
-	temp = mini->first_node;
 	if (!new)
 		return ;
 	if (!mini->first_node)
 		mini->first_node = new;
 	else
 	{
+		temp = mini->first_node;
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new;

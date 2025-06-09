@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:37:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 18:50:33 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/09 17:43:05 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	final_numbers(char *str, long long *result)
 // como ya no se requiere hacer la suma de 1 por el signo se retira el if
 // y el else,
 // junto a sus respectivas variebles necesarias (number e i)
-// reduciendo la funcion a una comprobacion de si str es NULL y el llamar a 
+// reduciendo la funcion a una comprobacion de si str es NULL y el llamar a
 // transformer_numbers
 
 static int	multiple_args(char **exit_args, int argc)
@@ -93,23 +93,25 @@ static int	multiple_args(char **exit_args, int argc)
 		return (2);
 	if (final_numbers(trimmed_arg, &exit_code) == 0)
 	{
-		printf("exit\n");
-		printf("minishell: exit: %s: numeric argument required\n",
-			exit_args[1]);
+		write(1, "exit\n", 5);
+		write(2, "minishell: exit: ", 18);
+		write(2, exit_args[1], ft_strlen(exit_args[1]));
+		write(2, ": numeric argument required\n", 29);
 		free(trimmed_arg);
-		return (2);
+		exit(2);
 	}
 	free(trimmed_arg);
 	if (argc > 2)
 	{
-		printf("exit\n");
-		printf("minishell: exit: too many arguments\n");
+		write(1, "exit\n", 5);
+		write(2, "minishell: exit: too many arguments\n", 36);
+		g_exit_status = 1;
 		return (-1);
 	}
-	printf("[multiple_args] exit_code raw = %lld\n", exit_code);
 	return (((exit_code % 256) + 256) % 256);
 }
-// se quita el final_numbers(trimmed_arg, &exit_code); enciam del 
+
+// se quita el final_numbers(trimmed_arg, &exit_code); enciam del
 // free(trimmed_arg, &exit_code)
 // y se mejora el return (añadiendo + 256 ) %256);
 // de esta forma ya no hay que gestionar el signo anteriormente
@@ -128,22 +130,19 @@ int	ft_exit(char **exit_args)
 	i = 0;
 	while (exit_args[i])
 		i++;
+	write(1, "exit\n", 5);
 	if (i == 1)
-	{
-		printf("exit\n");
-		exit(0);
-	}
+		exit(g_exit_status);
 	exit_status = multiple_args(exit_args, i);
 	if (exit_status == -1)
 	{
-		printf("se ha usado mi exit pero no sale por muchos argumentos\n");
 		return (1);
 	}
 	exit(exit_status);
 }
-	// printf("se ha usado mi exit con numeros\n");
-	// printf("[ft_exit] exit_status = %d\n", exit_status);
-// con estos cambios es mas legible y funciona correctamente los LLONG_MIN  
+// printf("se ha usado mi exit con numeros\n");
+// printf("[ft_exit] exit_status = %d\n", exit_status);
+// con estos cambios es mas legible y funciona correctamente los LLONG_MIN
 // y LLONG_MAX
-// y diferentes numeros entre medias y si se sale de estos numeros da el codigo 
+// y diferentes numeros entre medias y si se sale de estos numeros da el codigo
 // de error correcto
