@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/07 22:15:22 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:38:49 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@
 # include <signal.h>
 # include <stdbool.h>
 # include <stdio.h>
+# include <sys/ioctl.h>
 # include <sys/stat.h>
 # include <unistd.h>
 # include <wait.h>
-#include <sys/ioctl.h>
 
-extern int g_exit_status;
+extern int			g_exit_status;
 
 typedef struct s_shell
 {
@@ -96,9 +96,10 @@ void				ctrl_minishell(int signal);
 /*   funciones de builtings */
 
 void				execute_builting(t_list *node, t_mini *mini);
-int				ft_echo(char **args);
+int					ft_echo(char **args);
 int					ft_export(char **args, t_mini *mini);
 int					export_args(char **args, t_mini *mini);
+void				export_error(char *var);
 int					print_single_export(t_list *node);
 void				nodes_order(t_mini *mini);
 void				add_or_update_variable(t_mini *mini, char *var,
@@ -106,10 +107,10 @@ void				add_or_update_variable(t_mini *mini, char *var,
 t_list				*new_node_export(char *var, char *value);
 int					is_valid_variable_export(char *var);
 int					ft_env(char **args, t_mini *mini);
-int				ft_pwd(void);
+int					ft_pwd(void);
 void				new_pwd(char *new_path);
 void				previous_pwd(void);
-int				ft_cd(char **args);
+int					ft_cd(char **args);
 int					ft_exit(char **exit_args);
 int					ft_unset(char **args, t_mini *mini);
 
@@ -187,7 +188,7 @@ int					return_fd_out(t_list *node);
 t_status_type		update_status(char **math_content, int *i,
 						t_general *data_gen);
 int					is_operator_char(char c);
-int	dir_exists(const char *filepath);
+int					dir_exists(const char *filepath);
 
 /* counters */
 

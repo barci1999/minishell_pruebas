@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:08:47 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 18:17:58 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:29:29 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,13 @@ int	ft_export(char **args, t_mini *mini)
 		mini->total_nodes = list_size(&mini->first_node);
 		nodes_order(mini);
 		print_export_list(mini);
+		g_exit_status = 0;
 		return (0);
 	}
 	result = export_args(args, mini);
 	if (mini->total_nodes != count_nodes(mini))
 		printf("Export ha fallado\n");
-	return (result);
+	g_exit_status = result;
+	return (g_exit_status);
 }
 // se añade ese if al final para una mejor gestion de errores

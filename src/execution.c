@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/07 20:22:43 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/09 20:38:55 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	execute_node(t_list *node, t_general *general, t_mini *mini)
 	else if (is_builting(node->cmd_path))
 	{
 		execute_builting(node, mini);
-		exit(1);
+		exit(g_exit_status);
 	}
 }
 
@@ -63,21 +63,22 @@ void	execute_builtin_with_redir(t_list *node, t_general *data_gen,
 	close(saved_stdout);
 	close(saved_stdin);
 }
-void close_unused_pipes(int pipe_index, int total_cmds, int **pipes)
+void	close_unused_pipes(int pipe_index, int total_cmds, int **pipes)
 {
-	int j;
+	int	j;
+
 	j = 0;
-	while (j < total_cmds -1)
+	while (j < total_cmds - 1)
 	{
 		if (j != pipe_index)
 			close(pipes[j][1]); // escritura
 		if (j != pipe_index - 1)
 			close(pipes[j][0]); // lectura
 		j++;
-	}		
+	}
 }
 
-void execute_list(t_list *list, t_general general, t_mini *mini)
+void	execute_list(t_list *list, t_general general, t_mini *mini)
 {
 	t_list	*current;
 	int		i;
@@ -89,7 +90,6 @@ void execute_list(t_list *list, t_general general, t_mini *mini)
 	pipe_index = 0;
 	current = list;
 	i = 0;
-
 	general.pids = gen_pid_array((size_t)total_cmds);
 	general.pipes = gen_pipes_array((size_t)total_cmds);
 	if (!general.pids)
