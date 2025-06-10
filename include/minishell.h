@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/09 20:38:49 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/10 20:42:11 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void				ctrl_minishell(int signal);
 
 /*   funciones de builtings */
 
-void				execute_builting(t_list *node, t_mini *mini);
+void	execute_builting(t_list *node, t_mini *mini);
 int					ft_echo(char **args);
 int					ft_export(char **args, t_mini *mini);
 int					export_args(char **args, t_mini *mini);

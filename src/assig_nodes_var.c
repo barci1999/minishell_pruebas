@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assig_nodes_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/07 21:12:51 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/10 20:38:51 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 	t_status_type	type;
 	bool			cmd_started = false;
 	int				i = 0;
-
 	while (mat_content[i])
 	{
 		type = update_status(mat_content, &i, data_gen);
