@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:09:06 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/09 20:38:22 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/10 20:36:38 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	add_or_update_variable(t_mini *mini, char *var, char *value)
 {
 	t_list	*node;
 
+	if (!value || *value == '\0')
+		return ;
 	node = mini->first_node;
 	while (node != NULL)
 	{
