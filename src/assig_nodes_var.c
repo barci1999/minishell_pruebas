@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/10 20:38:51 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/11 19:58:19 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,21 +96,36 @@ t_status_type	safe_add_str(char ***mat, char *str)
 	return (OK);
 }
 
-void	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
+void	print_cmd_error(char *cmd, char *msg, int code)
+{
+	if (cmd)
+	{
+		write(2, "minishell: ", 11);
+		write(2, cmd, ft_strlen(cmd));
+		write(2, ": ", 2);
+	}
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
+	g_exit_status = code;
+}
+
+int	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 {
 	t_status_type	type;
-	bool			cmd_started = false;
-	int				i = 0;
+	bool			cmd_started;
+	int				i;
+
+	cmd_started = false;
+	i = 0;
 	while (mat_content[i])
 	{
 		type = update_status(mat_content, &i, data_gen);
-
 		if (!cmd_started && (type == CMD || type == WORD))
 		{
 			if (mod_cmd_and_args(list, mat_content, &i, data_gen) != OK)
 			{
-				printf("Error asignando comando y argumentos\n");
-				exit(1);
+				print_cmd_error(mat_content[i], "command not found", 127);
+				return (1);
 			}
 			cmd_started = true;
 		}
@@ -119,8 +134,8 @@ void	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 			list->cmd_arg = add_str_to_mat(list->cmd_arg, mat_content[i]);
 			if (!list->cmd_arg)
 			{
-				printf("Error guardando argumento extra\n");
-				exit(1);
+				print_cmd_error("malloc", "memory allocation failed", 1);
+				return (1);
 			}
 			i++;
 		}
@@ -128,14 +143,15 @@ void	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 		{
 			if (mod_redir_and_fd(list, mat_content, &i, data_gen) != OK)
 			{
-				printf("Error en redirección\n");
-				exit(1);
+				print_cmd_error(mat_content[i], "redirection error", 1);
+				return (1);
 			}
 		}
 		else
 		{
-			printf("Token inesperado: %s\n", mat_content[i]);
-			exit(127);
+			print_cmd_error(mat_content[i], "syntax error", 127);
+			return (1);
 		}
 	}
+	return (0);
 }

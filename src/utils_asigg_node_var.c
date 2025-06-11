@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/10 20:46:50 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/11 20:58:50 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ size_t	number_of_cmd_arg(const char *src)
 		else if (is_operator_char(src[i]))
 		{
 			if ((src[i] == '>' && src[i + 1] == '>') || (src[i] == '<' && src[i
-						+ 1] == '<'))
+					+ 1] == '<'))
 				i += 2;
 			else
 				i += 1;
@@ -129,7 +129,11 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen, t_mini *mini)
 		mat_content = fukking_quotes(current->content, mini);
 		if (!mat_content)
 			return (ft_free_mat(mat_content), NULL);
-		assig_var_node(mat_content, current, data_gen);
+		if (assig_var_node(mat_content, current, data_gen) != 0)
+		{
+			ft_free_mat(mat_content);
+			return (NULL);
+		}
 		current = current->next;
 	}
 	return (list);

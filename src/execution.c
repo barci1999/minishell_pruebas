@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/10 20:45:19 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/11 19:48:17 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,40 @@ void	execute_builting(t_list *node, t_mini *mini)
 		g_exit_status = ft_unset(node->cmd_arg, mini);
 }
 
+void	handle_external_command(t_list *node, t_general *general)
+{
+	struct stat	sb;
+
+	// Verificar si el archivo existe
+	if (access(node->cmd_path, F_OK) != 0)
+	{
+		print_cmd_error(node->cmd_path, "No such file or directory", 127);
+		exit(127);
+	}
+	// Verificar si es un directorio
+	if (stat(node->cmd_path, &sb) == 0 && S_ISDIR(sb.st_mode))
+	{
+		print_cmd_error(node->cmd_path, "Is a directory", 126);
+		exit(126);
+	}
+	// Verificar si tiene permisos de ejecución
+	if (access(node->cmd_path, X_OK) != 0)
+	{
+		print_cmd_error(node->cmd_path, "Permission denied", 126);
+		exit(126);
+	}
+	// Ejecutar si todo está bien
+	if (execve(node->cmd_path, node->cmd_arg, general->my_env) == -1)
+		exit(1);
+}
+
 void	execute_node(t_list *node, t_general *general, t_mini *mini)
 {
 	if (!is_builting(node->cmd_path))
 	{
-		if (execve(node->cmd_path, node->cmd_arg, general->my_env) == -1)
-			exit(1);
+		handle_external_command(node, general);
 	}
-	else if (is_builting(node->cmd_path))
+	else
 	{
 		execute_builting(node, mini);
 		exit(g_exit_status);
@@ -63,6 +89,7 @@ void	execute_builtin_with_redir(t_list *node, t_general *data_gen,
 	close(saved_stdout);
 	close(saved_stdin);
 }
+
 void	close_unused_pipes(int pipe_index, int total_cmds, int **pipes)
 {
 	int	j;
