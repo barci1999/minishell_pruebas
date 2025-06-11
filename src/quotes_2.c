@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 20:04:44 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/07 21:51:58 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:58:39 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,13 @@ char	*take_the_expand(char *src, int *i, t_mini *mini)
 {
 	char	*temp;
 	char	*temp_2;
+	char	*value;
 
 	temp = NULL;
 	temp_2 = NULL;
 	if (src[*i] == '?')
 	{
-		temp_2 = ft_itoa(g_exit_status); 
+		temp_2 = ft_itoa(g_exit_status);
 		return (temp_2);
 	}
 	while (src[*i] && (ft_isalnum(src[*i]) || src[*i] == '_'))
@@ -82,7 +83,11 @@ char	*take_the_expand(char *src, int *i, t_mini *mini)
 		temp = add_chr_to_str(temp, src[*i]);
 		(*i)++;
 	}
-	temp_2 = ft_strdup(get_env_value(mini, temp));
+	value = get_env_value(mini, temp);
+	if (value == NULL)
+		temp_2 = ft_strdup("");
+	else
+		temp_2 = ft_strdup(value);
 	free(temp);
 	return (temp_2);
 }
@@ -126,7 +131,8 @@ void	doble_quote(char *src, char **result, int *i, t_mini *mini)
 		(*i)++;
 	while (src[*i] != '\"')
 	{
-		if (src[*i + 1] && src[*i] == '$' && (ft_isalnum(src[*i+1]) ||src[*i +1] == '_'))
+		if (src[*i + 1] && src[*i] == '$' && (ft_isalnum(src[*i + 1]) || src[*i
+				+ 1] == '_'))
 		{
 			(*i)++;
 			temp = take_the_expand(src, i, mini);
@@ -146,12 +152,12 @@ void	no_quote(char *src, char **result, int *i, t_mini *mini, int *m)
 	char	*temp;
 
 	temp = NULL;
-	if (src [*i +1] && src[*i] == '$')
+	if (src[*i + 1] && src[*i] == '$')
 	{
 		(*i)++;
 		temp = take_the_expand(src, i, mini);
 		*result = ft_free_strjoin(*result, temp);
-		return;
+		return ;
 	}
 	if (is_operator_char(src[*i]))
 	{
