@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/11 20:58:50 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/12 20:07:27 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,12 @@ char	*take_cmd_path(char *comprove, t_general *data_gen)
 	temp = NULL;
 	i = 0;
 	cmd_path = NULL;
-	if (comprove[0] == '/')
+	if(*comprove == '\0')
+		return(NULL);
+	if (comprove[0] == '/' || comprove[0] == '.')
 		return (ft_strdup(comprove));
 	paths = take_paths_env(data_gen->my_env);
+	
 	while (paths[i] != NULL)
 	{
 		temp = ft_strjoin(paths[i], "/");
@@ -97,8 +100,8 @@ size_t	number_of_cmd_arg(const char *src)
 		}
 		else if (is_operator_char(src[i]))
 		{
-			if ((src[i] == '>' && src[i + 1] == '>') || (src[i] == '<' && src[i
-					+ 1] == '<'))
+			if ((src[i] == '>' && src[i + 1] == '>') || (src[i] == '<'
+					&& src[i + 1] == '<'))
 				i += 2;
 			else
 				i += 1;

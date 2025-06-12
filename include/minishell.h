@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/11 16:32:31 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/12 15:48:46 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void				ctrl_minishell(int signal);
 
 /*   funciones de builtings */
 
-void	execute_builting(t_list *node, t_mini *mini);
+void				execute_builting(t_list *node, t_mini *mini);
 int					ft_echo(char **args);
 int					ft_export(char **args, t_mini *mini);
 int					export_args(char **args, t_mini *mini);
@@ -217,7 +217,7 @@ int					is_quote(char c);
 char				*add_expand_str(t_mini *mini, char *src, char *matrix,
 						int *i);
 int					count_nodes(t_mini *mini);
-int				assig_var_node(char **math_content, t_list *list,
+int					assig_var_node(char **math_content, t_list *list,
 						t_general *data_gen);
 t_status_type		safe_add_str(char ***mat, char *str);
 t_status_type		mod_cmd_and_args(t_list *list, char **math_content, int *i,
@@ -236,5 +236,5 @@ void				evalue_next_char(char *src, int *i, int *m, char **result);
 char				*take_the_expand(char *src, int *i, t_mini *mini);
 char				*ft_free_strjoin(char *s1, char *s2);
 
-void print_cmd_error(char *cmd, char *msg, int code);
+void				print_cmd_error(char *cmd, char *msg, int code);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 19:08:34 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 18:15:32 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:47:52 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,5 @@ int	ft_echo(char **args)
 	}
 	if (new_line)
 		printf("\n");
-	return(0);
+	return (0);
 }
