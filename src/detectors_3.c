@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   detectors_3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 22:14:28 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/07 22:15:00 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:45:10 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"minishell.h"
+#include "minishell.h"
 
 int	dir_exists(const char *filepath)
 {
-	int		i;
-	char	*dir;
-	int		ret;
+	int i;
+	char *dir;
+	int ret;
 
 	// Busca la última '/' (si hay)
 	i = ft_strlen(filepath);

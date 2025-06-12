@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ctrls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:37:14 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/07 17:59:34 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/12 15:26:59 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@ void	ctrl_minishell(int signal)
 	if (signal == SIGINT)
 	{
 		printf("🔴 Se ha usado Ctrl-C\n");
-		ioctl(STDIN_FILENO, TIOCSTI,"\n");
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		
 		g_exit_status = 1;
 	}
 	else if (signal == SIGQUIT)

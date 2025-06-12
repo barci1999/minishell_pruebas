@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 20:04:44 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/11 20:58:39 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/12 20:30:07 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,8 @@ void	doble_quote(char *src, char **result, int *i, t_mini *mini)
 		(*i)++;
 	while (src[*i] != '\"')
 	{
-		if (src[*i + 1] && src[*i] == '$' && (ft_isalnum(src[*i + 1]) || src[*i
-				+ 1] == '_'))
+		if (src[*i + 1] && src[*i] == '$' && (ft_isalnum(src[*i + 1])
+				|| src[*i + 1] == '_'))
 		{
 			(*i)++;
 			temp = take_the_expand(src, i, mini);
@@ -161,15 +161,19 @@ void	no_quote(char *src, char **result, int *i, t_mini *mini, int *m)
 	}
 	if (is_operator_char(src[*i]))
 	{
-		result[*m] = NULL;
-		*result = add_chr_to_str(result[*m], src[*i]);
+		//printf("%i\n",*m);
+		*result = NULL;
+		*result = add_chr_to_str(*result, src[*i]);
 		if (src[*i + 1] && is_operator_char(src[*i + 1]))
 		{
 			(*i)++;
 			*result = add_chr_to_str(*result, src[*i]);
 		}
 		if (!ft_is_space(src[*i + 1]))
+		{
+			//(*i)++;
 			(*m)++;
+		}
 		return ;
 	}
 	*result = add_chr_to_str(*result, src[*i]);
@@ -192,12 +196,14 @@ char	**fukking_quotes(char *src, t_mini *mini)
 	}
 	while (src[i])
 	{
-		if (ft_is_space(src[i]))
+		while (ft_is_space(src[i]))
 			i++;
 		if (src[i] == '\'')
 			single_quote(&result[m], &i, src);
 		else if (src[i] == '\"')
+		{
 			doble_quote(src, &result[m], &i, mini);
+		}
 		else if (src[i] != '\'' && src[i] != '\"')
 		{
 			no_quote(src, &result[m], &i, mini, &m);

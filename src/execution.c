@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/11 19:48:17 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/12 19:33:40 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ void	handle_external_command(t_list *node, t_general *general)
 	struct stat	sb;
 
 	// Verificar si el archivo existe
+	//printf("%s\n",node->cmd_path);
+	if(*node->cmd_path == '\0')
+		exit(0);
 	if (access(node->cmd_path, F_OK) != 0)
 	{
 		print_cmd_error(node->cmd_path, "No such file or directory", 127);

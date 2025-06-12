@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:50:42 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/10 20:44:06 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/12 15:47:17 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	open_the_heredoc(t_list *list, int redir_index, int delim_index)
 	while (1)
 	{
 		line = readline("heredoc-> ");
-		if(g_exit_status == 130)
+		if (g_exit_status == 130)
 		{
 			close(fd);
-			return;
+			return ;
 		}
 		if (!line)
 			break ;

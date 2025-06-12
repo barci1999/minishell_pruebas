@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/11 19:58:19 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/12 20:54:43 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,16 @@ t_status_type	mod_cmd_and_args(t_list *list, char **math_content, int *i,
 	if (is_builting(math_content[*i]))
 		list->cmd_path = ft_strdup(math_content[*i]);
 	else
+	{
 		list->cmd_path = take_cmd_path(math_content[*i], data_gen);
+		if (!list->cmd_path && !*math_content[*i])
+			return(OK);	
+	}
 	list->cmd_arg = add_str_to_mat(list->cmd_arg, math_content[*i]);
 	if (!list->cmd_arg)
+	{
 		return (MALLOC_ERROR);
+	}
 	if (!list->cmd_path)
 		return (MALLOC_ERROR);
 	list->cmd_name = asigg_cmd_name(list->cmd_path, list);
@@ -119,6 +125,11 @@ int	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 	i = 0;
 	while (mat_content[i])
 	{
+		if (!mat_content[i] || mat_content[i][0] == '\0')//esto esta por ver si es necesario
+    	{
+       		i++;
+        	continue;
+    	}
 		type = update_status(mat_content, &i, data_gen);
 		if (!cmd_started && (type == CMD || type == WORD))
 		{
