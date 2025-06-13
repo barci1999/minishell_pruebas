@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 17:45:31 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/13 19:53:44 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_status_type	mod_cmd_and_args(t_list *list, char **math_content, int *i,
 	{
 		list->cmd_path = take_cmd_path(math_content[*i], data_gen);
 		if (!list->cmd_path && !*math_content[*i])
-			return(OK);	
+			return (OK);
 	}
 	list->cmd_arg = add_str_to_mat(list->cmd_arg, math_content[*i]);
 	if (!list->cmd_arg)
@@ -155,8 +155,8 @@ int	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 		}
 		else
 		{
-			if(*mat_content[i] == '\0')
-				return(0);
+			if (*mat_content[i] == '\0')
+				return (0);
 			print_cmd_error(mat_content[i], "syntax error", 127);
 			return (1);
 		}

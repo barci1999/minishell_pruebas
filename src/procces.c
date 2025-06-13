@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   procces.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 20:41:33 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/07 19:55:59 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:50:34 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ int	**gen_pipes_array(size_t n_cmd)
 	array = malloc((n_cmd - 1) * sizeof(int *));
 	if (!array)
 		return (NULL);
-	i = 0;
-	while (i < (n_cmd - 1))
+	i = -1;
+	while (++i < (n_cmd - 1))
 	{
 		array[i] = malloc(2 * sizeof(int));
 		if (!array[i])
@@ -49,7 +49,6 @@ int	**gen_pipes_array(size_t n_cmd)
 			ft_free_mat_int(array, i);
 			return (NULL);
 		}
-		i++;
 	}
 	return (array);
 }

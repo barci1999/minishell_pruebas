@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 22:14:28 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/12 15:45:10 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/13 19:55:29 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,18 @@
 
 int	dir_exists(const char *filepath)
 {
-	int i;
-	char *dir;
-	int ret;
+	int		i;
+	char	*dir;
+	int		ret;
 
-	// Busca la última '/' (si hay)
 	i = ft_strlen(filepath);
 	while (i >= 0 && filepath[i] != '/')
 		i--;
-
-	// Si no hay '/', el archivo está en el cwd => directorio existe
 	if (i <= 0)
 		return (1);
-
-	// Crea una copia del path solo con la parte del directorio
 	dir = ft_strndup(filepath, i);
 	if (!dir)
 		return (0);
-
-	// Verifica si el directorio existe
 	ret = (access(dir, F_OK | W_OK) == 0);
 	free(dir);
 	return (ret);

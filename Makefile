@@ -19,11 +19,14 @@ SRCS =  src/main.c\
 		borrar.c\
 		src/utils_env.c\
 		src/counters.c\
+		src/nbr_quotes.c\
 		src/ctrls.c\
 		src/utils_asigg_node_var_2.c\
+		src/utils_asigg_node_var_3.c\
 		src/detectors.c\
 		src/detectors_2.c\
 		src/heredocs.c\
+		src/heredocs_1.c\
 		src/execution.c\
 		src/expand_str.c\
 		src/redirections.c\
@@ -41,6 +44,7 @@ SRCS =  src/main.c\
 		src/enviroment/utils_enviroment_2.c\
 		src/status_redirecc.c\
 		src/assig_nodes_var.c\
+		src/quotes_1.c\
 		src/quotes_2.c\
 		src/detectors_3.c\
 		

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   counters.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 13:27:21 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/13 20:04:37 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,57 +51,4 @@ size_t	num_pipes(char *input, char c)
 		i++;
 	}
 	return (count);
-}
-
-static bool	analize_nbr(int *double_quote, int *single_quote)
-{
-	if (*double_quote % 2 == 0 && *single_quote % 2 == 0)
-		return (true);
-	else if (*double_quote == 0 && *single_quote % 2 == 0)
-		return (true);
-	else if (*double_quote % 2 == 0 && *single_quote == 0)
-		return (true);
-	else
-		return (false);
-}
-
-bool	nbr_quotes_ok(char *src)
-{
-	int	i;
-	int	double_quote;
-	int	single_quote;
-
-	i = 0;
-	double_quote = 0;
-	single_quote = 0;
-	while (src[i])
-	{
-		if (src[i] == '\"')
-		{
-			double_quote++;
-			i++;
-			while (src[i] && src[i] != '\"')
-				i++;
-			if (src[i] == '\"')
-			{
-				double_quote++;
-				i++;
-			}
-		}
-		else if (src[i] == '\'')
-		{
-			single_quote++;
-			i++;
-			while (src[i] && src[i] != '\'')
-				i++;
-			if (src[i] == '\'')
-			{
-				single_quote++;
-				i++;
-			}
-		}
-		else
-			i++;
-	}
-	return (analize_nbr(&double_quote, &single_quote));
 }

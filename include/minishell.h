@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 17:20:40 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/13 19:51:39 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,16 @@ typedef struct s_mini
 	t_list			*node_inter;
 	int				total_nodes;
 }					t_mini;
+
+typedef struct s_quotes
+{
+	char			*src;
+	char			**result;
+	char			**result_base;
+	int				*i;
+	int				*m;
+}					t_quotes;
+
 // Apunta al primer nodo de la lista de variables de entorno
 // Iterador temporal para recorrer la lista
 // Número total de variables en la lista
@@ -227,17 +237,15 @@ char				*take_the_redir(char **str);
 char				*add_chr_to_str(char *src, char c);
 size_t				number_of_cmd_arg(const char *src);
 char				*get_env_value(t_mini *mini, char *var_name);
-void				no_quote(char *src, char **result, int *i, t_mini *mini,
-						int *m);
-void				doble_quote(char *src, char **result, int *i, t_mini *mini);
+void				no_quote(t_quotes *quot, t_mini *mini);
+void				doble_quote(t_quotes *quot, t_mini *mini);
 char				**fukking_quotes(char *src, t_mini *mini);
-void				single_quote(char **result, int *i, char *src);
-void				evalue_next_char(char *src, int *i, int *m, char **result);
+void				single_quote(t_quotes *quot);
+void				evalue_next_char(t_quotes *quot);
+void				evalue_next_char(t_quotes *quot);
 char				*take_the_expand(char *src, int *i, t_mini *mini);
 char				*ft_free_strjoin(char *s1, char *s2);
 
 void				print_cmd_error(char *cmd, char *msg, int code);
-// void try_open_all_fds_out(t_list *node);
-// void try_to_open_all_fds_in(t_list *node);
-void try_to_open_all_fds(t_list *node);
+void				try_to_open_all_fds(t_list *node);
 #endif

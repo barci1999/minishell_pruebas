@@ -6,94 +6,57 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:50:42 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/12 15:47:17 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/13 20:40:36 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	open_the_heredoc(t_list *list, int redir_index, int delim_index)
+static int	open_heredoc_fd(t_list *list, int fd_index)
 {
-	char	*line;
-	int		fd;
-	int		fd_index;
+	int	fd;
 
-	fd_index = redir_index;
-	if (!list->fd[fd_index] || !list->redirecc[redir_index])
-		return ;
+	if (!list->fd[fd_index] || !list->redirecc[fd_index])
+		return (-1);
 	fd = open(list->fd[fd_index], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd == -1)
-	{
-		perror("open herdoc");
-		return ;
-	}
+		perror("open heredoc");
+	return (fd);
+}
+
+static int	is_delimiter(char *line, char *delimiter)
+{
+	return (ft_strcmp(line, delimiter) == 0);
+}
+
+static void	handle_heredoc_loop(int fd, char *delimiter)
+{
+	char	*line;
+
 	while (1)
 	{
 		line = readline("heredoc-> ");
 		if (g_exit_status == 130)
-		{
-			close(fd);
-			return ;
-		}
+			break ;
 		if (!line)
 			break ;
-		if (ft_strcmp(line, list->delim[delim_index]) == 0)
+		if (is_delimiter(line, delimiter))
+		{
+			free(line);
 			break ;
+		}
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
+}
+
+void	open_the_heredoc(t_list *list, int redir_index, int delim_index)
+{
+	int	fd;
+
+	fd = open_heredoc_fd(list, redir_index);
+	if (fd == -1)
+		return ;
+	handle_heredoc_loop(fd, list->delim[delim_index]);
 	close(fd);
-}
-
-void	open_all_herdocs(t_list *list)
-{
-	int	i;
-	int	delim_index;
-
-	i = 0;
-	delim_index = 0;
-	while (list->redirecc[i])
-	{
-		if (ft_strcmp(list->redirecc[i], "<<") == 0)
-		{
-			open_the_heredoc(list, i, delim_index);
-			delim_index++;
-		}
-		i++;
-	}
-}
-
-void	comprove_heredocs(t_list *list)
-{
-	t_list	*current;
-
-	current = list;
-	while (current)
-	{
-		if (have_a_heredoc(current) == 1)
-		{
-			open_all_herdocs(current);
-			current = current->next;
-		}
-		else
-			current = current->next;
-	}
-}
-
-void	close_herdocs(t_list *list, t_general *gen)
-{
-	t_list	*current;
-	int		i;
-	char	*temp;
-
-	current = list;
-	i = 0;
-	while (i <= gen->tem_heredoc)
-	{
-		temp = ft_strjoin("temp_here_", ft_itoa(i));
-		if (access(temp, F_OK) != -1)
-			unlink(temp);
-		free(temp);
-		i++;
-	}
 }
