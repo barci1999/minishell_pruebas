@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 15:41:54 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:40:06 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	handle_external_command(t_list *node, t_general *general)
 
 void	execute_node(t_list *node, t_general *general, t_mini *mini)
 {
+	if(!node->cmd_path)
+		exit(0);
 	if (!is_builting(node->cmd_path))
 	{
 		handle_external_command(node, general);
@@ -83,8 +85,8 @@ void	execute_builtin_with_redir(t_list *node, t_general *data_gen,
 	saved_stdin = dup(STDIN_FILENO);
 	if (node->redirecc)
 	{
-		open_and_redir_in(node, data_gen, 0);
 		open_and_redir_out(node, data_gen, 0, 0);
+		open_and_redir_in(node, data_gen, 0);
 	}
 	execute_builting(node, mini);
 	dup2(saved_stdout, STDOUT_FILENO);
@@ -135,6 +137,7 @@ void	execute_list(t_list *list, t_general general, t_mini *mini)
 		if (pid == 0)
 		{
 			close_unused_pipes(pipe_index, total_cmds, general.pipes);
+			try_to_open_all_fds(current);
 			open_and_redir_in(current, &general, pipe_index);
 			open_and_redir_out(current, &general, pipe_index, total_cmds);
 			execute_node(current, &general, mini);

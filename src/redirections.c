@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:39:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 15:46:44 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/13 18:41:15 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-void try_to_open_all_fds_in(t_list *node)
+void try_to_open_all_fds(t_list *node)
 {
 	int i;
 	int fd;
@@ -22,6 +22,11 @@ void try_to_open_all_fds_in(t_list *node)
 	{
 		if(ft_strcmp(node->redirecc[i],"<<") == 0 || ft_strcmp(node->redirecc[i],"<") == 0)
 		{
+			if(!dir_exists(node->fd[i]))
+			{
+				perror(node->fd[i]);
+				exit(1);
+			}
 			fd = open(node->fd[i],O_RDONLY);
 			if(fd == -1)
 			{
@@ -30,9 +35,41 @@ void try_to_open_all_fds_in(t_list *node)
 			}
 			close(fd);	
 		}
+		if(ft_strcmp(node->redirecc[i],">>") == 0)
+		{
+			if(!dir_exists(node->fd[i]))
+			{
+				perror(node->fd[i]);
+				exit(1);
+			}
+			fd = open(node->fd[i], O_WRONLY | O_CREAT | O_APPEND, 0644);
+			if(fd == -1)
+			{
+				perror(node->fd[i]);
+				exit(1);
+			}
+			close(fd);
+		}
+		if(ft_strcmp(node->redirecc[i],">") == 0)
+		{
+			if(!dir_exists(node->fd[i]))
+			{
+				perror(node->fd[i]);
+				exit(1);
+			}
+			fd = open(node->fd[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			if(fd == -1)
+			{
+				perror(node->fd[i]);
+				exit(1);
+			}
+			close(fd);
+			
+		}
 		i++;
 	}
 }
+
 void try_open_all_fds_out(t_list *node)
 {
 	int i;
@@ -45,6 +82,11 @@ void try_open_all_fds_out(t_list *node)
 	{
 		if(ft_strcmp(node->redirecc[i],">") == 0)
 		{
+			if(!dir_exists(node->fd[i]))
+			{
+				perror(node->fd[i]);
+				exit(1);
+			}
 			fd = open(node->fd[i],O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if(fd == -1)
 			{
@@ -78,7 +120,6 @@ void	open_and_redir_in(t_list *node, t_general *general, int i)
 		return ;
 	if (redir_type == FD || redir_type == HEREDOC)
 	{
-		try_to_open_all_fds_in(node);
 		fd = open(node->fd[return_fd_in(node)], O_RDONLY);
 		if (fd == -1)
 		{
