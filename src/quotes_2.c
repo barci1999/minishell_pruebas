@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 20:04:44 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 16:55:36 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/13 19:41:50 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*take_the_expand(char *src, int *i, t_mini *mini)
 	if (src[*i] == '?')
 	{
 		temp_2 = ft_itoa(g_exit_status);
-		if(src[*i + 1] && ft_is_space(src[*i +1]))
+		if (src[*i + 1] && ft_is_space(src[*i + 1]))
 			(*i)++;
 		return (temp_2);
 	}
@@ -94,128 +94,42 @@ char	*take_the_expand(char *src, int *i, t_mini *mini)
 	return (temp_2);
 }
 
-void	evalue_next_char(char *src, int *i, int *m, char **result)
+static void	parse_quotes_loop(t_quotes *quot, t_mini *mini)
 {
-	(void)result;
-	if (src[*i + 1])
+	while (quot->src[*quot->i])
 	{
-		if (ft_is_space(src[*i + 1]) || is_operator_char(src[*i + 1]))
-		{
-			(*m)++;
-		}
-	}
-	else
-	{
-		(*m)++;
-	}
-}
-
-void	single_quote(char **result, int *i, char *src)
-{
-	if (!src[*i + 1])
-		return ;
-	else
-		(*i)++;
-	while (src[*i] != '\'')
-	{
-		*result = add_chr_to_str(*result, src[*i]);
-		(*i)++;
-	}
-}
-
-void	doble_quote(char *src, char **result, int *i, t_mini *mini)
-{
-	char	*temp;
-
-	if (!src[*i + 1])
-		return ;
-	else
-		(*i)++;
-	while (src[*i] != '\"')
-	{
-		if (src[*i + 1] && src[*i] == '$' && (ft_isalnum(src[*i + 1])
-				|| src[*i + 1] == '_' || src[*i +1] == '?'))
-		{
-			(*i)++;
-			//printf("%c     %i   %i\n", src[*i], src[*i], *i);
-			temp = take_the_expand(src, i, mini);
-			*result = ft_free_strjoin(*result, temp);
-			//printf("%s\n",*result);
-			if (src[*i] == '\"')
-				break ;
-		}
+		while (ft_is_space(quot->src[*quot->i]))
+			(*quot->i)++;
+		quot->result = &quot->result_base[*quot->m];
+		if (quot->src[*quot->i] == '\'')
+			single_quote(quot);
+		else if (quot->src[*quot->i] == '\"')
+			doble_quote(quot, mini);
 		else
-		{
-			//printf("%c     %i   %i\n", src[*i], src[*i], *i);
-			*result = add_chr_to_str(*result, src[*i]);
-			(*i)++;
-		}
+			no_quote(quot, mini);
+		evalue_next_char(quot);
+		(*quot->i)++;
 	}
-}
-
-void	no_quote(char *src, char **result, int *i, t_mini *mini, int *m)
-{
-	char	*temp;
-
-	temp = NULL;
-	if (src[*i + 1] && src[*i] == '$')
-	{
-		(*i)++;
-		temp = take_the_expand(src, i, mini);
-		*result = ft_free_strjoin(*result, temp);
-		return ;
-	}
-	if (is_operator_char(src[*i]))
-	{
-		//printf("%i\n",*m);
-		*result = NULL;
-		*result = add_chr_to_str(*result, src[*i]);
-		if (src[*i + 1] && is_operator_char(src[*i + 1]))
-		{
-			(*i)++;
-			*result = add_chr_to_str(*result, src[*i]);
-		}
-		if (!ft_is_space(src[*i + 1]))
-		{
-			//(*i)++;
-			(*m)++;
-		}
-		return ;
-	}
-	*result = add_chr_to_str(*result, src[*i]);
 }
 
 char	**fukking_quotes(char *src, t_mini *mini)
 {
-	int		i;
-	int		m;
-	char	**result;
-	size_t	j;
+	t_quotes	quot;
+	char		**result;
+	size_t		j;
+	int			i;
+	int			m;
 
-	j = 0;
 	i = 0;
 	m = 0;
+	j = 0;
 	result = malloc((number_of_cmd_arg(src) + 1) * sizeof(char *));
 	while (j <= number_of_cmd_arg(src))
-	{
 		result[j++] = NULL;
-	}
-	while (src[i])
-	{
-		while (ft_is_space(src[i]))
-			i++;
-		if (src[i] == '\'')
-			single_quote(&result[m], &i, src);
-		else if (src[i] == '\"')
-		{
-			doble_quote(src, &result[m], &i, mini);
-		}
-		else if (src[i] != '\'' && src[i] != '\"')
-		{
-			no_quote(src, &result[m], &i, mini, &m);
-		}
-		evalue_next_char(src, &i, &m, &result[m]);
-		i++;
-	}
+	quot.src = src;
+	quot.i = &i;
+	quot.m = &m;
+	quot.result_base = result;
+	parse_quotes_loop(&quot, mini);
 	return (result);
 }
