@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/12 20:11:28 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/13 15:47:56 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ int	main(int argc, char **argv, char **envp)
 	t_list		*temp;
 	t_mini		mini;
 	t_general	data_gen;
+	int flag;
 
+	flag = 0;
 	input = NULL;
 	temp = NULL;
 	ft_memset(&temp, 0, sizeof(temp));
@@ -68,6 +70,8 @@ int	main(int argc, char **argv, char **envp)
 					if (num_pipes(input, '|') == 0
 						&& is_builting(temp->cmd_path))
 					{
+						try_to_open_all_fds_in(temp);
+						try_open_all_fds_out(temp);
 						execute_builtin_with_redir(temp, &data_gen, &mini);
 						close_herdocs(temp, &data_gen);
 					}
@@ -92,4 +96,4 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-// he usado esto valgrind --leak-check=full --trace-children=yes --track-fd=yes ./mini
+// he usado esto valgrind --leak-check=full --show-leaks-kind=all --trace-children=yes --track-fd=yes ./mini
