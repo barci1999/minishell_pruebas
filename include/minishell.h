@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/12 15:48:46 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/13 15:42:21 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,4 +237,6 @@ char				*take_the_expand(char *src, int *i, t_mini *mini);
 char				*ft_free_strjoin(char *s1, char *s2);
 
 void				print_cmd_error(char *cmd, char *msg, int code);
+void try_open_all_fds_out(t_list *node);
+void try_to_open_all_fds_in(t_list *node);
 #endif
