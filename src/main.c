@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 15:47:56 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/13 19:04:46 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,7 @@ int	main(int argc, char **argv, char **envp)
 					if (num_pipes(input, '|') == 0
 						&& is_builting(temp->cmd_path))
 					{
-						try_to_open_all_fds_in(temp);
-						try_open_all_fds_out(temp);
+						try_to_open_all_fds(temp);
 						execute_builtin_with_redir(temp, &data_gen, &mini);
 						close_herdocs(temp, &data_gen);
 					}
@@ -86,8 +85,6 @@ int	main(int argc, char **argv, char **envp)
 					data_gen.my_env = NULL;         
 						// esto es una recomendacion
 				}
-				else
-					ft_putendl_fd("Error", 0);
 			}
 			free(input);
 		}
@@ -96,4 +93,4 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-// he usado esto valgrind --leak-check=full --show-leaks-kind=all --trace-children=yes --track-fd=yes ./mini
+// he usado esto valgrind --show-leak-kinds=indirect --leak-check=full --trace-children=yes --track-fds=yes ./minishell	

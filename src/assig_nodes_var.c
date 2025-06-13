@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/12 20:54:43 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/13 17:45:31 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,6 @@ int	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 	i = 0;
 	while (mat_content[i])
 	{
-		if (!mat_content[i] || mat_content[i][0] == '\0')//esto esta por ver si es necesario
-    	{
-       		i++;
-        	continue;
-    	}
 		type = update_status(mat_content, &i, data_gen);
 		if (!cmd_started && (type == CMD || type == WORD))
 		{
@@ -160,6 +155,8 @@ int	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 		}
 		else
 		{
+			if(*mat_content[i] == '\0')
+				return(0);
 			print_cmd_error(mat_content[i], "syntax error", 127);
 			return (1);
 		}
