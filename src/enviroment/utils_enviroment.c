@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:13:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/15 17:32:11 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/15 21:22:03 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	init_env_list(t_mini *mini, char **envp)
 	char	*equal;
 	char	*key;
 	char	*value;
+	char	*temp;
 
 	if (!envp || !envp[0])
 		return (init_minim_env(mini));
@@ -88,7 +89,9 @@ void	init_env_list(t_mini *mini, char **envp)
 	}
 	value = get_env_value(mini, "SHLVL");
 	i = atoi(value) + 1;
-	add_or_update_variable(mini, ft_strdup("SHLVL"), ft_itoa(i));
+	temp = ft_itoa(i);
+	add_or_update_variable(mini, "SHLVL", temp);
+	free(temp);
 }
 
 char	**env_list_to_array(t_mini *mini)
