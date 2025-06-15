@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 19:04:46 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/15 17:43:27 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ int	main(int argc, char **argv, char **envp)
 					if (num_pipes(input, '|') == 0
 						&& is_builting(temp->cmd_path))
 					{
-						try_to_open_all_fds(temp);
-						execute_builtin_with_redir(temp, &data_gen, &mini);
+						if(try_to_open_all_fds(temp) == 0)
+						{
+							execute_builtin_with_redir(temp, &data_gen, &mini);
+						}
 						close_herdocs(temp, &data_gen);
 					}
 					else

@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:39:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 19:52:47 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/15 17:43:40 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	try_to_open_all_fds(t_list *node)
+int	try_to_open_all_fds(t_list *node)
 {
 	int	i;
 	int	fd;
 
 	i = 0;
 	if (!node->redirecc)
-		return ;
+		return (0);
 	while (node->redirecc[i])
 	{
 		if (ft_strcmp(node->redirecc[i], "<<") == 0
@@ -28,13 +28,13 @@ void	try_to_open_all_fds(t_list *node)
 			if (!dir_exists(node->fd[i]))
 			{
 				perror(node->fd[i]);
-				exit(1);
+				return(-1);
 			}
 			fd = open(node->fd[i], O_RDONLY);
 			if (fd == -1)
 			{
 				perror(node->fd[i]);
-				exit(1);
+				return(-1);
 			}
 			close(fd);
 		}
@@ -43,13 +43,13 @@ void	try_to_open_all_fds(t_list *node)
 			if (!dir_exists(node->fd[i]))
 			{
 				perror(node->fd[i]);
-				exit(1);
+				return(-1);
 			}
 			fd = open(node->fd[i], O_WRONLY | O_CREAT | O_APPEND, 0644);
 			if (fd == -1)
 			{
 				perror(node->fd[i]);
-				exit(1);
+				return(-1);
 			}
 			close(fd);
 		}
@@ -58,18 +58,19 @@ void	try_to_open_all_fds(t_list *node)
 			if (!dir_exists(node->fd[i]))
 			{
 				perror(node->fd[i]);
-				exit(1);
+				return(-1);
 			}
 			fd = open(node->fd[i], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 			if (fd == -1)
 			{
 				perror(node->fd[i]);
-				exit(1);
+				return(-1);
 			}
 			close(fd);
 		}
 		i++;
 	}
+	return(0);
 }
 
 void	try_open_all_fds_out(t_list *node)
@@ -153,7 +154,6 @@ void	open_and_redir_out(t_list *node, t_general *general, int i,
 	redir_type = identify_reddir_out(node);
 	if (redir_type == FD || redir_type == FD_APPEND)
 	{
-		try_open_all_fds_out(node);
 		filename = node->fd[return_fd_out(node)];
 		if (!dir_exists(filename))
 		{
