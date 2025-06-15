@@ -152,9 +152,9 @@ size_t				list_size(t_list **list);
 
 /* heredocs functions */
 
-void				comprove_heredocs(t_list *list);
-void				open_all_herdocs(t_list *list);
-void				open_the_heredoc(t_list *list, int redir_index,
+int				comprove_heredocs(t_list *list);
+int				open_all_herdocs(t_list *list);
+int				open_the_heredoc(t_list *list, int redir_index,
 						int delim_index);
 void				close_herdocs(t_list *list, t_general *gen);
 

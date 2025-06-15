@@ -66,20 +66,24 @@ int	main(int argc, char **argv, char **envp)
 				//print_cmd_list(temp);
 				if (temp)
 				{
-					comprove_heredocs(temp);
-					if (num_pipes(input, '|') == 0
-						&& is_builting(temp->cmd_path))
-					{
-						if(try_to_open_all_fds(temp) == 0)
+					if(comprove_heredocs(temp) == -1)
+						close_herdocs(temp,&data_gen);
+					else {
+						if (num_pipes(input, '|') == 0
+							&& is_builting(temp->cmd_path))
 						{
-							execute_builtin_with_redir(temp, &data_gen, &mini);
+							if(try_to_open_all_fds(temp) == 0)
+							{
+								execute_builtin_with_redir(temp, &data_gen, &mini);
+							}
+							close_herdocs(temp, &data_gen);
 						}
-						close_herdocs(temp, &data_gen);
-					}
-					else
-					{
-						execute_list(temp, data_gen, &mini);
-						close_herdocs(temp, &data_gen);
+						else
+						{
+							execute_list(temp, data_gen, &mini);
+							close_herdocs(temp, &data_gen);
+						}
+						
 					}
 					free_list(&temp);
 					free_env_array(data_gen.my_env);

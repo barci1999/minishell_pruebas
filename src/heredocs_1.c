@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	open_all_herdocs(t_list *list)
+int	open_all_herdocs(t_list *list)
 {
 	int	i;
 	int	delim_index;
@@ -23,14 +23,18 @@ void	open_all_herdocs(t_list *list)
 	{
 		if (ft_strcmp(list->redirecc[i], "<<") == 0)
 		{
-			open_the_heredoc(list, i, delim_index);
+			if(open_the_heredoc(list, i, delim_index) == -1)
+			{
+				return(-1);
+			}
 			delim_index++;
 		}
 		i++;
 	}
+	return(0);
 }
 
-void	comprove_heredocs(t_list *list)
+int 	comprove_heredocs(t_list *list)
 {
 	t_list	*current;
 
@@ -39,12 +43,16 @@ void	comprove_heredocs(t_list *list)
 	{
 		if (have_a_heredoc(current) == 1)
 		{
-			open_all_herdocs(current);
+			if(open_all_herdocs(current) == -1)
+			{
+				return (-1);
+			}
 			current = current->next;
 		}
 		else
 			current = current->next;
 	}
+	return(0);
 }
 
 void	close_herdocs(t_list *list, t_general *gen)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:50:42 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 20:40:36 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/15 20:02:03 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	is_delimiter(char *line, char *delimiter)
 	return (ft_strcmp(line, delimiter) == 0);
 }
 
-static void	handle_heredoc_loop(int fd, char *delimiter)
+static int	handle_heredoc_loop(int fd, char *delimiter)
 {
 	char	*line;
 
@@ -37,7 +37,7 @@ static void	handle_heredoc_loop(int fd, char *delimiter)
 	{
 		line = readline("heredoc-> ");
 		if (g_exit_status == 130)
-			break ;
+			return(-1);
 		if (!line)
 			break ;
 		if (is_delimiter(line, delimiter))
@@ -48,15 +48,18 @@ static void	handle_heredoc_loop(int fd, char *delimiter)
 		ft_putendl_fd(line, fd);
 		free(line);
 	}
+	return(0);
 }
 
-void	open_the_heredoc(t_list *list, int redir_index, int delim_index)
+int	open_the_heredoc(t_list *list, int redir_index, int delim_index)
 {
 	int	fd;
 
 	fd = open_heredoc_fd(list, redir_index);
 	if (fd == -1)
-		return ;
-	handle_heredoc_loop(fd, list->delim[delim_index]);
+		return (-1);
+	if(handle_heredoc_loop(fd, list->delim[delim_index]) == -1)
+		return(-1);
 	close(fd);
+	return(0);
 }

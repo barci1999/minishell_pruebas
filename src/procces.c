@@ -72,6 +72,8 @@ void	wait_all_procces(t_general *general, int i)
 	int	status;
 
 	j = 0;
+	signal(SIGQUIT,SIG_DFL);
+	signal(SIGINT,SIG_IGN);
 	while (j < i)
 	{
 		waitpid(general->pids[j], &status, 0);
@@ -92,4 +94,5 @@ void	wait_all_procces(t_general *general, int i)
 	}
 	ft_free_mat_void((void **)general->pipes,(i - 1));
 	ft_free_array_void(general->pids);
+	ctrls(0);
 }
