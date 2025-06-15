@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_enviroment.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:13:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/10 20:37:06 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/15 17:32:11 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	init_env_list(t_mini *mini, char **envp)
 	char	*value;
 
 	if (!envp || !envp[0])
-		init_minim_env(mini);
+		return (init_minim_env(mini));
 	i = 0;
 	while (envp[i])
 	{
@@ -86,6 +86,9 @@ void	init_env_list(t_mini *mini, char **envp)
 		}
 		i++;
 	}
+	value = get_env_value(mini, "SHLVL");
+	i = atoi(value) + 1;
+	add_or_update_variable(mini, ft_strdup("SHLVL"), ft_itoa(i));
 }
 
 char	**env_list_to_array(t_mini *mini)

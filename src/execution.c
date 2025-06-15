@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 19:56:11 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/15 17:42:09 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,10 +132,14 @@ void	execute_list(t_list *list, t_general general, t_mini *mini)
 		if (pid == 0)
 		{
 			close_unused_pipes(pipe_index, total_cmds, general.pipes);
-			try_to_open_all_fds(current);
-			open_and_redir_in(current, &general, pipe_index);
-			open_and_redir_out(current, &general, pipe_index, total_cmds);
-			execute_node(current, &general, mini);
+			if(try_to_open_all_fds(current) == 0)
+			{
+				open_and_redir_in(current, &general, pipe_index);
+				open_and_redir_out(current, &general, pipe_index, total_cmds);
+				execute_node(current, &general, mini);
+			}
+			else
+				exit(1);
 		}
 		else
 		{

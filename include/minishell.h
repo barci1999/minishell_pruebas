@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 19:51:39 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/15 17:42:56 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <sys/stat.h>
 # include <unistd.h>
 # include <wait.h>
+
+
 
 extern int			g_exit_status;
 
@@ -247,5 +249,5 @@ char				*take_the_expand(char *src, int *i, t_mini *mini);
 char				*ft_free_strjoin(char *s1, char *s2);
 
 void				print_cmd_error(char *cmd, char *msg, int code);
-void				try_to_open_all_fds(t_list *node);
+int				try_to_open_all_fds(t_list *node);
 #endif
