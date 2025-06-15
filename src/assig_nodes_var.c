@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assig_nodes_var.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 19:53:44 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/15 19:08:14 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,8 @@ int	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 		{
 			if (mod_redir_and_fd(list, mat_content, &i, data_gen) != OK)
 			{
-				print_cmd_error(mat_content[i], "redirection error", 1);
-				return (1);
+				print_cmd_error(mat_content[i], "redirection error", 2);
+				return (2);
 			}
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/15 17:42:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:36:30 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	execute_list(t_list *list, t_general general, t_mini *mini)
 			{
 				open_and_redir_in(current, &general, pipe_index);
 				open_and_redir_out(current, &general, pipe_index, total_cmds);
-				execute_node(current, &general, mini);
+				execute_node(current, &general, mini); // si eso close_heredocs de nodo
 			}
 			else
 				exit(1);

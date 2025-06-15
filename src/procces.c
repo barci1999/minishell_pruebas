@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   procces.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 20:41:33 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 19:50:34 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/15 18:43:23 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ void	wait_all_procces(t_general *general, int i)
 	int	status;
 
 	j = 0;
+	signal(SIGQUIT,SIG_DFL);
+	signal(SIGINT,SIG_IGN);
 	while (j < i)
 	{
 		waitpid(general->pids[j], &status, 0);
@@ -90,4 +92,5 @@ void	wait_all_procces(t_general *general, int i)
 		}
 		j++;
 	}
+	ctrls(0);
 }

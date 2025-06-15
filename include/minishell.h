@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/15 17:42:56 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:44:40 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,9 +154,9 @@ size_t				list_size(t_list **list);
 
 /* heredocs functions */
 
-void				comprove_heredocs(t_list *list);
-void				open_all_herdocs(t_list *list);
-void				open_the_heredoc(t_list *list, int redir_index,
+int				comprove_heredocs(t_list *list);
+int				open_all_herdocs(t_list *list);
+int				open_the_heredoc(t_list *list, int redir_index,
 						int delim_index);
 void				close_herdocs(t_list *list, t_general *gen);
 
