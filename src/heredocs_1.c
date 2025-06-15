@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:40:13 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/15 19:57:34 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/15 21:19:28 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,15 +60,20 @@ void	close_herdocs(t_list *list, t_general *gen)
 	t_list	*current;
 	int		i;
 	char	*temp;
+	char *temp_2;
 
 	current = list;
+	temp = NULL;
+	temp_2 = NULL;
 	i = 0;
 	while (i <= gen->tem_heredoc)
 	{
-		temp = ft_strjoin("temp_here_", ft_itoa(i));
+		temp_2 = ft_itoa(i);
+		temp = ft_strjoin("temp_here_", temp_2);
 		if (access(temp, F_OK) != -1)
 			unlink(temp);
 		free(temp);
+		free(temp_2);
 		i++;
 	}
 }

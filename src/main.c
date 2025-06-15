@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/15 20:36:34 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:11:50 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int	main(int argc, char **argv, char **envp)
 					data_gen.my_env = NULL;         
 						// esto es una recomendacion
 				}
-			}
 			free(input);
+			}
 		}
 	}
 	free_env_list(&mini);

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/15 19:44:40 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:17:27 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,6 @@ void				free_env_array(char **envp);
 void				print_cmd_list(t_list *list);
 
 /*    liberacion y errores  */
-
-void				ft_free_mat_int(int **matrix, size_t len);
 
 /* list fuctions      */
 

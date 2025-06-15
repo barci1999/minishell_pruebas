@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_asigg_node_var.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 20:29:58 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/15 21:13:40 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen, t_mini *mini)
 			ft_free_mat(mat_content);
 			return (NULL);
 		}
+		ft_free_mat(mat_content);
 		current = current->next;
 	}
 	return (list);
