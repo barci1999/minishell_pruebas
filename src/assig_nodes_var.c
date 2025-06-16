@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/15 19:08:14 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:02:45 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ t_status_type	mod_cmd_and_args(t_list *list, char **math_content, int *i,
 	{
 		list->cmd_path = take_cmd_path(math_content[*i], data_gen);
 		if (!list->cmd_path && !*math_content[*i])
+		{
 			return (OK);
+		}
 	}
 	list->cmd_arg = add_str_to_mat(list->cmd_arg, math_content[*i]);
 	if (!list->cmd_arg)
@@ -78,7 +80,9 @@ t_status_type	mod_cmd_and_args(t_list *list, char **math_content, int *i,
 		return (MALLOC_ERROR);
 	}
 	if (!list->cmd_path)
-		return (MALLOC_ERROR);
+	{
+		return (OK);
+	}
 	list->cmd_name = asigg_cmd_name(list->cmd_path, list);
 	if (!list->cmd_name)
 		return (MALLOC_ERROR);
@@ -130,6 +134,7 @@ int	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 		{
 			if (mod_cmd_and_args(list, mat_content, &i, data_gen) != OK)
 			{
+				printf("%s\n",mat_content[i]);
 				print_cmd_error(mat_content[i], "command not found", 127);
 				return (1);
 			}
@@ -157,7 +162,7 @@ int	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 		{
 			if (*mat_content[i] == '\0')
 				return (0);
-			print_cmd_error(mat_content[i], "syntax error", 127);
+			print_cmd_error(mat_content[i], "syntax error", 2);
 			return (1);
 		}
 	}

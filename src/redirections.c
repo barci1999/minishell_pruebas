@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:39:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/15 21:51:51 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:22:58 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,8 @@ void	open_and_redir_out(t_list *node, t_general *general, int i,
 			exit(1);
 		}
 		dup2(fd, STDOUT_FILENO);
+		if(general->pipes)
+			close(general->pipes[i][1]);
 		close(fd);
 		return ;
 	}

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/15 22:17:27 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:13:08 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_general
 	int				tem_heredoc;
 	pid_t			*pids;
 	int				**pipes;
-	int				last_exit_code;
 
 }					t_general;
 
@@ -248,4 +247,5 @@ char				*ft_free_strjoin(char *s1, char *s2);
 
 void				print_cmd_error(char *cmd, char *msg, int code);
 int				try_to_open_all_fds(t_list *node);
+void free_all(t_mini *mini);
 #endif
