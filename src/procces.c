@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 20:41:33 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/15 22:24:11 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:20:47 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,9 @@ void	wait_all_procces(t_general *general, int i)
 		if (j == i - 1)
 		{
 			if (WIFEXITED(status))
-			{
 				g_exit_status = WEXITSTATUS(status);
-				general->last_exit_code = g_exit_status;
-			}
 			else if (WIFSIGNALED(status))
-			{
 				g_exit_status = 128 + WTERMSIG(status);
-				general->last_exit_code = g_exit_status;
-			}
 		}
 		j++;
 	}

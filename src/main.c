@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/15 22:11:50 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:36:07 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,85 @@
 
 int	g_exit_status = 0;
 
+void free_all(t_mini *mini)
+{
+	if(!mini)
+		return;
+	free_list(&mini->first_node);
+}
+int comprove_first_char(char *src)
+{
+	int i = 0;
+	while (src[i] && ft_is_space(src[i]))
+	{
+		i++;
+	}
+	if(src[i] == '\0' || src[i] == '|')
+		return(1);
+	else
+		return(0);
+	
+}
+int comprove_last_char(char *src)
+{
+	int i = 0;
+	char c;
+	while (src[i])
+	{
+		c = src[i];
+		i++;
+	}
+	if(c == '|')
+	{
+		return(1);
+	}
+	else
+		return(0);
+	
+	
+}
+int comprove_doble_pipe(char *src)
+{
+	int i = 0;
+	char quote = 0;
+
+	while (src[i])
+	{
+		if (src[i] == '\'' || src[i] == '\"')
+		{
+			quote = src[i];
+			i++;
+			while (src[i] && src[i] != quote)
+				i++;
+			if (src[i])
+				i++; 
+			continue;
+		}
+		if (src[i] == '|')
+		{
+			i++;
+			while (src[i] && (src[i] == ' ' || src[i] == '\t'))
+				i++;
+			if (src[i] == '|')
+				return 1;
+		}
+		else
+			i++;
+	}
+	return 0;
+}
+int comprove_input(char *input)
+{
+	if(nbr_quotes_ok(input) == false)
+		return(1);
+	if(comprove_first_char(input)== 1)
+		return(1);
+	if(comprove_last_char(input) == 1)
+		return(1);
+	if(comprove_doble_pipe(input) == 1)
+		return(1);
+	return(0);
+}
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell		shell;
@@ -49,21 +128,22 @@ int	main(int argc, char **argv, char **envp)
 		if (*input != '\0')
 		{
 			add_history(input);
-			if (nbr_quotes_ok(input) == false)
-				printf("error en numero de comillas\n");
+			if(comprove_input(input) == 1)
+			{
+				printf("imput no valido\n");
+				free(input);
+			}
 			else
 			{
 				if (num_pipes(input, '|') != 0)
-				{
 					temp = asigg_cont_list(mat_to_list(ft_split_quotes(input,
 									'|')), &data_gen, &mini);
-				}
 				else
 				{
 					node_to_end(&temp, new_doble_node(input));
 					temp = asigg_cont_list(temp, &data_gen, &mini);
 				}
-				//print_cmd_list(temp);
+				print_cmd_list(temp);
 				if (temp)
 				{
 					if(comprove_heredocs(temp) == -1)
@@ -73,9 +153,7 @@ int	main(int argc, char **argv, char **envp)
 							&& is_builting(temp->cmd_path))
 						{
 							if(try_to_open_all_fds(temp) == 0)
-							{
 								execute_builtin_with_redir(temp, &data_gen, &mini);
-							}
 							close_herdocs(temp, &data_gen);
 						}
 						else
@@ -87,15 +165,22 @@ int	main(int argc, char **argv, char **envp)
 					}
 					free_list(&temp);
 					free_env_array(data_gen.my_env);
-						// free añadido para liberar el array
 					data_gen.my_env = NULL;         
-						// esto es una recomendacion
+				}
+				else
+				{
+					ft_free_mat_void((void**)data_gen.my_env,ft_matlen(data_gen.my_env));
+					ft_free_mat_void((void **)data_gen.pipes,(list_size(&temp))-1);
+					ft_free_array_void(data_gen.pids);
+					free_list(&temp);
+					if(temp)
+						printf("me gusta el pito\n");
 				}
 			free(input);
 			}
 		}
 	}
-	free_env_list(&mini);
+	free_all(&mini);
 	return (0);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 17:06:44 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/10 20:43:14 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/16 20:27:20 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ char	**take_paths_env(char **envp)
 	i = 0;
 	paths = NULL;
 	path_env = NULL;
-	while (*envp)
+	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 		{
 			path_env = envp[i] + 5;
 			break ;
 		}
-		envp++;
+		i++;
 	}
 	paths = ft_split(path_env, ':');
 	if (paths == NULL)

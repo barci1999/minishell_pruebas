@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/15 21:13:40 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:27:54 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ char	*take_cmd_path(char *comprove, t_general *data_gen)
 	if (comprove[0] == '/' || comprove[0] == '.')
 		return (ft_strdup(comprove));
 	paths = take_paths_env(data_gen->my_env);
-	
 	while (paths[i] != NULL)
 	{
+		printf("cocacola\n");
 		temp = ft_strjoin(paths[i], "/");
 		if (!temp)
 			return (ft_free_mat(paths), NULL);
@@ -118,6 +118,7 @@ size_t	number_of_cmd_arg(const char *src)
 	return (count);
 }
 
+
 t_list	*asigg_cont_list(t_list *list, t_general *data_gen, t_mini *mini)
 {
 	t_list	*current;
@@ -135,6 +136,7 @@ t_list	*asigg_cont_list(t_list *list, t_general *data_gen, t_mini *mini)
 		if (assig_var_node(mat_content, current, data_gen) != 0)
 		{
 			ft_free_mat(mat_content);
+			free_list(&list);
 			return (NULL);
 		}
 		ft_free_mat(mat_content);

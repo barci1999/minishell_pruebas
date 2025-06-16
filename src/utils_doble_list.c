@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 15:33:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:23:09 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,14 @@ void	free_list(t_list **list)
 	while (temp)
 	{
 		next = temp->next;
-		free(temp->cmd_name);
-		free(temp->cmd_path);
 		free(temp->content);
-		ft_free_mat(temp->delim);
+		free(temp->cmd_path);
 		ft_free_mat(temp->cmd_arg);
+		free(temp->cmd_name);
 		ft_free_mat(temp->redirecc);
 		ft_free_mat(temp->fd);
+		ft_free_mat(temp->delim);
+		free(temp->variable);
 		free(temp);
 		temp = next;
 	}

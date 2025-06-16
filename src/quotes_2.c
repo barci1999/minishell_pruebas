@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 20:04:44 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 19:41:50 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/16 21:26:55 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,9 @@ char	**fukking_quotes(char *src, t_mini *mini)
 	quot.m = &m;
 	quot.result_base = result;
 	parse_quotes_loop(&quot, mini);
+	for (size_t i = 0; result[i]; i++)
+	{
+		printf("%s\n",result[3]);
+	}
 	return (result);
 }

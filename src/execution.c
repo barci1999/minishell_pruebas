@@ -6,11 +6,27 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/15 22:06:07 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/16 17:15:29 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_single_node(t_list *node)
+{
+	if (!node)
+		return ;
+
+	free(node->content);
+	free(node->cmd_path);
+	ft_free_mat(node->cmd_arg);
+	free(node->cmd_name);
+	ft_free_mat(node->redirecc);
+	ft_free_mat(node->fd);
+	ft_free_mat(node->delim);
+	free(node->variable);
+	free(node);
+}
 
 void	execute_builting(t_list *node, t_mini *mini)
 {
@@ -35,7 +51,10 @@ void	handle_external_command(t_list *node, t_general *general)
 	struct stat	sb;
 
 	if (*node->cmd_path == '\0')
+	{
+		ft_free_mat_void((void**)general->my_env,ft_matlen(general->my_env));
 		exit(0);
+	}
 	if (access(node->cmd_path, F_OK) != 0)
 	{
 		print_cmd_error(node->cmd_path, "No such file or directory", 127);
@@ -52,13 +71,23 @@ void	handle_external_command(t_list *node, t_general *general)
 		exit(126);
 	}
 	if (execve(node->cmd_path, node->cmd_arg, general->my_env) == -1)
+	{
+		ft_free_mat_void((void**)general->my_env,ft_matlen(general->my_env));
 		exit(1);
+	}
 }
 
-void	execute_node(t_list *node, t_general *general, t_mini *mini)
+void	execute_node(t_list *node, t_general *general, t_mini *mini,t_list **lista)
 {
 	if (!node->cmd_path)
+	{
+		ft_free_mat_void((void**)general->my_env,ft_matlen(general->my_env));
+		ft_free_mat_void((void **)general->pipes,(list_size(lista))-1);
+		ft_free_array_void(general->pids);
+		free_list(lista);
+		free_all(mini);
 		exit(0);
+	}
 	if (!is_builting(node->cmd_path))
 	{
 		handle_external_command(node, general);
@@ -66,6 +95,11 @@ void	execute_node(t_list *node, t_general *general, t_mini *mini)
 	else
 	{
 		execute_builting(node, mini);
+		ft_free_mat_void((void**)general->my_env,ft_matlen(general->my_env));
+		ft_free_mat_void((void **)general->pipes,(list_size(lista))-1);
+		ft_free_array_void(general->pids);
+		free_list(lista);
+		free_all(mini);
 		exit(g_exit_status);
 	}
 }
@@ -136,7 +170,7 @@ void	execute_list(t_list *list, t_general general, t_mini *mini)
 			{
 				open_and_redir_in(current, &general, pipe_index);
 				open_and_redir_out(current, &general, pipe_index, total_cmds);
-				execute_node(current, &general, mini); // si eso close_heredocs de nodo
+				execute_node(current, &general, mini,&list); // si eso close_heredocs de nodo
 			}
 			else
 				exit(1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 19:34:23 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/13 20:43:54 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/16 21:33:53 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,14 @@ void	no_quote(t_quotes *quot, t_mini *mini)
 		{
 			(*quot->i)++;
 			*quot->result = add_chr_to_str(*quot->result, quot->src[*quot->i]);
+			
 		}
 		if (!ft_is_space(quot->src[*quot->i + 1]))
+		{
+			if(is_operator_char(quot->src[*quot->i + 1]))
+				return;
 			(*quot->m)++;
+		}
 		return ;
 	}
 	*quot->result = add_chr_to_str(*quot->result, quot->src[*quot->i]);
@@ -88,7 +93,9 @@ void	evalue_next_char(t_quotes *quot)
 	{
 		if (ft_is_space(quot->src[*quot->i + 1])
 			|| is_operator_char(quot->src[*quot->i + 1]))
+			{
 			(*quot->m)++;
+			}
 	}
 	else
 		(*quot->m)++;
