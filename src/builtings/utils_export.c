@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:09:06 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/10 20:36:38 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/17 21:38:12 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	add_or_update_variable(t_mini *mini, char *var, char *value)
 {
 	t_list	*node;
 
-	if (!value || *value == '\0')
+	if (!value)
 		return ;
 	node = mini->first_node;
 	while (node != NULL)

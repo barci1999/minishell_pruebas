@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 16:37:14 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/15 19:58:08 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:40:04 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	ctrl_minishell(int signal)
 {
 	if (signal == SIGINT)
 	{
-		printf("🔴 Se ha usado Ctrl-C\n");
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();
@@ -24,7 +23,6 @@ void	ctrl_minishell(int signal)
 	}
 	else if (signal == SIGQUIT)
 	{
-		printf("🔵 Se ha usado Ctrl-\\\n");
 		rl_on_new_line();
 		rl_redisplay();
 		g_exit_status = 131;
@@ -35,12 +33,10 @@ void	ctrl_child(int signal)
 {
 	if (signal == SIGINT)
 	{
-		printf("❌ Ctrl-C en hijo\n");
 		g_exit_status = 130;
 	}
 	else if (signal == SIGQUIT)
 	{
-		printf("❌ Ctrl-\\ en hijo\n");
 		write(1, "Quit: 3\n", 8);
 		g_exit_status = 131;
 	}

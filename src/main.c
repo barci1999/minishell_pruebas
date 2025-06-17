@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/17 19:08:11 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:40:15 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,6 @@ int	main(int argc, char **argv, char **envp)
 		input = readline("minishell -> ");
 		if (input == NULL)
 		{
-			printf("🟡 Se ha usado Ctrl-D\n");
 			break ;
 		}
 		if (*input != '\0')

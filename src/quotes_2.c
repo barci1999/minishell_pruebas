@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 20:04:44 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/17 19:07:02 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/17 22:43:11 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ char	*add_chr_to_str(char *src, char c)
 	}
 	result[i++] = c;
 	result[i] = '\0';
-	if (src)
+	if (src){
 		free(src);
+		src = NULL;
+	}
+		
 	return (result);
 }
 
@@ -127,6 +130,7 @@ char **remove_nulls(char **matrix,int strings)
 			i++;
 		}
 	}
+	ft_free_mat(matrix);
 	return(final);
 }
 int middle_null(char **result,int strings)
