@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 18:22:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/07 21:48:02 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:20:00 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ t_status_type	handle_fd_redir(t_list *list, char **mat_content, int *i)
 			return (SYN_ERROR);
 		if (safe_add_str(&list->redirecc, mat_content[(*i)++]) != OK)
 			return (MALLOC_ERROR);
+		if(ft_strncmp(mat_content[*i],"<",1) == 0 || ft_strncmp(mat_content[*i],">",1) == 0)
+			return(SYN_ERROR);
 		if (safe_add_str(&list->fd, mat_content[*i]) != OK)
 			return (MALLOC_ERROR);
 	}
@@ -88,6 +90,8 @@ t_status_type	handle_fd_redir(t_list *list, char **mat_content, int *i)
 		if (safe_add_str(&list->redirecc, redir_op) != OK)
 			return (free(redir_op), MALLOC_ERROR);
 		free(redir_op);
+		if(ft_strncmp(mat_content[*i],"<",1) == 0 || ft_strncmp(mat_content[*i],">",1) == 0)
+			return(SYN_ERROR);
 		if (safe_add_str(&list->fd, mat_content[*i]) != OK)
 			return (MALLOC_ERROR);
 	}

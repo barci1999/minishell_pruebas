@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/16 17:15:29 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/17 22:01:59 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ void	handle_external_command(t_list *node, t_general *general)
 		ft_free_mat_void((void**)general->my_env,ft_matlen(general->my_env));
 		exit(0);
 	}
-	if (access(node->cmd_path, F_OK) != 0)
-	{
-		print_cmd_error(node->cmd_path, "No such file or directory", 127);
-		exit(127);
-	}
 	if (stat(node->cmd_path, &sb) == 0 && S_ISDIR(sb.st_mode))
 	{
 		print_cmd_error(node->cmd_path, "Is a directory", 126);
 		exit(126);
+	}
+	if (access(node->cmd_path, F_OK) != 0)
+	{
+		print_cmd_error(node->cmd_path, "No such file or directory", 127);
+		exit(127);
 	}
 	if (access(node->cmd_path, X_OK) != 0)
 	{

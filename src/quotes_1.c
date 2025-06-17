@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 19:34:23 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/17 19:30:33 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/17 22:43:15 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	no_quote(t_quotes *quot, t_mini *mini)
 	{
 		(*quot->i)++;
 		temp = take_the_expand(quot->src, quot->i, mini);
+		if (quot->src[*quot->i] == '\0')
+			(*quot->i)--;	
 		*quot->result = ft_free_strjoin(*quot->result, temp);
 		return ;
 	}
