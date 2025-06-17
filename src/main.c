@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/16 20:36:07 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/17 19:08:11 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ int	main(int argc, char **argv, char **envp)
 			if(comprove_input(input) == 1)
 			{
 				printf("imput no valido\n");
+				g_exit_status = 2;
 				free(input);
 			}
 			else
@@ -143,7 +144,7 @@ int	main(int argc, char **argv, char **envp)
 					node_to_end(&temp, new_doble_node(input));
 					temp = asigg_cont_list(temp, &data_gen, &mini);
 				}
-				print_cmd_list(temp);
+				//print_cmd_list(temp);
 				if (temp)
 				{
 					if(comprove_heredocs(temp) == -1)

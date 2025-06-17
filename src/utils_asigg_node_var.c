@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/16 20:27:54 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:21:21 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*take_cmd_path(char *comprove, t_general *data_gen)
 	paths = take_paths_env(data_gen->my_env);
 	while (paths[i] != NULL)
 	{
-		printf("cocacola\n");
 		temp = ft_strjoin(paths[i], "/");
 		if (!temp)
 			return (ft_free_mat(paths), NULL);
@@ -41,7 +40,7 @@ char	*take_cmd_path(char *comprove, t_general *data_gen)
 		free(cmd_path);
 		i++;
 	}
-	return (ft_free_mat(paths), NULL);
+	return (ft_free_mat(paths), ft_strdup(comprove));
 }
 
 char	*asigg_cmd_name(char *cmd_path, t_list *list)
