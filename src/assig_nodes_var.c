@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/16 20:02:45 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:21:02 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ int	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)
 		{
 			if (mod_cmd_and_args(list, mat_content, &i, data_gen) != OK)
 			{
-				printf("%s\n",mat_content[i]);
 				print_cmd_error(mat_content[i], "command not found", 127);
 				return (1);
 			}

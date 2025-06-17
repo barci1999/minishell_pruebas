@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 20:04:44 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/16 21:42:43 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/17 19:07:02 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,36 @@ static void	parse_quotes_loop(t_quotes *quot, t_mini *mini)
 		(*quot->i)++;
 	}
 }
+char **remove_nulls(char **matrix,int strings)
+{
+	char **final;
+	final = NULL;
+	int i;
+	i = 0;
+	while (i <= strings)
+	{
+		if(matrix[i] == NULL)
+			i++;
+		else
+		{
+			final = add_str_to_mat(final,matrix[i]);
+			i++;
+		}
+	}
+	return(final);
+}
+int middle_null(char **result,int strings)
+{
+	int i = 0;
+	while (i <= strings)
+	{
+		if(result[i] == NULL)
+			return(1);
+		i++;
+	}
+	return(0);
+	
+}
 
 char	**fukking_quotes(char *src, t_mini *mini)
 {
@@ -131,5 +161,7 @@ char	**fukking_quotes(char *src, t_mini *mini)
 	quot.m = &m;
 	quot.result_base = result;
 	parse_quotes_loop(&quot, mini);
+	if(middle_null(result,(number_of_cmd_arg(src))) == 1)
+		result = remove_nulls(result,(number_of_cmd_arg(src)));
 	return (result);
 }
