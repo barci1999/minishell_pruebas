@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:13:06 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 16:52:22 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:08:35 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ static int	handle_expansion(t_quotes *q, t_mini *mini)
 		if (q->src[*q->i] == '\0')
 			(*q->i)--;
 		*q->result = ft_free_strjoin(*q->result, temp);
+		if (q->src[*q->i] == '$')
+			(*q->i)--;
 		return (1);
 	}
 	return (0);

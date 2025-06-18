@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/16 14:23:09 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:32:08 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ int	node_to_end(t_list **list, t_list *insert)
 	{
 		temp = *list;
 		while (temp->next != NULL)
+		{
 			temp = temp->next;
+		}
 		temp->next = insert;
 		insert->next = NULL;
 		insert->prev = temp;

@@ -308,3 +308,92 @@ void print_cmd_list(t_list *list)
 // 	}
 // 	return (count);
 // }
+
+// int	main(int argc, char **argv, char **envp)
+// {
+// 	char		*input;
+// 	t_list		*temp;
+// 	t_mini		mini;
+// 	t_general	data_gen;
+// 	int			flag;
+
+// 	flag = 0;
+// 	input = NULL;
+// 	temp = NULL;
+// 	ft_memset(&temp, 0, sizeof(temp));
+// 	ft_memset(&mini, 0, sizeof(t_mini));
+// 	ft_memset(&data_gen, 0, sizeof(t_general));
+// 	(void)argv;
+// 	(void)envp;
+// 	if (argc < 1)
+// 		return (1);
+// 	g_exit_status = 0;
+// 	mini.first_node = NULL;
+// 	mini.total_nodes = 0;
+// 	init_env_list(&mini, envp);
+// 	ctrls(0);
+// 	while (1)
+// 	{
+// 		input = readline("minishell -> ");
+// 		if (input == NULL)
+// 			break ;
+// 		if (*input != '\0')
+// 		{
+// 			add_history(input);
+// 			if (comprove_input(input) == 1)
+// 			{
+// 				printf("imput no valido\n");
+// 				g_exit_status = 2;
+// 				free(input);
+// 			}
+// 			else
+// 			{
+// 				if (num_pipes(input, '|') != 0)
+// 					temp = asigg_cont_list(mat_to_list(ft_split_quotes(input,
+// 									'|')), &data_gen, &mini);
+// 				else
+// 				{
+// 					node_to_end(&temp, new_doble_node(input));
+// 					temp = asigg_cont_list(temp, &data_gen, &mini);
+// 				}
+// 				// print_cmd_list(temp);
+// 				if (temp)
+// 				{
+// 					if (comprove_heredocs(temp) == -1)
+// 						close_herdocs(temp, &data_gen);
+// 					else
+// 					{
+// 						if (num_pipes(input, '|') == 0
+// 							&& is_builting(temp->cmd_path))
+// 						{
+// 							if (try_to_open_all_fds(temp) == 0)
+// 								execute_builtin_with_redir(temp, &data_gen,
+// 									&mini);
+// 							close_herdocs(temp, &data_gen);
+// 						}
+// 						else
+// 						{
+// 							execute_list(temp, data_gen, &mini);
+// 							close_herdocs(temp, &data_gen);
+// 						}
+// 					}
+// 					free_list(&temp);
+// 					free_env_array(data_gen.my_env);
+// 					data_gen.my_env = NULL;
+// 				}
+// 				else
+// 				{
+// 					ft_free_mat_void((void **)data_gen.my_env,
+// 						ft_matlen(data_gen.my_env));
+// 					ft_free_mat_void((void **)data_gen.pipes, (list_size(&temp))
+// 						- 1);
+// 					ft_free_array_void(data_gen.pids);
+// 					free_list(&temp);
+// 				}
+// 				free(input);
+// 			}
+// 		}
+// 	}
+// 	free_all(&mini);
+// 	return (0);
+// }
