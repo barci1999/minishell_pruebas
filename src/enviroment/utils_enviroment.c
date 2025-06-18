@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:13:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/16 15:24:10 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:22:03 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ void	init_env_list(t_mini *mini, char **envp)
 
 	if (!envp || !envp[0])
 		return (init_minim_env(mini));
-	i = 0;
-	while (envp[i])
+	i = -1;
+	while (envp[++i])
 	{
 		equal = ft_strchr(envp[i], '=');
 		if (equal)
@@ -85,11 +85,9 @@ void	init_env_list(t_mini *mini, char **envp)
 			free(key);
 			free(value);
 		}
-		i++;
 	}
 	value = get_env_value(mini, "SHLVL");
-	i = atoi(value) + 1;
-	temp = ft_itoa(i);
+	temp = ft_itoa(atoi(value) + 1);
 	add_or_update_variable(mini, "SHLVL", temp);
 	free(temp);
 }

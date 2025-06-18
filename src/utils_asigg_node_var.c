@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 13:49:59 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/17 17:21:21 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:29:44 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*take_cmd_path(char *comprove, t_general *data_gen)
 	temp = NULL;
 	i = 0;
 	cmd_path = NULL;
-	if(*comprove == '\0')
-		return(NULL);
+	if (*comprove == '\0')
+		return (NULL);
 	if (comprove[0] == '/' || comprove[0] == '.')
 		return (ft_strdup(comprove));
 	paths = take_paths_env(data_gen->my_env);
@@ -99,8 +99,8 @@ size_t	number_of_cmd_arg(const char *src)
 		}
 		else if (is_operator_char(src[i]))
 		{
-			if ((src[i] == '>' && src[i + 1] == '>') || (src[i] == '<'
-					&& src[i + 1] == '<'))
+			if ((src[i] == '>' && src[i + 1] == '>')
+				|| (src[i] == '<' && src[i + 1] == '<'))
 				i += 2;
 			else
 				i += 1;
@@ -116,7 +116,6 @@ size_t	number_of_cmd_arg(const char *src)
 	}
 	return (count);
 }
-
 
 t_list	*asigg_cont_list(t_list *list, t_general *data_gen, t_mini *mini)
 {

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 20:40:13 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/17 20:52:49 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 13:59:58 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ int	open_all_herdocs(t_list *list)
 	{
 		if (ft_strcmp(list->redirecc[i], "<<") == 0)
 		{
-			if(open_the_heredoc(list, i, delim_index) == -1)
+			if (open_the_heredoc(list, i, delim_index) == -1)
 			{
-				return(-1);
+				return (-1);
 			}
 			delim_index++;
 		}
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
-int 	comprove_heredocs(t_list *list)
+int	comprove_heredocs(t_list *list)
 {
 	t_list	*current;
 
@@ -43,7 +43,7 @@ int 	comprove_heredocs(t_list *list)
 	{
 		if (have_a_heredoc(current) == 1)
 		{
-			if(open_all_herdocs(current) == -1)
+			if (open_all_herdocs(current) == -1)
 			{
 				return (-1);
 			}
@@ -52,7 +52,7 @@ int 	comprove_heredocs(t_list *list)
 		else
 			current = current->next;
 	}
-	return(0);
+	return (0);
 }
 
 void	close_herdocs(t_list *list, t_general *gen)
@@ -60,7 +60,7 @@ void	close_herdocs(t_list *list, t_general *gen)
 	t_list	*current;
 	int		i;
 	char	*temp;
-	char *temp_2;
+	char	*temp_2;
 
 	current = list;
 	temp = NULL;

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/16 16:13:08 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:38:45 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,7 @@
 # include <unistd.h>
 # include <wait.h>
 
-
-
 extern int			g_exit_status;
-
-typedef struct s_shell
-{
-	int				last_exit_status;
-}					t_shell;
 
 typedef struct s_general
 {
@@ -41,6 +34,8 @@ typedef struct s_general
 	int				tem_heredoc;
 	pid_t			*pids;
 	int				**pipes;
+	int				pipe_index;
+	int				total_cmd;
 
 }					t_general;
 
@@ -95,6 +90,13 @@ typedef struct s_quotes
 	int				*m;
 }					t_quotes;
 
+typedef struct s_varnodes
+{
+		t_status_type	type;
+	bool			start;
+	int				i;
+}				t_varnodes;
+
 // Apunta al primer nodo de la lista de variables de entorno
 // Iterador temporal para recorrer la lista
 // Número total de variables en la lista
@@ -103,9 +105,6 @@ typedef struct s_quotes
 void				ctrls(int is_child);
 void				ctrl_child(int signal);
 void				ctrl_minishell(int signal);
-
-/*   funciones de builtings */
-
 void				execute_builting(t_list *node, t_mini *mini);
 int					ft_echo(char **args);
 int					ft_export(char **args, t_mini *mini);
@@ -124,93 +123,59 @@ void				previous_pwd(void);
 int					ft_cd(char **args);
 int					ft_exit(char **exit_args);
 int					ft_unset(char **args, t_mini *mini);
-
-/* enviroment functions */
-
 t_list				*create_env_node(char *var, char *value);
 void				add_env_var(t_mini *mini, char *var, char *value);
 void				init_env_list(t_mini *mini, char **envp);
 void				free_env_list(t_mini *mini);
 char				**env_list_to_array(t_mini *mini);
 char				*build_env_string(t_list *node);
-
 void				free_env_array(char **envp);
-
-/* funcciones a borrar  */
-
 void				print_cmd_list(t_list *list);
-
-/*    liberacion y errores  */
-
-/* list fuctions      */
-
 void				free_list(t_list **list);
 int					node_to_end(t_list **list, t_list *insert);
 t_list				*new_doble_node(char *token);
 size_t				list_size(t_list **list);
-
-/* heredocs functions */
-
-int				comprove_heredocs(t_list *list);
-int				open_all_herdocs(t_list *list);
-int				open_the_heredoc(t_list *list, int redir_index,
+int					comprove_heredocs(t_list *list);
+int					open_all_herdocs(t_list *list);
+int					open_the_heredoc(t_list *list, int redir_index,
 						int delim_index);
 void				close_herdocs(t_list *list, t_general *gen);
-
-/* redirection functions */
 void				open_and_redir_out(t_list *node, t_general *general, int i,
 						int total_comds);
 void				open_and_redir_in(t_list *node, t_general *general, int i);
-t_status_type		mod_redir_and_fd(t_list *list, char **mat_content, int *i,
+t_status_type		mod_redir_and_fd(t_list *list, char **mat_content, t_varnodes *var_nodes,
 						t_general *data_gen);
-t_status_type		handle_fd_redir(t_list *list, char **mat_content, int *i);
-t_status_type		handle_heredoc(t_list *list, char **mat_content, int *i,
+t_status_type		handle_fd_redir(t_list *list, char **mat_content, t_varnodes *var_nodes);
+t_status_type		handle_heredoc(t_list *list, char **mat_content, t_varnodes *var_nodes,
 						t_general *data_gen);
 t_status_type		handle_quoted_heredoc(t_list *list, char **mat_content,
-						int *i);
+						t_varnodes *var_nodes);
 t_status_type		handle_simple_heredoc(t_list *list, char **mat_content,
-						int *i);
-
-/* execution functions */
-
+						t_varnodes *var_nodes);
 void				execute_list(t_list *list, t_general general, t_mini *mini);
 void				execute_builtin_with_redir(t_list *node,
 						t_general *data_gen, t_mini *mini);
 void				close_all_pipes(int total_cmds, t_general *general);
 void				wait_all_procces(t_general *general, int i);
-
-/* procces function    */
-
 pid_t				*gen_pid_array(size_t nbr_proces);
 int					**gen_pipes_array(size_t n_cmd);
-
-/* detectors           */
-
 int					is_builting(char *token);
 int					have_a_heredoc(t_list *node);
 int					is_redirec(char *str);
 int					is_cmd(char *comprove, t_general *data_gen);
 t_token_type		identify_reddir_in(t_list *node);
-t_token_type		identify_reddir_out(t_list *node);
+t_token_type		iden_red_out(t_list *node);
 int					return_fd_in(t_list *node);
 int					return_fd_out(t_list *node);
-t_status_type		update_status(char **math_content, int *i,
+t_status_type		up_stat(char **math_content, t_varnodes *var_nodes,
 						t_general *data_gen);
 int					is_operator_char(char c);
 int					dir_exists(const char *filepath);
-
-/* counters */
-
 bool				nbr_quotes_ok(char *src);
 size_t				nb_redirrec(char **mat);
 size_t				num_pipes(char *input, char c);
-
-/* funciones env */
 char				**take_paths_env(char **envp);
 char				*take_cmd_path(char *comprove, t_general *data_gen);
-
-/* funciones de asignacion de variables a los nodos */
-
 t_list				*mat_to_list(char **mat);
 t_list				*asigg_cont_list(t_list *list, t_general *data_gen,
 						t_mini *mini);
@@ -219,9 +184,6 @@ char				**assig_fd(char **mat, t_general *data_gen, t_list *list);
 char				**assig_delim(char **mat, t_list *list);
 char				*asigg_cmd_name(char *cmd_path, t_list *list);
 char				*take_cmd_path(char *comprove, t_general *data_gen);
-
-/*    expancion de variable    */
-
 int					is_quote(char c);
 char				*add_expand_str(t_mini *mini, char *src, char *matrix,
 						int *i);
@@ -229,7 +191,7 @@ int					count_nodes(t_mini *mini);
 int					assig_var_node(char **math_content, t_list *list,
 						t_general *data_gen);
 t_status_type		safe_add_str(char ***mat, char *str);
-t_status_type		mod_cmd_and_args(t_list *list, char **math_content, int *i,
+t_status_type		mod_cmd_and_args(t_list *list, char **math_content, t_varnodes *var_nodes,
 						t_general *data_gen);
 char				**add_str_to_mat(char **src, char *to_add);
 char				*take_the_redir(char **str);
@@ -244,8 +206,28 @@ void				evalue_next_char(t_quotes *quot);
 void				evalue_next_char(t_quotes *quot);
 char				*take_the_expand(char *src, int *i, t_mini *mini);
 char				*ft_free_strjoin(char *s1, char *s2);
-
-void				print_cmd_error(char *cmd, char *msg, int code);
-int				try_to_open_all_fds(t_list *node);
-void free_all(t_mini *mini);
+void				print_error(char *cmd, char *msg, int code);
+int					try_to_open_all_fds(t_list *node);
+void				free_all(t_mini *mini);
+void				close_unused_pipes(int pipe_index, int total_cmds,
+						int **pipes);
+void				handle_external_command(t_list *node, t_general *general);
+void				execute_builting(t_list *node, t_mini *mini);
+char				**remove_nulls(char **matrix, int strings);
+int					middle_null(char **result, int strings);
+void				execute_node(t_list *node, t_general *general, t_mini *mini,
+						t_list **lista);
+void				end_exec(t_list *list, t_general *general, int i);
+void				handle_parent(pid_t pid, t_general *gen, int *i);
+void				handle_child(t_list *node, t_general *gen, t_mini *mini,
+						t_list *list);
+void				redir_and_exec(t_list *node, t_general *gen, t_mini *mini,
+						t_list *list);
+void				init_exec_data(t_list **list, t_general *general);
+t_status_type	handle_complex_redir(t_list *list, char **mat, t_varnodes *var_nodes);
+t_status_type	handle_simple_redir(t_list *list, char **mat, t_varnodes *var_nodes);
+t_status_type	handle_quoted_heredoc(t_list *list, char **mat_content, t_varnodes *var_nodes);
+t_status_type	handle_simple_heredoc(t_list *list, char **mat_content, t_varnodes *var_nodes);
+void print_perror_exit(char *msg, int code);
+void	print_error_exit(char *cmd, char *msg, int code);
 #endif

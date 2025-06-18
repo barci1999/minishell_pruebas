@@ -6,15 +6,15 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:50:42 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/17 20:58:14 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:41:33 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int open_heredoc_fd(t_list *list, int fd_index)
+static int	open_heredoc_fd(t_list *list, int fd_index)
 {
-	int fd;
+	int	fd;
 
 	if (!list->fd[fd_index] || !list->redirecc[fd_index])
 		return (-1);
@@ -24,14 +24,14 @@ static int open_heredoc_fd(t_list *list, int fd_index)
 	return (fd);
 }
 
-static int is_delimiter(char *line, char *delimiter)
+static int	is_delimiter(char *line, char *delimiter)
 {
 	return (ft_strcmp(line, delimiter) == 0);
 }
 
-static int handle_heredoc_loop(int fd, char *delimiter)
+static int	handle_heredoc_loop(int fd, char *delimiter)
 {
-	char *line;
+	char	*line;
 
 	while (1)
 	{
@@ -39,11 +39,11 @@ static int handle_heredoc_loop(int fd, char *delimiter)
 		if (g_exit_status == 130)
 			return (-1);
 		if (!line)
-			break;
+			break ;
 		if (is_delimiter(line, delimiter))
 		{
 			free(line);
-			break;
+			break ;
 		}
 		ft_putendl_fd(line, fd);
 		free(line);
@@ -51,17 +51,17 @@ static int handle_heredoc_loop(int fd, char *delimiter)
 	return (0);
 }
 
-int open_the_heredoc(t_list *list, int redir_index, int delim_index)
+int	open_the_heredoc(t_list *list, int redir_index, int delim_index)
 {
-	int fd;
+	int	fd;
 
 	fd = open_heredoc_fd(list, redir_index);
 	if (fd == -1)
 		return (-1);
-	if (ft_strncmp(list->delim[delim_index], "<", 1) == 0 
+	if (ft_strncmp(list->delim[delim_index], "<", 1) == 0
 		|| ft_strncmp(list->delim[delim_index], ">", 1) == 0)
 	{
-		print_cmd_error(list->delim[delim_index], "syntax error", 2);
+		print_error(list->delim[delim_index], "syntax error", 2);
 		return (-1);
 	}
 	if (handle_heredoc_loop(fd, list->delim[delim_index]) == -1)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes_2.c                                         :+:      :+:    :+:   */
+/*   utils_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 20:04:44 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/17 22:43:11 by pablalva         ###   ########.fr       */
+/*   Created: 2025/06/18 14:04:17 by pablalva          #+#    #+#             */
+/*   Updated: 2025/06/18 14:29:04 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ char	*add_chr_to_str(char *src, char c)
 	}
 	result[i++] = c;
 	result[i] = '\0';
-	if (src){
+	if (src)
+	{
 		free(src);
 		src = NULL;
 	}
-		
 	return (result);
 }
 
@@ -68,6 +68,41 @@ char	*ft_free_strjoin(char *s1, char *s2)
 	return (str);
 }
 
+char	**remove_nulls(char **matrix, int strings)
+{
+	char	**final;
+	int		i;
+
+	final = NULL;
+	i = 0;
+	while (i <= strings)
+	{
+		if (matrix[i] == NULL)
+			i++;
+		else
+		{
+			final = add_str_to_mat(final, matrix[i]);
+			i++;
+		}
+	}
+	ft_free_mat(matrix);
+	return (final);
+}
+
+int	middle_null(char **result, int strings)
+{
+	int	i;
+
+	i = 0;
+	while (i <= strings)
+	{
+		if (result[i] == NULL)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 char	*take_the_expand(char *src, int *i, t_mini *mini)
 {
 	char	*temp;
@@ -95,77 +130,4 @@ char	*take_the_expand(char *src, int *i, t_mini *mini)
 		temp_2 = ft_strdup(value);
 	free(temp);
 	return (temp_2);
-}
-
-static void	parse_quotes_loop(t_quotes *quot, t_mini *mini)
-{
-	while (quot->src[*quot->i])
-	{
-		while (ft_is_space(quot->src[*quot->i]))
-			(*quot->i)++;
-		quot->result = &quot->result_base[*quot->m];
-		if (quot->src[*quot->i] == '\'')
-			single_quote(quot);
-		else if (quot->src[*quot->i] == '\"')
-			doble_quote(quot, mini);
-		else
-			no_quote(quot, mini);
-		evalue_next_char(quot);
-		(*quot->i)++;
-	}
-}
-char **remove_nulls(char **matrix,int strings)
-{
-	char **final;
-	final = NULL;
-	int i;
-	i = 0;
-	while (i <= strings)
-	{
-		if(matrix[i] == NULL)
-			i++;
-		else
-		{
-			final = add_str_to_mat(final,matrix[i]);
-			i++;
-		}
-	}
-	ft_free_mat(matrix);
-	return(final);
-}
-int middle_null(char **result,int strings)
-{
-	int i = 0;
-	while (i <= strings)
-	{
-		if(result[i] == NULL)
-			return(1);
-		i++;
-	}
-	return(0);
-	
-}
-
-char	**fukking_quotes(char *src, t_mini *mini)
-{
-	t_quotes	quot;
-	char		**result;
-	size_t		j;
-	int			i;
-	int			m;
-
-	i = 0;
-	m = 0;
-	j = 0;
-	result = malloc((number_of_cmd_arg(src) + 1) * sizeof(char *));
-	while (j <= number_of_cmd_arg(src))
-		result[j++] = NULL;
-	quot.src = src;
-	quot.i = &i;
-	quot.m = &m;
-	quot.result_base = result;
-	parse_quotes_loop(&quot, mini);
-	if(middle_null(result,(number_of_cmd_arg(src))) == 1)
-		result = remove_nulls(result,(number_of_cmd_arg(src)));
-	return (result);
 }
