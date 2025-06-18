@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 17:53:42 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:38:45 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,13 @@ typedef struct s_quotes
 	int				*m;
 }					t_quotes;
 
+typedef struct s_varnodes
+{
+		t_status_type	type;
+	bool			start;
+	int				i;
+}				t_varnodes;
+
 // Apunta al primer nodo de la lista de variables de entorno
 // Iterador temporal para recorrer la lista
 // Número total de variables en la lista
@@ -136,15 +143,15 @@ void				close_herdocs(t_list *list, t_general *gen);
 void				open_and_redir_out(t_list *node, t_general *general, int i,
 						int total_comds);
 void				open_and_redir_in(t_list *node, t_general *general, int i);
-t_status_type		mod_redir_and_fd(t_list *list, char **mat_content, int *i,
+t_status_type		mod_redir_and_fd(t_list *list, char **mat_content, t_varnodes *var_nodes,
 						t_general *data_gen);
-t_status_type		handle_fd_redir(t_list *list, char **mat_content, int *i);
-t_status_type		handle_heredoc(t_list *list, char **mat_content, int *i,
+t_status_type		handle_fd_redir(t_list *list, char **mat_content, t_varnodes *var_nodes);
+t_status_type		handle_heredoc(t_list *list, char **mat_content, t_varnodes *var_nodes,
 						t_general *data_gen);
 t_status_type		handle_quoted_heredoc(t_list *list, char **mat_content,
-						int *i);
+						t_varnodes *var_nodes);
 t_status_type		handle_simple_heredoc(t_list *list, char **mat_content,
-						int *i);
+						t_varnodes *var_nodes);
 void				execute_list(t_list *list, t_general general, t_mini *mini);
 void				execute_builtin_with_redir(t_list *node,
 						t_general *data_gen, t_mini *mini);
@@ -160,7 +167,7 @@ t_token_type		identify_reddir_in(t_list *node);
 t_token_type		iden_red_out(t_list *node);
 int					return_fd_in(t_list *node);
 int					return_fd_out(t_list *node);
-t_status_type		update_status(char **math_content, int *i,
+t_status_type		up_stat(char **math_content, t_varnodes *var_nodes,
 						t_general *data_gen);
 int					is_operator_char(char c);
 int					dir_exists(const char *filepath);
@@ -184,7 +191,7 @@ int					count_nodes(t_mini *mini);
 int					assig_var_node(char **math_content, t_list *list,
 						t_general *data_gen);
 t_status_type		safe_add_str(char ***mat, char *str);
-t_status_type		mod_cmd_and_args(t_list *list, char **math_content, int *i,
+t_status_type		mod_cmd_and_args(t_list *list, char **math_content, t_varnodes *var_nodes,
 						t_general *data_gen);
 char				**add_str_to_mat(char **src, char *to_add);
 char				*take_the_redir(char **str);
@@ -199,7 +206,7 @@ void				evalue_next_char(t_quotes *quot);
 void				evalue_next_char(t_quotes *quot);
 char				*take_the_expand(char *src, int *i, t_mini *mini);
 char				*ft_free_strjoin(char *s1, char *s2);
-void				print_cmd_error(char *cmd, char *msg, int code);
+void				print_error(char *cmd, char *msg, int code);
 int					try_to_open_all_fds(t_list *node);
 void				free_all(t_mini *mini);
 void				close_unused_pipes(int pipe_index, int total_cmds,
@@ -217,10 +224,10 @@ void				handle_child(t_list *node, t_general *gen, t_mini *mini,
 void				redir_and_exec(t_list *node, t_general *gen, t_mini *mini,
 						t_list *list);
 void				init_exec_data(t_list **list, t_general *general);
-t_status_type	handle_complex_redir(t_list *list, char **mat, int *i);
-t_status_type	handle_simple_redir(t_list *list, char **mat, int *i);
-t_status_type	handle_quoted_heredoc(t_list *list, char **mat_content, int *i);
-t_status_type	handle_simple_heredoc(t_list *list, char **mat_content, int *i);
+t_status_type	handle_complex_redir(t_list *list, char **mat, t_varnodes *var_nodes);
+t_status_type	handle_simple_redir(t_list *list, char **mat, t_varnodes *var_nodes);
+t_status_type	handle_quoted_heredoc(t_list *list, char **mat_content, t_varnodes *var_nodes);
+t_status_type	handle_simple_heredoc(t_list *list, char **mat_content, t_varnodes *var_nodes);
 void print_perror_exit(char *msg, int code);
-void	print_cmd_error_exit(char *cmd, char *msg, int code);
+void	print_error_exit(char *cmd, char *msg, int code);
 #endif

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 16:11:10 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 17:55:28 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:41:33 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_status_type	safe_add_str(char ***mat, char *str)
 	return (OK);
 }
 
-void	print_cmd_error(char *cmd, char *msg, int code)
+void	print_error(char *cmd, char *msg, int code)
 {
 	if (cmd)
 	{
@@ -40,7 +40,7 @@ void	print_cmd_error(char *cmd, char *msg, int code)
 	g_exit_status = code;
 }
 
-void	print_cmd_error_exit(char *cmd, char *msg, int code)
+void	print_error_exit(char *cmd, char *msg, int code)
 {
 	if (cmd)
 	{

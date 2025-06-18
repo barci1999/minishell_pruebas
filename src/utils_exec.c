@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:17:23 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 17:54:27 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:41:33 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,11 @@ void	handle_external_command(t_list *node, t_general *general)
 		exit(0);
 	}
 	if (stat(node->cmd_path, &sb) == 0 && S_ISDIR(sb.st_mode))
-		print_cmd_error_exit(node->cmd_path, "Is a directory", 126);
+		print_error_exit(node->cmd_path, "Is a directory", 126);
 	if (access(node->cmd_path, F_OK) != 0)
-		print_cmd_error_exit(node->cmd_path, "No such file or directory", 127);
+		print_error_exit(node->cmd_path, "No such file or directory", 127);
 	if (access(node->cmd_path, X_OK) != 0)
-		print_cmd_error_exit(node->cmd_path, "Permission denied", 126);
+		print_error_exit(node->cmd_path, "Permission denied", 126);
 	if (execve(node->cmd_path, node->cmd_arg, general->my_env) == -1)
 	{
 		ft_free_mat_void((void **)general->my_env, ft_matlen(general->my_env));

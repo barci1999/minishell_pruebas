@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:37:19 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 17:48:03 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 19:22:21 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ t_token_type	iden_red_out(t_list *node)
 	return (result);
 }
 
-t_status_type	update_status(char **math_content, int *i, t_general *data_gen)
+t_status_type	up_stat(char **math_content, t_varnodes *var_nodes,t_general *data_gen)
 {
-	if (is_redirec(math_content[*i]))
+	if (is_redirec(math_content[var_nodes->i]))
 		return (REDIREC);
-	else if (is_cmd(math_content[*i], data_gen) == 1)
+	else if (is_cmd(math_content[var_nodes->i], data_gen) == 1)
 		return (CMD);
 	else
 	{

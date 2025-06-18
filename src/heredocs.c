@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 19:50:42 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 14:00:03 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 18:41:33 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	open_the_heredoc(t_list *list, int redir_index, int delim_index)
 	if (ft_strncmp(list->delim[delim_index], "<", 1) == 0
 		|| ft_strncmp(list->delim[delim_index], ">", 1) == 0)
 	{
-		print_cmd_error(list->delim[delim_index], "syntax error", 2);
+		print_error(list->delim[delim_index], "syntax error", 2);
 		return (-1);
 	}
 	if (handle_heredoc_loop(fd, list->delim[delim_index]) == -1)
