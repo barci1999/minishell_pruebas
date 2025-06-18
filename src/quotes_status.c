@@ -1,49 +1,63 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quotes_1.c                                         :+:      :+:    :+:   */
+/*   quotes_status.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/13 19:34:23 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/17 22:43:15 by pablalva         ###   ########.fr       */
+/*   Created: 2025/06/18 14:13:06 by pablalva          #+#    #+#             */
+/*   Updated: 2025/06/18 16:52:22 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	no_quote(t_quotes *quot, t_mini *mini)
+static int	handle_expansion(t_quotes *q, t_mini *mini)
 {
 	char	*temp;
 
-	temp = NULL;
-	if (quot->src[*quot->i + 1] && quot->src[*quot->i] == '$')
+	if (q->src[*q->i + 1] && q->src[*q->i] == '$')
 	{
-		(*quot->i)++;
-		temp = take_the_expand(quot->src, quot->i, mini);
-		if (quot->src[*quot->i] == '\0')
-			(*quot->i)--;	
-		*quot->result = ft_free_strjoin(*quot->result, temp);
-		return ;
+		(*q->i)++;
+		temp = take_the_expand(q->src, q->i, mini);
+		if (q->src[*q->i] == '\0')
+			(*q->i)--;
+		*q->result = ft_free_strjoin(*q->result, temp);
+		return (1);
 	}
-	if (is_operator_char(quot->src[*quot->i]))
+	return (0);
+}
+
+static int	handle_operator(t_quotes *q)
+{
+	if (is_operator_char(q->src[*q->i]))
 	{
-		*quot->result = add_chr_to_str(NULL, quot->src[*quot->i]);
-		if (quot->src[*quot->i + 1]
-			&& is_operator_char(quot->src[*quot->i + 1]))
+		*q->result = add_chr_to_str(NULL, q->src[*q->i]);
+		if (q->src[*q->i + 1] && is_operator_char(q->src[*q->i + 1]))
 		{
-			(*quot->i)++;
-			*quot->result = add_chr_to_str(*quot->result, quot->src[*quot->i]);
-			
+			(*q->i)++;
+			*q->result = add_chr_to_str(*q->result, q->src[*q->i]);
 		}
-		if (!ft_is_space(quot->src[*quot->i + 1]))
+		if (!ft_is_space(q->src[*q->i + 1]))
 		{
-			if(is_operator_char(quot->src[*quot->i + 1]))
-				return;
-			(*quot->m)++;
+			if (!is_operator_char(q->src[*q->i + 1]))
+				(*q->m)++;
 		}
-		return ;
+		return (1);
 	}
+	return (0);
+}
+
+void	no_quote(t_quotes *quot, t_mini *mini)
+{
+	int	handled;
+
+	handled = handle_expansion(quot, mini);
+	if (handled)
+		return ;
+	handled = handle_operator(quot);
+	if (handled)
+		return ;
 	*quot->result = add_chr_to_str(*quot->result, quot->src[*quot->i]);
 }
 
@@ -87,18 +101,4 @@ void	doble_quote(t_quotes *quo, t_mini *mini)
 			(*quo->i)++;
 		}
 	}
-}
-
-void	evalue_next_char(t_quotes *quot)
-{
-	if (quot->src[*quot->i + 1])
-	{
-		if (ft_is_space(quot->src[*quot->i + 1])
-			|| is_operator_char(quot->src[*quot->i + 1]))
-			{
-			(*quot->m)++;
-			}
-	}
-	else
-		(*quot->m)++;
 }

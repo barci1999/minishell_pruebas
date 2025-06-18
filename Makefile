@@ -44,9 +44,13 @@ SRCS =  src/main.c\
 		src/enviroment/utils_enviroment_2.c\
 		src/status_redirecc.c\
 		src/assig_nodes_var.c\
-		src/quotes_1.c\
-		src/quotes_2.c\
+		src/quotes_status.c\
+		src/quotes.c\
 		src/detectors_3.c\
+		src/utils_quotes.c\
+		src/utils_exec.c\
+		src/utils_exec_list.c\
+		src/utils_status_redirec.c\
 		
 
 

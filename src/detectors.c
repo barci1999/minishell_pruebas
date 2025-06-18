@@ -3,37 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   detectors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/11 13:07:13 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 20:36:49 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/18 15:19:44 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	is_cmd(char *comprove, t_general *data_gen)
+static int	aux_is_cmd(char **paths, char *comprove)
 {
-	struct stat	sb;
-	char		**paths;
-	char		*temp;
-	char		*cmd_path;
-	int			i;
+	char	*temp;
+	char	*cmd_path;
+	int		i;
 
 	i = 0;
 	temp = NULL;
-	if (is_builting(comprove))
-		return (1);
-	if (ft_strchr(comprove, '/'))
-	{
-		if (access(comprove, X_OK) == 0 && stat(comprove, &sb) == 0
-			&& S_ISREG(sb.st_mode))
-			return (1);
-		return (0);
-	}
-	paths = take_paths_env(data_gen->my_env);
-	if (!paths)
-		return (0);
 	while (paths[i])
 	{
 		temp = ft_strjoin(paths[i], "/");
@@ -47,6 +33,28 @@ int	is_cmd(char *comprove, t_general *data_gen)
 		free(cmd_path);
 		i++;
 	}
+	return (0);
+}
+
+int	is_cmd(char *comprove, t_general *data_gen)
+{
+	struct stat	sb;
+	char		**paths;
+
+	if (is_builting(comprove))
+		return (1);
+	if (ft_strchr(comprove, '/'))
+	{
+		if (access(comprove, X_OK) == 0 && stat(comprove, &sb) == 0
+			&& S_ISREG(sb.st_mode))
+			return (1);
+		return (0);
+	}
+	paths = take_paths_env(data_gen->my_env);
+	if (!paths)
+		return (0);
+	if (aux_is_cmd(paths, comprove) == 1)
+		return (1);
 	return (ft_free_mat(paths), 0);
 }
 
@@ -99,9 +107,4 @@ int	have_a_heredoc(t_list *node)
 		i++;
 	}
 	return (0);
-}
-
-int	is_operator_char(char c)
-{
-	return (c == '>' || c == '<');
 }

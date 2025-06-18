@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   detectors_3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 22:14:28 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/13 19:55:29 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/18 15:23:48 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,9 @@ int	dir_exists(const char *filepath)
 	ret = (access(dir, F_OK | W_OK) == 0);
 	free(dir);
 	return (ret);
+}
+
+int	is_operator_char(char c)
+{
+	return (c == '>' || c == '<');
 }

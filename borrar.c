@@ -188,3 +188,39 @@ void print_cmd_list(t_list *list)
         i++;
     }
 }
+
+
+
+// void	no_quote(t_quotes *quot, t_mini *mini)
+// {
+// 	char	*temp;
+
+// 	temp = NULL;
+// 	if (quot->src[*quot->i + 1] && quot->src[*quot->i] == '$')
+// 	{
+// 		(*quot->i)++;
+// 		temp = take_the_expand(quot->src, quot->i, mini);
+// 		if (quot->src[*quot->i] == '\0')
+// 			(*quot->i)--;
+// 		*quot->result = ft_free_strjoin(*quot->result, temp);
+// 		return ;
+// 	}
+// 	if (is_operator_char(quot->src[*quot->i]))
+// 	{
+// 		*quot->result = add_chr_to_str(NULL, quot->src[*quot->i]);
+// 		if (quot->src[*quot->i + 1]
+// 			&& is_operator_char(quot->src[*quot->i + 1]))
+// 		{
+// 			(*quot->i)++;
+// 			*quot->result = add_chr_to_str(*quot->result, quot->src[*quot->i]);
+// 		}
+// 		if (!ft_is_space(quot->src[*quot->i + 1]))
+// 		{
+// 			if (is_operator_char(quot->src[*quot->i + 1]))
+// 				return ;
+// 			(*quot->m)++;
+// 		}
+// 		return ;
+// 	}
+// 	*quot->result = add_chr_to_str(*quot->result, quot->src[*quot->i]);
+// }

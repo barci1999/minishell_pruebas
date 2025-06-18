@@ -6,38 +6,11 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/30 18:22:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/17 20:20:00 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:01:23 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_status_type	handle_simple_heredoc(t_list *list, char **mat_content, int *i)
-{
-	if (!mat_content[*i + 1])
-		return (SYN_ERROR);
-	if (safe_add_str(&list->redirecc, mat_content[*i]) != OK)
-		return (MALLOC_ERROR);
-	(*i)++;
-	if (safe_add_str(&list->delim, mat_content[*i]) != OK)
-		return (MALLOC_ERROR);
-	return (OK);
-}
-
-t_status_type	handle_quoted_heredoc(t_list *list, char **mat_content, int *i)
-{
-	char	*redir_op;
-
-	redir_op = take_the_redir(&mat_content[*i]);
-	if (!redir_op)
-		return (MALLOC_ERROR);
-	if (safe_add_str(&list->redirecc, redir_op) != OK)
-		return (free(redir_op), MALLOC_ERROR);
-	free(redir_op);
-	if (safe_add_str(&list->delim, mat_content[*i]) != OK)
-		return (MALLOC_ERROR);
-	return (OK);
-}
 
 t_status_type	handle_heredoc(t_list *list, char **mat_content, int *i,
 		t_general *data_gen)
@@ -68,33 +41,15 @@ t_status_type	handle_heredoc(t_list *list, char **mat_content, int *i,
 
 t_status_type	handle_fd_redir(t_list *list, char **mat_content, int *i)
 {
-	char	*redir_op;
+	t_status_type	status;
 
 	if (ft_strcmp(mat_content[*i], "<") == 0 || ft_strcmp(mat_content[*i],
 			">") == 0 || ft_strcmp(mat_content[*i], ">>") == 0)
-	{
-		if (!mat_content[*i + 1])
-			return (SYN_ERROR);
-		if (safe_add_str(&list->redirecc, mat_content[(*i)++]) != OK)
-			return (MALLOC_ERROR);
-		if(ft_strncmp(mat_content[*i],"<",1) == 0 || ft_strncmp(mat_content[*i],">",1) == 0)
-			return(SYN_ERROR);
-		if (safe_add_str(&list->fd, mat_content[*i]) != OK)
-			return (MALLOC_ERROR);
-	}
+		status = handle_simple_redir(list, mat_content, i);
 	else
-	{
-		redir_op = take_the_redir(&mat_content[*i]);
-		if (!redir_op)
-			return (MALLOC_ERROR);
-		if (safe_add_str(&list->redirecc, redir_op) != OK)
-			return (free(redir_op), MALLOC_ERROR);
-		free(redir_op);
-		if(ft_strncmp(mat_content[*i],"<",1) == 0 || ft_strncmp(mat_content[*i],">",1) == 0)
-			return(SYN_ERROR);
-		if (safe_add_str(&list->fd, mat_content[*i]) != OK)
-			return (MALLOC_ERROR);
-	}
+		status = handle_complex_redir(list, mat_content, i);
+	if (status != OK)
+		return (status);
 	(*i)++;
 	return (OK);
 }

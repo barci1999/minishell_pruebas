@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/17 20:21:07 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:58:53 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,29 +36,6 @@ char	*take_the_redir(char **str)
 	str[0] = ft_strdup(temp);
 	free(temp);
 	return (result);
-}
-
-char	**add_str_to_mat(char **src, char *to_add)
-{
-	char	**result;
-	int		i;
-
-	i = 0;
-	result = malloc((ft_matlen(src) + 2) * sizeof(char *));
-	if (!result)
-		return (ft_free_mat(src), NULL);
-	while (src && src[i])
-	{
-		result[i] = ft_strdup(src[i]);
-		if (!result[i])
-			return (ft_free_mat(result), ft_free_mat(src), NULL);
-		i++;
-	}
-	result[i] = ft_strdup(to_add);
-	if (!result[i])
-		return (ft_free_mat(result), ft_free_mat(src), NULL);
-	result[i + 1] = NULL;
-	return (ft_free_mat(src), result);
 }
 
 t_status_type	mod_cmd_and_args(t_list *list, char **math_content, int *i,
@@ -96,27 +73,6 @@ t_status_type	mod_cmd_and_args(t_list *list, char **math_content, int *i,
 		(*i)++;
 	}
 	return (OK);
-}
-
-t_status_type	safe_add_str(char ***mat, char *str)
-{
-	*mat = add_str_to_mat(*mat, str);
-	if (!*mat)
-		return (MALLOC_ERROR);
-	return (OK);
-}
-
-void	print_cmd_error(char *cmd, char *msg, int code)
-{
-	if (cmd)
-	{
-		write(2, "minishell: ", 11);
-		write(2, cmd, ft_strlen(cmd));
-		write(2, ": ", 2);
-	}
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-	g_exit_status = code;
 }
 
 int	assig_var_node(char **mat_content, t_list *list, t_general *data_gen)

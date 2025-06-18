@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:37:19 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/16 18:38:28 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 17:48:03 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_token_type	identify_reddir_in(t_list *node)
 	return (result);
 }
 
-t_token_type	identify_reddir_out(t_list *node)
+t_token_type	iden_red_out(t_list *node)
 {
 	int				i;
 	t_token_type	result;

@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 17:44:17 by ksudyn            #+#    #+#             */
-/*   Updated: 2025/06/17 20:36:55 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:00:18 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ char	*get_env_value(t_mini *mini, char *var_name)
 {
 	t_list	*node;
 
-	if(!var_name)
-		return(NULL);
+	if (!var_name)
+		return (NULL);
 	node = mini->first_node;
 	while (node)
 	{

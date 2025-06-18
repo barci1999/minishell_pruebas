@@ -6,83 +6,19 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/17 22:01:59 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 16:20:29 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_single_node(t_list *node)
-{
-	if (!node)
-		return ;
-
-	free(node->content);
-	free(node->cmd_path);
-	ft_free_mat(node->cmd_arg);
-	free(node->cmd_name);
-	ft_free_mat(node->redirecc);
-	ft_free_mat(node->fd);
-	ft_free_mat(node->delim);
-	free(node->variable);
-	free(node);
-}
-
-void	execute_builting(t_list *node, t_mini *mini)
-{
-	if (ft_strcmp(node->cmd_path, "echo") == 0)
-		g_exit_status = ft_echo(node->cmd_arg);
-	else if (ft_strcmp(node->cmd_path, "export") == 0)
-		g_exit_status = ft_export(node->cmd_arg, mini);
-	else if (ft_strcmp(node->cmd_path, "env") == 0)
-		g_exit_status = ft_env(node->cmd_arg, mini);
-	else if (ft_strcmp(node->cmd_path, "pwd") == 0)
-		g_exit_status = ft_pwd();
-	else if (ft_strcmp(node->cmd_path, "cd") == 0)
-		g_exit_status = ft_cd(node->cmd_arg);
-	else if (ft_strcmp(node->cmd_path, "exit") == 0)
-		g_exit_status = ft_exit(node->cmd_arg);
-	else if (ft_strcmp(node->cmd_path, "unset") == 0)
-		g_exit_status = ft_unset(node->cmd_arg, mini);
-}
-
-void	handle_external_command(t_list *node, t_general *general)
-{
-	struct stat	sb;
-
-	if (*node->cmd_path == '\0')
-	{
-		ft_free_mat_void((void**)general->my_env,ft_matlen(general->my_env));
-		exit(0);
-	}
-	if (stat(node->cmd_path, &sb) == 0 && S_ISDIR(sb.st_mode))
-	{
-		print_cmd_error(node->cmd_path, "Is a directory", 126);
-		exit(126);
-	}
-	if (access(node->cmd_path, F_OK) != 0)
-	{
-		print_cmd_error(node->cmd_path, "No such file or directory", 127);
-		exit(127);
-	}
-	if (access(node->cmd_path, X_OK) != 0)
-	{
-		print_cmd_error(node->cmd_path, "Permission denied", 126);
-		exit(126);
-	}
-	if (execve(node->cmd_path, node->cmd_arg, general->my_env) == -1)
-	{
-		ft_free_mat_void((void**)general->my_env,ft_matlen(general->my_env));
-		exit(1);
-	}
-}
-
-void	execute_node(t_list *node, t_general *general, t_mini *mini,t_list **lista)
+void	execute_node(t_list *node, t_general *general, t_mini *mini,
+		t_list **lista)
 {
 	if (!node->cmd_path)
 	{
-		ft_free_mat_void((void**)general->my_env,ft_matlen(general->my_env));
-		ft_free_mat_void((void **)general->pipes,(list_size(lista))-1);
+		ft_free_mat_void((void **)general->my_env, ft_matlen(general->my_env));
+		ft_free_mat_void((void **)general->pipes, (list_size(lista)) - 1);
 		ft_free_array_void(general->pids);
 		free_list(lista);
 		free_all(mini);
@@ -95,8 +31,8 @@ void	execute_node(t_list *node, t_general *general, t_mini *mini,t_list **lista)
 	else
 	{
 		execute_builting(node, mini);
-		ft_free_mat_void((void**)general->my_env,ft_matlen(general->my_env));
-		ft_free_mat_void((void **)general->pipes,(list_size(lista))-1);
+		ft_free_mat_void((void **)general->my_env, ft_matlen(general->my_env));
+		ft_free_mat_void((void **)general->pipes, (list_size(lista)) - 1);
 		ft_free_array_void(general->pids);
 		free_list(lista);
 		free_all(mini);
@@ -124,67 +60,46 @@ void	execute_builtin_with_redir(t_list *node, t_general *data_gen,
 	close(saved_stdin);
 }
 
-void	close_unused_pipes(int pipe_index, int total_cmds, int **pipes)
+void	execute_builting(t_list *node, t_mini *mini)
 {
-	int	j;
-
-	j = 0;
-	while (j < total_cmds - 1)
-	{
-		if (j != pipe_index)
-			close(pipes[j][1]);
-		if (j != pipe_index - 1)
-			close(pipes[j][0]);
-		j++;
-	}
+	if (ft_strcmp(node->cmd_path, "echo") == 0)
+		g_exit_status = ft_echo(node->cmd_arg);
+	else if (ft_strcmp(node->cmd_path, "export") == 0)
+		g_exit_status = ft_export(node->cmd_arg, mini);
+	else if (ft_strcmp(node->cmd_path, "env") == 0)
+		g_exit_status = ft_env(node->cmd_arg, mini);
+	else if (ft_strcmp(node->cmd_path, "pwd") == 0)
+		g_exit_status = ft_pwd();
+	else if (ft_strcmp(node->cmd_path, "cd") == 0)
+		g_exit_status = ft_cd(node->cmd_arg);
+	else if (ft_strcmp(node->cmd_path, "exit") == 0)
+		g_exit_status = ft_exit(node->cmd_arg);
+	else if (ft_strcmp(node->cmd_path, "unset") == 0)
+		g_exit_status = ft_unset(node->cmd_arg, mini);
 }
 
 void	execute_list(t_list *list, t_general general, t_mini *mini)
 {
-	t_list	*current;
+	t_list	*cur;
 	int		i;
 	pid_t	pid;
-	int		total_cmds;
-	int		pipe_index;
 
-	total_cmds = (int)list_size(&list);
-	pipe_index = 0;
-	current = list;
+	cur = list;
 	i = 0;
-	general.pids = gen_pid_array((size_t)total_cmds);
-	general.pipes = gen_pipes_array((size_t)total_cmds);
-	if (!general.pids)
-	{
-		free_list(&list);
-		exit(1);
-	}
-	while (current)
+	general.pipe_index = 0;
+	general.total_cmd = (int)list_size(&list);
+	init_exec_data(&list, &general);
+	while (cur)
 	{
 		pid = fork();
 		if (pid == -1)
 			exit(1);
 		if (pid == 0)
-		{
-			close_unused_pipes(pipe_index, total_cmds, general.pipes);
-			if(try_to_open_all_fds(current) == 0)
-			{
-				open_and_redir_in(current, &general, pipe_index);
-				open_and_redir_out(current, &general, pipe_index, total_cmds);
-				execute_node(current, &general, mini,&list); // si eso close_heredocs de nodo
-			}
-			else
-				exit(1);
-		}
-		else
-		{
-			general.pids[i] = pid;
-			current = current->next;
-			i++;
-			if (current)
-				pipe_index++;
-		}
+			handle_child(cur, &general, mini, list);
+		handle_parent(pid, &general, &i);
+		cur = cur->next;
+		if (cur)
+			general.pipe_index++;
 	}
-	close_all_pipes(total_cmds, &general);
-	wait_all_procces(&general, i);
-	close_herdocs(list, &general);
+	end_exec(list, &general, i);
 }
