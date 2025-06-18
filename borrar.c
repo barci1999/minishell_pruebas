@@ -224,3 +224,87 @@ void print_cmd_list(t_list *list)
 // 	}
 // 	*quot->result = add_chr_to_str(*quot->result, quot->src[*quot->i]);
 // }
+
+
+
+
+// int	assig_var_node(char **content, t_list *list, t_general *data_gen)
+// {
+// 	t_varnodes var_nodes;
+
+// 	var_nodes.start = false;
+// 	var_nodes.i = 0;
+// 	while (content[var_nodes.i])
+// 	{
+// 		var_nodes.type = up_stat(content,&var_nodes, data_gen);
+// 		if (!var_nodes.start && (var_nodes.type == CMD || var_nodes.type == WORD))
+// 		{
+// 			if (mod_cmd_and_args(list, content,&var_nodes, data_gen) != OK)
+// 				return (print_error(content[var_nodes.i], "command not found", 127),1);
+// 			var_nodes.start = true;
+// 		}
+// 		else if (var_nodes.start && up_stat(content,&var_nodes, data_gen) == WORD)
+// 		{
+// 			list->cmd_arg = add_str_to_mat(list->cmd_arg, content[var_nodes.i]);
+// 			if (!list->cmd_arg)
+// 				return (print_error("malloc", "memory allocation failed", 1),1);
+// 			var_nodes.i++;
+// 		}
+// 		else if (up_stat(content, &var_nodes, data_gen) == REDIREC)
+// 		{
+// 			if (mod_redir_and_fd(list, content, &var_nodes, data_gen) != OK)
+// 				return (print_error(content[var_nodes.i], "redirection error", 2),1);
+// 		}
+// 		else
+// 		{
+// 			if (*content[var_nodes.i] == '\0')
+// 				return (0);
+// 			print_error(content[var_nodes.i], "syntax error", 2);
+// 			return (1);
+// 		}
+// 	}
+// 	return (0);
+// }
+
+// size_t	number_of_cmd_arg(const char *src)
+// {
+// 	int		i;
+// 	size_t	count;
+// 	char	quote;
+
+// 	i = 0;
+// 	count = 0;
+// 	while (src[i])
+// 	{
+// 		while (src[i] && ft_is_space(src[i]))
+// 			i++;
+// 		if (!src[i])
+// 			break ;
+// 		if (is_quote(src[i]))
+// 		{
+// 			quote = src[i++];
+// 			while (src[i] && src[i] != quote)
+// 				i++;
+// 			if (src[i] == quote)
+// 				i++;
+// 			count++;
+// 		}
+// 		else if (is_operator_char(src[i]))
+// 		{
+// 			if ((src[i] == '>' && src[i + 1] == '>') || (src[i] == '<' && src[i
+// 					+ 1] == '<'))
+// 				i += 2;
+// 			else
+// 				i += 1;
+// 			count++;
+// 		}
+// 		else
+// 		{
+// 			while (src[i] && !ft_is_space(src[i]) && !is_quote(src[i])
+// 				&& !is_operator_char(src[i]))
+// 				i++;
+// 			count++;
+// 		}
+// 	}
+// 	return (count);
+// }

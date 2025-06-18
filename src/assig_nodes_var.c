@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 14:24:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 19:50:25 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:45:37 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,18 @@ char	*take_the_redir(char **str)
 	return (result);
 }
 
-t_status_type	mod_cmd_and_args(t_list *list, char **content,t_varnodes *var_nodes,
-		t_general *data_gen)
+t_status_type	mod_cmd_and_args(t_list *list, char **cont,
+		t_varnodes *var_nodes, t_general *data_gen)
 {
-	if (is_builting(content[var_nodes->i]))
-		list->cmd_path = ft_strdup(content[var_nodes->i]);
+	if (is_builting(cont[var_nodes->i]))
+		list->cmd_path = ft_strdup(cont[var_nodes->i]);
 	else
 	{
-		list->cmd_path = take_cmd_path(content[var_nodes->i], data_gen);
-		if (!list->cmd_path && !*content[var_nodes->i])
+		list->cmd_path = take_cmd_path(cont[var_nodes->i], data_gen);
+		if (!list->cmd_path && !*cont[var_nodes->i])
 			return (OK);
 	}
-	list->cmd_arg = add_str_to_mat(list->cmd_arg, content[var_nodes->i]);
+	list->cmd_arg = add_str_to_mat(list->cmd_arg, cont[var_nodes->i]);
 	if (!list->cmd_arg)
 		return (MALLOC_ERROR);
 	if (!list->cmd_path)
@@ -58,9 +58,9 @@ t_status_type	mod_cmd_and_args(t_list *list, char **content,t_varnodes *var_node
 	if (!list->cmd_name)
 		return (MALLOC_ERROR);
 	(var_nodes->i)++;
-	while (content[var_nodes->i] && up_stat(content,var_nodes, data_gen) != REDIREC)
+	while (cont[var_nodes->i] && up_stat(cont, var_nodes, data_gen) != REDIREC)
 	{
-		list->cmd_arg = add_str_to_mat(list->cmd_arg, content[var_nodes->i]);
+		list->cmd_arg = add_str_to_mat(list->cmd_arg, cont[var_nodes->i]);
 		if (!list->cmd_arg)
 			return (MALLOC_ERROR);
 		(var_nodes->i)++;
@@ -68,42 +68,20 @@ t_status_type	mod_cmd_and_args(t_list *list, char **content,t_varnodes *var_node
 	return (OK);
 }
 
-int	assig_var_node(char **content, t_list *list, t_general *data_gen)
+int	assig_var_node(char **c, t_list *l, t_general *g)
 {
-	t_varnodes var_nodes;
+	t_varnodes	v;
+	int			prev_i;
 
-	var_nodes.start = false;
-	var_nodes.i = 0;
-	while (content[var_nodes.i])
+	init_varnodes(&v);
+	while (c[v.i])
 	{
-		var_nodes.type = up_stat(content,&var_nodes, data_gen);
-		if (!var_nodes.start && (var_nodes.type == CMD || var_nodes.type == WORD))
-		{
-			if (mod_cmd_and_args(list, content,&var_nodes, data_gen) != OK)
-				return (print_error(content[var_nodes.i], "command not found", 127),1);
-			var_nodes.start = true;
-		}
-		else if (var_nodes.start && up_stat(content,&var_nodes, data_gen) == WORD)
-		{
-			list->cmd_arg = add_str_to_mat(list->cmd_arg, content[var_nodes.i]);
-			if (!list->cmd_arg)
-				return (print_error("malloc", "memory allocation failed", 1),1);
-			var_nodes.i++;
-		}
-		else if (up_stat(content, &var_nodes, data_gen) == REDIREC)
-		{
-			if (mod_redir_and_fd(list, content, &var_nodes, data_gen) != OK)
-				return (print_error(content[var_nodes.i], "redirection error", 2),1);
-		}
-		else
-		{
-			if (*content[var_nodes.i] == '\0')
-				return (0);
-			print_error(content[var_nodes.i], "syntax error", 2);
+		prev_i = v.i;
+		v.type = up_stat(c, &v, g);
+		if (process_node_cases(c, l, &v, g))
 			return (1);
-		}
+		if (prev_i == v.i)
+			v.i++;
 	}
 	return (0);
 }
-
-
