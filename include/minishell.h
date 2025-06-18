@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 20:42:22 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:49:12 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ typedef struct s_quotes
 
 typedef struct s_varnodes
 {
-		t_status_type	type;
+	t_status_type	type;
 	bool			start;
 	int				i;
-}				t_varnodes;
+}					t_varnodes;
 
 // Apunta al primer nodo de la lista de variables de entorno
 // Iterador temporal para recorrer la lista
@@ -143,11 +143,12 @@ void				close_herdocs(t_list *list, t_general *gen);
 void				open_and_redir_out(t_list *node, t_general *general, int i,
 						int total_comds);
 void				open_and_redir_in(t_list *node, t_general *general, int i);
-t_status_type		mod_redir_and_fd(t_list *list, char **mat_content, t_varnodes *var_nodes,
-						t_general *data_gen);
-t_status_type		handle_fd_redir(t_list *list, char **mat_content, t_varnodes *var_nodes);
-t_status_type		handle_heredoc(t_list *list, char **mat_content, t_varnodes *var_nodes,
-						t_general *data_gen);
+t_status_type		mod_redir_and_fd(t_list *list, char **mat_content,
+						t_varnodes *var_nodes, t_general *data_gen);
+t_status_type		handle_fd_redir(t_list *list, char **mat_content,
+						t_varnodes *var_nodes);
+t_status_type		handle_heredoc(t_list *list, char **mat_content,
+						t_varnodes *var_nodes, t_general *data_gen);
 t_status_type		handle_quoted_heredoc(t_list *list, char **mat_content,
 						t_varnodes *var_nodes);
 t_status_type		handle_simple_heredoc(t_list *list, char **mat_content,
@@ -191,8 +192,8 @@ int					count_nodes(t_mini *mini);
 int					assig_var_node(char **math_content, t_list *list,
 						t_general *data_gen);
 t_status_type		safe_add_str(char ***mat, char *str);
-t_status_type		mod_cmd_and_args(t_list *list, char **math_content, t_varnodes *var_nodes,
-						t_general *data_gen);
+t_status_type		mod_cmd_and_args(t_list *list, char **math_content,
+						t_varnodes *var_nodes, t_general *data_gen);
 char				**add_str_to_mat(char **src, char *to_add);
 char				*take_the_redir(char **str);
 char				*add_chr_to_str(char *src, char c);
@@ -224,15 +225,35 @@ void				handle_child(t_list *node, t_general *gen, t_mini *mini,
 void				redir_and_exec(t_list *node, t_general *gen, t_mini *mini,
 						t_list *list);
 void				init_exec_data(t_list **list, t_general *general);
-t_status_type	handle_complex_redir(t_list *list, char **mat, t_varnodes *var_nodes);
-t_status_type	handle_simple_redir(t_list *list, char **mat, t_varnodes *var_nodes);
-t_status_type	handle_quoted_heredoc(t_list *list, char **mat_content, t_varnodes *var_nodes);
-t_status_type	handle_simple_heredoc(t_list *list, char **mat_content, t_varnodes *var_nodes);
-void print_perror_exit(char *msg, int code);
-void	print_error_exit(char *cmd, char *msg, int code);
-int	process_node_cases(char **c, t_list *l, t_varnodes *v, t_general *g);
-int	process_redir(char **c, t_list *l, t_varnodes *v, t_general *g);
-int	process_word(char **c, t_list *l, t_varnodes *v);
-int	process_cmd(char **c, t_list *l, t_varnodes *v, t_general *g);
-void	init_varnodes(t_varnodes *v);
+t_status_type		handle_complex_redir(t_list *list, char **mat,
+						t_varnodes *var_nodes);
+t_status_type		handle_simple_redir(t_list *list, char **mat,
+						t_varnodes *var_nodes);
+t_status_type		handle_quoted_heredoc(t_list *list, char **mat_content,
+						t_varnodes *var_nodes);
+t_status_type		handle_simple_heredoc(t_list *list, char **mat_content,
+						t_varnodes *var_nodes);
+void				print_perror_exit(char *msg, int code);
+void				print_error_exit(char *cmd, char *msg, int code);
+int					process_node_cases(char **c, t_list *l, t_varnodes *v,
+						t_general *g);
+int					process_redir(char **c, t_list *l, t_varnodes *v,
+						t_general *g);
+int					process_word(char **c, t_list *l, t_varnodes *v);
+int					process_cmd(char **c, t_list *l, t_varnodes *v,
+						t_general *g);
+void				init_varnodes(t_varnodes *v);
+void				cleanup_exec(t_general *data_gen, t_list **temp);
+void				init_structs(t_mini *mini, t_general *data_gen,
+						char **envp);
+void				execute_pipeline(char *input, t_list *temp,
+						t_general *data_gen, t_mini *mini);
+void				free_error_case(t_general *data_gen, t_list **temp);
+int					handle_input(char *input, t_list **temp, t_mini *mini,
+						t_general *data_gen);
+void				free_all(t_mini *mini);
+int					comprove_first_char(char *src);
+int					comprove_last_char(char *src);
+int					comprove_doble_pipe(char *src);
+int					comprove_input(char *input);
 #endif

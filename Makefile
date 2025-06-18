@@ -53,6 +53,8 @@ SRCS =  src/main.c\
 		src/utils_status_redirec.c\
 		src/utils_assig_node_var_4.c\
 		src/utils_assig_node_var_1.c\
+		src/utils_main.c\
+		src/utils_main_2.c\
 		
 
 

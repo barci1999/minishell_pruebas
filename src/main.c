@@ -6,187 +6,39 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 15:25:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 16:34:02 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 22:48:37 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		g_exit_status = 0;
+int	g_exit_status = 0;
 
-void	free_all(t_mini *mini)
-{
-	if (!mini)
-		return ;
-	free_list(&mini->first_node);
-}
-int	comprove_first_char(char *src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] && ft_is_space(src[i]))
-	{
-		i++;
-	}
-	if (src[i] == '\0' || src[i] == '|')
-		return (1);
-	else
-		return (0);
-}
-int	comprove_last_char(char *src)
-{
-	int		i;
-	char	c;
-
-	i = 0;
-	while (src[i])
-	{
-		c = src[i];
-		i++;
-	}
-	if (c == '|')
-	{
-		return (1);
-	}
-	else
-		return (0);
-}
-int	comprove_doble_pipe(char *src)
-{
-	int		i;
-	char	quote;
-
-	i = 0;
-	quote = 0;
-	while (src[i])
-	{
-		if (src[i] == '\'' || src[i] == '\"')
-		{
-			quote = src[i];
-			i++;
-			while (src[i] && src[i] != quote)
-				i++;
-			if (src[i])
-				i++;
-			continue ;
-		}
-		if (src[i] == '|')
-		{
-			i++;
-			while (src[i] && (src[i] == ' ' || src[i] == '\t'))
-				i++;
-			if (src[i] == '|')
-				return (1);
-		}
-		else
-			i++;
-	}
-	return (0);
-}
-int	comprove_input(char *input)
-{
-	if (nbr_quotes_ok(input) == false)
-		return (1);
-	if (comprove_first_char(input) == 1)
-		return (1);
-	if (comprove_last_char(input) == 1)
-		return (1);
-	if (comprove_doble_pipe(input) == 1)
-		return (1);
-	return (0);
-}
 int	main(int argc, char **argv, char **envp)
 {
 	char		*input;
 	t_list		*temp;
 	t_mini		mini;
 	t_general	data_gen;
-	int			flag;
 
-	flag = 0;
-	input = NULL;
-	temp = NULL;
-	ft_memset(&temp, 0, sizeof(temp));
-	ft_memset(&mini, 0, sizeof(t_mini));
-	ft_memset(&data_gen, 0, sizeof(t_general));
-	(void)argv;
-	(void)envp;
 	if (argc < 1)
 		return (1);
-	g_exit_status = 0;
-	mini.first_node = NULL;
-	mini.total_nodes = 0;
-	init_env_list(&mini, envp);
-	ctrls(0);
+	(void)argv;
+	temp = NULL;
+	init_structs(&mini, &data_gen, envp);
 	while (1)
 	{
 		input = readline("minishell -> ");
-		if (input == NULL)
-		{
+		if (!input)
 			break ;
-		}
-		if (*input != '\0')
+		if (*input == '\0')
 		{
-			add_history(input);
-			if (comprove_input(input) == 1)
-			{
-				printf("imput no valido\n");
-				g_exit_status = 2;
-				free(input);
-			}
-			else
-			{
-				if (num_pipes(input, '|') != 0)
-					temp = asigg_cont_list(mat_to_list(ft_split_quotes(input,
-									'|')), &data_gen, &mini);
-				else
-				{
-					node_to_end(&temp, new_doble_node(input));
-					temp = asigg_cont_list(temp, &data_gen, &mini);
-				}
-				// print_cmd_list(temp);
-				if (temp)
-				{
-					if (comprove_heredocs(temp) == -1)
-						close_herdocs(temp, &data_gen);
-					else
-					{
-						if (num_pipes(input, '|') == 0
-							&& is_builting(temp->cmd_path))
-						{
-							if (try_to_open_all_fds(temp) == 0)
-								execute_builtin_with_redir(temp, &data_gen,
-									&mini);
-							close_herdocs(temp, &data_gen);
-						}
-						else
-						{
-							execute_list(temp, data_gen, &mini);
-							close_herdocs(temp, &data_gen);
-						}
-					}
-					free_list(&temp);
-					free_env_array(data_gen.my_env);
-					data_gen.my_env = NULL;
-				}
-				else
-				{
-					ft_free_mat_void((void **)data_gen.my_env,
-						ft_matlen(data_gen.my_env));
-					ft_free_mat_void((void **)data_gen.pipes, (list_size(&temp))
-						- 1);
-					ft_free_array_void(data_gen.pids);
-					free_list(&temp);
-					if (temp)
-						printf("me gusta el pito\n");
-				}
-				free(input);
-			}
+			free(input);
+			continue ;
 		}
+		if (handle_input(input, &temp, &mini, &data_gen) == -1)
+			break ;
+		free(input);
 	}
-	free_all(&mini);
-	return (0);
+	return (free_all(&mini), 0);
 }
-
-// he usado esto valgrind --show-leak-kinds=indirect --leak-check=full --trace-children=yes --track-fds=yes ./minishell
