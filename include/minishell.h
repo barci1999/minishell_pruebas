@@ -6,7 +6,7 @@
 /*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 19:38:45 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/18 20:42:22 by pablalva         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,4 +230,9 @@ t_status_type	handle_quoted_heredoc(t_list *list, char **mat_content, t_varnodes
 t_status_type	handle_simple_heredoc(t_list *list, char **mat_content, t_varnodes *var_nodes);
 void print_perror_exit(char *msg, int code);
 void	print_error_exit(char *cmd, char *msg, int code);
+int	process_node_cases(char **c, t_list *l, t_varnodes *v, t_general *g);
+int	process_redir(char **c, t_list *l, t_varnodes *v, t_general *g);
+int	process_word(char **c, t_list *l, t_varnodes *v);
+int	process_cmd(char **c, t_list *l, t_varnodes *v, t_general *g);
+void	init_varnodes(t_varnodes *v);
 #endif
