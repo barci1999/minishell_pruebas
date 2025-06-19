@@ -6,22 +6,22 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:09:34 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/19 18:10:52 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/19 20:09:46 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	previous_pwd(void)
+void	previous_pwd(t_mini *mini)
 {
 	char	*oldpwd;
 
-	oldpwd = getenv("PWD");
+	oldpwd = get_env_value(mini, "PWD");
 	if (oldpwd)
-		setenv("OLDPWD", oldpwd, 1);// TO-DO: quitar setenv, esta prohibida
+		add_or_update_variable(mini, "OLDPWD", oldpwd);
 }
 
-void	new_pwd(char *new_path)
+void	new_pwd(char *new_path, t_mini *mini)
 {
 	if (!new_path)
 		new_path = getcwd(NULL, 0);
@@ -30,7 +30,7 @@ void	new_pwd(char *new_path)
 		perror("getcwd");
 		return ;
 	}
-	setenv("PWD", new_path, 1);// TO-DO: quitar setenv, esta prohibida
+	add_or_update_variable(mini, "PWD", new_path);
 	free(new_path);
 }
 

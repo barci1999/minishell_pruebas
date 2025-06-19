@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/19 19:32:13 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/19 20:09:22 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,9 @@ t_list				*new_node_export(char *var, char *value);
 int					is_valid_variable_export(char *var);
 int					ft_env(char **args, t_mini *mini);
 int					ft_pwd(void);
-void				new_pwd(char *new_path);
-void				previous_pwd(void);
-int					ft_cd(char **args);
+void				new_pwd(char *new_path, t_mini *mini);
+void				previous_pwd(t_mini *mini);
+int					ft_cd(char **args, t_mini *mini);
 int					ft_exit(char **args, t_mini *m, t_general *d, t_list *n);
 int					ft_unset(char **args, t_mini *mini);
 t_list				*create_env_node(char *var, char *value);

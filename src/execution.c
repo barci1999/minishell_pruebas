@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/19 19:33:05 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/19 20:09:31 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	execute_builting(t_list *node, t_mini *mini, t_general *d)
 	else if (ft_strcmp(node->cmd_path, "pwd") == 0)
 		g_exit_status = ft_pwd();
 	else if (ft_strcmp(node->cmd_path, "cd") == 0)
-		g_exit_status = ft_cd(node->cmd_arg);
+		g_exit_status = ft_cd(node->cmd_arg, mini);
 	else if (ft_strcmp(node->cmd_path, "exit") == 0)
 		g_exit_status = ft_exit(node->cmd_arg, mini, d, node);
 	else if (ft_strcmp(node->cmd_path, "unset") == 0)

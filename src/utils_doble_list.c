@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:39:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/19 18:30:50 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/19 20:12:52 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,16 @@ void	free_list(t_list **list)
 t_list	*mat_to_list(char **mat)
 {
 	t_list	*list;
+	t_list	*new;
 	int		i;
 
 	list = NULL;
 	i = -1;
 	while (mat[++i])
 	{
-		if (node_to_end(&list, new_doble_node(mat[i])) == -1)
-			return (free_list(&list), ft_free_mat(mat), NULL);
+		new = new_doble_node(mat[i]);
+		if (node_to_end(&list, new) == -1)
+			return (free_list(&list), ft_free_mat(mat), free_list(&new), NULL);
 	}
 	ft_free_mat(mat);
 	return (list);

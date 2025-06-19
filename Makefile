@@ -16,7 +16,6 @@ LIBS = -L$(LIBFT_DIR) -lft -L$(PRINT_DIR) -lftprintf -lreadline
 SRCS =  src/main.c\
 		src/utils_doble_list.c\
 		src/utils_asigg_node_var.c\
-		borrar.c\
 		src/utils_env.c\
 		src/counters.c\
 		src/nbr_quotes.c\
