@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_asigg_node_var_2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 16:11:10 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 18:41:33 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:17:09 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	**add_str_to_mat(char **src, char *to_add)
 	result = malloc((ft_matlen(src) + 2) * sizeof(char *));
 	if (!result)
 		return (ft_free_mat(src), NULL);
+	ft_bzero(result, (ft_matlen(src) + 2) * sizeof(char *));
 	while (src && src[i])
 	{
 		result[i] = ft_strdup(src[i]);

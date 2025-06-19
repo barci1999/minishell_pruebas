@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_main_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 22:38:33 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 22:47:58 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:24:42 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	handle_input(char *input, t_list **temp, t_mini *mini, t_general *data_gen)
 	add_history(input);
 	if (comprove_input(input) == 1)
 	{
-		printf("imput no valido\n");
+		printf("invalid input\n");
 		g_exit_status = 2;
 		return (0);
 	}

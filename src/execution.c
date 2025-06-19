@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 11:38:39 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 16:20:29 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:33:05 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	execute_node(t_list *node, t_general *general, t_mini *mini,
 	}
 	else
 	{
-		execute_builting(node, mini);
+		execute_builting(node, mini, general);
 		ft_free_mat_void((void **)general->my_env, ft_matlen(general->my_env));
 		ft_free_mat_void((void **)general->pipes, (list_size(lista)) - 1);
 		ft_free_array_void(general->pids);
@@ -53,14 +53,19 @@ void	execute_builtin_with_redir(t_list *node, t_general *data_gen,
 		open_and_redir_out(node, data_gen, 0, 0);
 		open_and_redir_in(node, data_gen, 0);
 	}
-	execute_builting(node, mini);
+	if (ft_strcmp(node->cmd_path, "exit") == 0)
+	{
+		close(saved_stdout);
+		close(saved_stdin);
+	}
+	execute_builting(node, mini, data_gen);
 	dup2(saved_stdout, STDOUT_FILENO);
-	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDIN_FILENO);
 	close(saved_stdout);
 	close(saved_stdin);
 }
 
-void	execute_builting(t_list *node, t_mini *mini)
+void	execute_builting(t_list *node, t_mini *mini, t_general *d)
 {
 	if (ft_strcmp(node->cmd_path, "echo") == 0)
 		g_exit_status = ft_echo(node->cmd_arg);
@@ -73,7 +78,7 @@ void	execute_builting(t_list *node, t_mini *mini)
 	else if (ft_strcmp(node->cmd_path, "cd") == 0)
 		g_exit_status = ft_cd(node->cmd_arg);
 	else if (ft_strcmp(node->cmd_path, "exit") == 0)
-		g_exit_status = ft_exit(node->cmd_arg);
+		g_exit_status = ft_exit(node->cmd_arg, mini, d, node);
 	else if (ft_strcmp(node->cmd_path, "unset") == 0)
 		g_exit_status = ft_unset(node->cmd_arg, mini);
 }

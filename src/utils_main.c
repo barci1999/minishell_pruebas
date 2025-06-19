@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 22:36:26 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 22:48:19 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:39:59 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,32 +54,30 @@ int	comprove_doble_pipe(char *src)
 	int		i;
 	char	quote;
 
-	i = 0;
-	while (src[i])
+	i = -1;
+	while (src[++i])
 	{
 		if (src[i] == '\'' || src[i] == '\"')
 		{
-			quote = src[i++];
-			while (src[i] && src[i] != quote)
-				i++;
-			if (src[i])
-				i++;
+			quote = src[i];
+			while (src[++i] && src[i] != quote)
+				;
 		}
-		else if (src[i++] == '|')
+		else if (src[i] == '|')
 		{
-			while (src[i] == ' ' || src[i] == '\t')
-				i++;
+			while (src[++i] && (src[i] == ' ' || src[i] == '\t'))
+				;
 			if (src[i] == '|')
 				return (1);
 		}
-		else
-			i++;
 	}
 	return (0);
 }
 
 int	comprove_input(char *input)
 {
+	if (!input)
+		return (1);
 	if (nbr_quotes_ok(input) == false)
 		return (1);
 	if (comprove_first_char(input) == 1)

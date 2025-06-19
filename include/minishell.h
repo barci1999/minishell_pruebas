@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 22:45:53 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 22:49:12 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/19 19:32:13 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct t_list
 typedef struct s_mini
 {
 	t_list			*first_node;
-	t_list			*node_inter;
 	int				total_nodes;
 }					t_mini;
 
@@ -105,7 +104,7 @@ typedef struct s_varnodes
 void				ctrls(int is_child);
 void				ctrl_child(int signal);
 void				ctrl_minishell(int signal);
-void				execute_builting(t_list *node, t_mini *mini);
+void				execute_builting(t_list *node, t_mini *mini, t_general *d);
 int					ft_echo(char **args);
 int					ft_export(char **args, t_mini *mini);
 int					export_args(char **args, t_mini *mini);
@@ -121,7 +120,7 @@ int					ft_pwd(void);
 void				new_pwd(char *new_path);
 void				previous_pwd(void);
 int					ft_cd(char **args);
-int					ft_exit(char **exit_args);
+int					ft_exit(char **args, t_mini *m, t_general *d, t_list *n);
 int					ft_unset(char **args, t_mini *mini);
 t_list				*create_env_node(char *var, char *value);
 void				add_env_var(t_mini *mini, char *var, char *value);
@@ -213,7 +212,6 @@ void				free_all(t_mini *mini);
 void				close_unused_pipes(int pipe_index, int total_cmds,
 						int **pipes);
 void				handle_external_command(t_list *node, t_general *general);
-void				execute_builting(t_list *node, t_mini *mini);
 char				**remove_nulls(char **matrix, int strings);
 int					middle_null(char **result, int strings);
 void				execute_node(t_list *node, t_general *general, t_mini *mini,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:09:34 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/05 18:33:13 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:10:52 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	previous_pwd(void)
 
 	oldpwd = getenv("PWD");
 	if (oldpwd)
-		setenv("OLDPWD", oldpwd, 1);
+		setenv("OLDPWD", oldpwd, 1);// TO-DO: quitar setenv, esta prohibida
 }
 
 void	new_pwd(char *new_path)
@@ -30,7 +30,7 @@ void	new_pwd(char *new_path)
 		perror("getcwd");
 		return ;
 	}
-	setenv("PWD", new_path, 1);
+	setenv("PWD", new_path, 1);// TO-DO: quitar setenv, esta prohibida
 	free(new_path);
 }
 

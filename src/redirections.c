@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablalva <pablalva@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:39:25 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/18 17:51:29 by pablalva         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:54:44 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,17 +91,17 @@ void	open_and_redir_in(t_list *node, t_general *general, int i)
 	}
 }
 
-void	aux_open_and_redir_out(t_list *node, char *filename, int fd)
+void	aux_open_and_redir_out(t_list *node, char *filename, int *fd)
 {
 	if (!dir_exists(filename))
 		print_perror_exit(filename, 1);
 	if (iden_red_out(node) == FD)
-		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		*fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else
-		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1)
+		*fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (*fd == -1)
 		print_perror_exit(filename, 1);
-	dup2(fd, STDOUT_FILENO);
+	dup2(*fd, STDOUT_FILENO);
 }
 
 void	open_and_redir_out(t_list *node, t_general *general, int i,
@@ -114,7 +114,7 @@ void	open_and_redir_out(t_list *node, t_general *general, int i,
 	if (iden_red_out(node) == FD || iden_red_out(node) == FD_APPEND)
 	{
 		filename = node->fd[return_fd_out(node)];
-		aux_open_and_redir_out(node, filename, fd);
+		aux_open_and_redir_out(node, filename, &fd);
 		if (i < (int)list_size(&node) - 1 && general->pipes[i])
 			close(general->pipes[i][1]);
 		close(fd);

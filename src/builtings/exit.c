@@ -6,7 +6,7 @@
 /*   By: ksudyn <ksudyn@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 18:37:07 by pablalva          #+#    #+#             */
-/*   Updated: 2025/06/09 17:43:05 by ksudyn           ###   ########.fr       */
+/*   Updated: 2025/06/19 19:37:18 by ksudyn           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,15 @@ static int	multiple_args(char **exit_args, int argc)
 		return (2);
 	if (final_numbers(trimmed_arg, &exit_code) == 0)
 	{
-		write(1, "exit\n", 5);
 		write(2, "minishell: exit: ", 18);
 		write(2, exit_args[1], ft_strlen(exit_args[1]));
 		write(2, ": numeric argument required\n", 29);
 		free(trimmed_arg);
-		exit(2);
+		return (2);
 	}
 	free(trimmed_arg);
 	if (argc > 2)
 	{
-		write(1, "exit\n", 5);
 		write(2, "minishell: exit: too many arguments\n", 36);
 		g_exit_status = 1;
 		return (-1);
@@ -122,7 +120,7 @@ static int	multiple_args(char **exit_args, int argc)
 // 						246 % 256 = 246 ✅
 // asi se asegura de dar el codigo de salida correcto
 
-int	ft_exit(char **exit_args)
+int	ft_exit(char **exit_args, t_mini *mini, t_general *data_gen, t_list *node)
 {
 	int	i;
 	int	exit_status;
@@ -132,12 +130,20 @@ int	ft_exit(char **exit_args)
 		i++;
 	write(1, "exit\n", 5);
 	if (i == 1)
+	{
+		free_list(&node);
+		free_env_array(data_gen->my_env);
+		free_all(mini);
 		exit(g_exit_status);
+	}
 	exit_status = multiple_args(exit_args, i);
 	if (exit_status == -1)
 	{
 		return (1);
 	}
+	free_list(&node);
+	free_env_array(data_gen->my_env);
+	free_all(mini);
 	exit(exit_status);
 }
 // printf("se ha usado mi exit con numeros\n");
